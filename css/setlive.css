@@ -1,0 +1,168 @@
+body {
+  background-color: #F9F9F9;
+}
+.header-wrap {
+  background-color: white;
+  position: fixed;
+  top: 0;
+  width: 100%;
+  z-index: 99;
+}
+.header {
+  width: 1400px;
+  margin: 0 auto;
+  height: 100px;
+  display: flex;
+  align-items: center;
+  margin-bottom: 10px;
+}
+.header .logo {
+  width: 55px;
+  height: 55px;
+  margin-right: 99px;
+}
+.header .nav {
+  display: flex;
+}
+.header .nav a {
+  display: block;
+  height: 100px;
+  line-height: 100px;
+  margin-right: 51px;
+  font-size: 20px;
+  color: #333333;
+  box-sizing: border-box;
+}
+.header .nav a.active {
+  border-bottom: 6px solid #FF1F63;
+}
+.header .right {
+  display: flex;
+  align-items: center;
+  margin-left: auto;
+}
+.header .right span {
+  cursor: pointer;
+  color: #999999;
+}
+.header .right .nick {
+  display: flex;
+  align-items: center;
+  margin-right: 40px;
+}
+.header .right img {
+  width: 36px;
+  height: 36px;
+  margin-right: 10px;
+}
+.main {
+  width: 1400px;
+  margin: 0 auto;
+  padding-top: 120px;
+}
+.main .title {
+  margin: 29px 0;
+  font-weight: bold;
+  font-size: 24px;
+}
+.main .input-box {
+  padding: 46px 73px 78px 51px;
+  background-color: white;
+}
+.main .input-box .single {
+  margin-bottom: 38px;
+  display: flex;
+}
+.main .input-box .single .limit {
+  position: absolute;
+  top: 22px;
+  right: 22px;
+  display: flex;
+}
+.main .input-box .single span {
+  width: 120px;
+  font-weight: bold;
+}
+.main .input-box .single .title-input {
+  height: 61px;
+  flex: 1;
+  background-color: #F9F9F9;
+}
+.main .input-box .single textarea {
+  height: 254px;
+  background-color: #F9F9F9;
+  flex: 1;
+  border: none;
+}
+.main .input-box .single #test1 {
+  width: 362px;
+  height: 61px;
+  background-color: #F9F9F9;
+}
+.main .input-box .single .cover {
+  position: relative;
+  width: 500px;
+  height: 254px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background-color: #F9F9F9;
+}
+.main .input-box .single .cover img {
+  width: 64px;
+  height: 53px;
+  margin-bottom: 27px;
+}
+.main .input-box .single .cover p {
+  max-width: 207px;
+  text-align: center;
+}
+.main .input-box .single .cover .cover-img {
+  position: absolute;
+  width: 500px;
+  height: 254px;
+}
+.main .button-list {
+  background-color: white;
+  display: flex;
+  justify-content: flex-end;
+  padding-bottom: 75px;
+  padding-right: 73px;
+}
+.main .button-list button {
+  width: 154px;
+  height: 54px;
+  border-radius: 27px;
+  margin-left: 26px;
+  cursor: pointer;
+}
+.main .button-list button:nth-child(1) {
+  border: 1px solid #999999;
+}
+.main .button-list button:nth-child(2) {
+  color: white;
+  background-color: #FF1F63;
+}
+.footer {
+  height: 160px;
+  background-color: #FF2365;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  color: white;
+}
+.footer span {
+  margin-bottom: 27px;
+}
+.style06 input {
+  margin-right: 35px;
+}
+.style06 strong {
+  margin-right: 70px;
+}
+.style06 button {
+  color: white;
+  background-color: #FF1F63;
+}

@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="/css/reset.css">
+  <link rel="stylesheet" href="/css/livepre.css">
+  <script src="/js/jquery1.11.1.min.js"></script>
+  <script src="/js/url.js"></script>
+  <title>Document</title>
+</head>
+
+<body>
+  <div class="header-wrap">
+    <div class="header">
+      <img src="/img/top_logo@2x.png" alt="" class="logo">
+      <div class="nav">
+        <a href="livepre.html" class="active">直播预告</a>
+        <a href="livemanage.html">直播管理</a>
+      </div>
+      <div class="right">
+        <div class="nick">
+          <img src="/img/top_logo@2x.png" alt="">
+          <p>昵称昵称昵称....</p>
+        </div>
+        <span>退出登录</span>
+
+      </div>
+    </div>
+
+  </div>
+
+  <div class="main">
+    <div class="title">
+      <p>直播预告</p>
+      <a href="/pages/setlive.html">创建直播预告</a>
+    </div>
+    <div class="content">
+      <ul>
+        <li>
+          <div class="left">
+            <img src="/img/demo.jpg" alt="">
+          </div>
+          <div class="right">
+            <div class="top">
+              <p>标题标题标题标题标题标题题标题标题标题题标题标题标题题标题标题标题题标题标题标题题标题标题标题标题标题标题标题标题标题标题标题标题标题标题标题标题标题标题标题标题标题</p>
+            </div>
+            <div class="center">
+              <p>
+                直播简介直播简介直播简介直播简介直播简介直播简介直播简介直播简介直播简介直播简介直播简介直播简介直播简介直播简介直播简介直播简介直播简介直播简介直播简介直播简介直播简介直播简介直播简介直播简介直播简介直播简介直播播简介直播简介直播简介直播简介直播简介直播简介直播简介直播简介直播简介直播简介直播简介直播简介直播简介直播简介直播简介直播简介..
+              </p>
+            </div>
+            <div class="bottom">
+              <div class="info">
+                <span>
+                  开播时间：
+                </span>
+                <p>
+                  2020年12月12日 15:00
+                </p>
+              </div>
+              <div class="button-box">
+                <div class="edit">编辑</div>
+                <div class="delete">删除</div>
+              </div>
+            </div>
+          </div>
+        </li>
+        <li>
+          <div class="left">
+            <img src="/img/demo.jpg" alt="">
+          </div>
+          <div class="right">
+            <div class="top">
+              <p>标题标题标题标题标题标题标题标题</p>
+            </div>
+            <div class="center">
+              <p>
+                直播简介直播简介直播简介直播简介直播简介直播简介直播简介直播简介直播简介直播简介直播简介直播简介直播简介直播简介直播简介直播简介直播简介直播简介直播简介直播简介直播简介直播简介直播简介直播简介直播简介直播简介直播播简介直播简介直播简介直播简介直播简介直播简介直播简介直播简介直播简介直播简介直播简介直播简介直播简介直播简介直播简介直播简介..
+              </p>
+            </div>
+            <div class="bottom">
+              <div class="info">
+                <span>
+                  开播时间：
+                </span>
+                <p>
+                  2020年12月12日 15:00
+                </p>
+              </div>
+              <div class="button-box">
+                <div class="edit">编辑</div>
+                <div class="delete">删除</div>
+              </div>
+            </div>
+          </div>
+        </li>
+        <li>
+          <div class="left">
+            <img src="/img/demo.jpg" alt="">
+          </div>
+          <div class="right">
+            <div class="top">
+              <p>标题标题标题标题标题标题标题标题</p>
+            </div>
+            <div class="center">
+              <p>
+                直播简介直播简介直播简介直播简介直播简介直播简介直播简介直播简介直播简介直播简介直播简介直播简介直播简介直播简介直播简介直播简介直播简介直播简介直播简介直播简介直播简介直播简介直播简介直播简介直播简介直播简介直播播简介直播简介直播简介直播简介直播简介直播简介直播简介直播简介直播简介直播简介直播简介直播简介直播简介直播简介直播简介直播简介..
+              </p>
+            </div>
+            <div class="bottom">
+              <div class="info">
+                <span>
+                  开播时间：
+                </span>
+                <p>
+                  2020年12月12日 15:00
+                </p>
+              </div>
+              <div class="button-box">
+                <div class="edit">编辑</div>
+                <div class="delete">删除</div>
+              </div>
+            </div>
+          </div>
+        </li>
+      </ul>
+    </div>
+  </div>
+  <div class="more">
+    <p>点击查看更多</p>
+    <img src="/img/home_icon_down@2x.png" alt="">
+  </div>
+  <div class="mask dn"></div>
+  <div class="tips dn">
+    <div class="top">
+      <p>确认删除此预告吗？</p>
+    </div>
+    <div class="bottom">
+      <button>取消</button>
+      <button>确定</button>
+    </div>
+  </div>
+  <div class="footer">
+    <span>©2020 广州大健康网络科技有限公司 版权所有</span>
+    <p>粤ICP备20014480号-1</p>
+  </div>
+</body>
+<script>
+  //获取未开播预告
+  postRequest('/api/room/page',{
+    sessionId:'11111',
+    pageNumber:1,
+    pageSize:10,
+    state:0
+  },function(res){
+    console.log(res);
+  })
+
+  //获取正在开播直播
+  postRequest('/api/room/page',{
+    sessionId:'11111',
+    pageNumber:1,
+    pageSize:10,
+    state:1
+  },function(res){
+    console.log(res);
+  })
+
+  //删除预告
+  $('.delete').click(function(){
+    $('.mask').removeClass('dn')
+    $('.tips').removeClass('dn')
+  })
+
+  //清楚弹窗
+  $('.tips .bottom button').click(function(){
+    $('.mask').addClass('dn')
+    $('.tips').addClass('dn')
+  })
+
+  //编辑预告
+  $('.edit').click(function(){
+    window.location.href="setlive.html"
+  })
+
+    //退出登录
+    $('.header span').click(function(){
+    window.location.href='index.html'
+  })
+</script>
+</html>

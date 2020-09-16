@@ -1,0 +1,89 @@
+.header {
+  height: 100px;
+  display: flex;
+  align-items: center;
+
+  img {
+    width: 58px;
+    height: 58px;
+    margin-left: 258px;
+    margin-right: 29px;
+  }
+
+  span {
+    color: #E51D62;
+    font-size: 28px;
+    font-weight: bold;
+  }
+}
+
+html {
+  height: 100%;
+}
+
+body {
+  height: 100%;
+  background: url('/img/bigback.png') center 100px no-repeat;
+  background-size: 100% 100%;
+}
+
+.main {
+  .login-box {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    bottom: 0;
+    right: 0;
+    background-color: white;
+    border-radius: 20px;
+    transform: translate(-50%, -50%);
+    width: 526px;
+    height: 533px;
+    display: flex;
+    flex-direction: column;
+    padding: 63px 76px 44px 76px;
+    box-sizing: border-box;
+
+    p {
+      font-size: 28px;
+      margin-bottom: 40px;
+    }
+
+    .single {
+      background-color: #F4F6FA;
+      border-radius: 10px;
+      height: 60px;
+      display: flex;
+      align-items: center;
+      margin-bottom: 40px;
+      input{
+        height: 100%;
+        background-color: #F4F6FA;
+      }
+      img {
+        width: 26px;
+        height: 26px;
+        margin-left: 16px;
+        margin-right: 19px;
+      }
+
+    }
+
+    .auto{
+      display: flex;
+      align-items: center;
+      padding-bottom: 72px;
+      span{
+        color: #FF2063;
+        margin-left: 12px;
+      }
+    }
+    button{
+      height: 69px;
+      background-color: #FF2063;
+      border-radius: 20px;
+      color: white;
+      cursor: pointer;
+    }
+  }
+}

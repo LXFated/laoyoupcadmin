@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="/css/reset.css">
+  <link rel="stylesheet" href="/css/index.css">
+  <script src="/js/jquery1.11.1.min.js"></script>
+  <script src="/js/jquery.cookie.js"></script>
+  <title>老友养生</title>
+</head>
+
+<body>
+
+  <div class="header">
+    <img src="/img/top_logo@2x.png" alt="">
+    <span>老友养生直播管理网站</span>
+  </div>
+  <div class="main">
+
+    <div class="login-box">
+      <p>欢迎，请登录</p>
+      <div class="input-box">
+        <div class="single">
+          <img src="/img/icon_account @2x.png" alt="">
+          <input type="text" placeholder="请输入登录的账号">
+        </div>
+        <div class="single">
+          <img src="/img//icon_password@2x.png" alt="">
+          <input type="password" placeholder="请输入登录密码">
+        </div>
+        <div class='auto'>
+          <input type="checkbox">
+          <span>下次自动登录</span>
+        </div>
+      </div>
+      <button onclick="login()">登录</button>
+    </div>
+  </div>
+</body>
+<script>
+  //登录
+  function login(){
+    window.location.href="livepre.html"
+  }
+</script>
+
+</html>
