@@ -43,7 +43,7 @@
         <span>标题</span>
         <input type="text" class="title-input">
         <div class="limit">
-          <p>0</p>/<strong>100</strong>
+          <p>0</p>/<strong>60</strong>
         </div>
       </div>
       <div class="single">
@@ -121,6 +121,17 @@
   //button
   $('.button-list button').click(function(){
     window.location.href='livepre.html'
+  })
+
+  //标题限制次数
+  $('.title-input').bind('keyup',function(){
+    console.log($(this).val().length);
+    if($(this).val().length>=60){
+      $(this).attr('disabled',true)
+    }else{
+      $(this).attr('disabled',false)
+    }
+    $('.limit p').html($(this).val().length)
   })
 </script>
 

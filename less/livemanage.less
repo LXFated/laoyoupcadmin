@@ -35,6 +35,7 @@ body {
       height: 100px;
       line-height: 100px;
       margin-right: 51px;
+      font-weight: bold;
       font-size: 20px;
       color: #333333;
       box-sizing: border-box;
@@ -49,7 +50,8 @@ body {
   .right {
     display: flex;
     align-items: center;
-    span{
+
+    span {
       cursor: pointer;
       color: #999999;
     }
@@ -159,6 +161,7 @@ body {
 
         strong {
           width: 1223px;
+          line-height: 24px;
         }
 
         img {
@@ -268,6 +271,12 @@ body {
         // display: flex;
         height: 68px;
         line-height: 68px;
+        color: #EC1D5B;
+
+        th {
+          font-weight: bold;
+
+        }
       }
 
       img {
@@ -305,6 +314,12 @@ body {
           &:nth-child(1) {
             background-color: #EC1D5B;
             color: white;
+          }
+
+          &.re {
+            border: 1px solid #EC1D5B;
+            color: #EC1D5B;
+            background-color: white;
           }
 
           &:nth-child(2) {
@@ -467,8 +482,10 @@ body {
     height: 234px;
     text-align: center;
     line-height: 234px;
-    p{
+
+    p {
       font-weight: bold;
+      font-size: 24px;
     }
   }
 
@@ -481,6 +498,7 @@ body {
       background-color: white;
       border-top: 1px solid #EEEEEE;
       border-radius: 0 0 10px 10px;
+      font-size: 20px;
 
       cursor: pointer;
 
@@ -537,6 +555,10 @@ body {
       align-items: center;
       margin-bottom: 20px;
 
+      strong {
+        font-weight: bold;
+      }
+
       input {
         margin: 0;
         border: none;
@@ -569,6 +591,8 @@ body {
 
       .right {
         display: flex;
+        justify-content: space-between;
+
 
         p {
           height: 50px;
@@ -626,9 +650,9 @@ body {
       .right {
         width: 302px;
         display: flex;
+        justify-content: space-between;
 
         span {
-          margin-right: 40px;
 
           &:nth-child(6) {
             margin-right: 0;
@@ -722,4 +746,49 @@ body {
       }
     }
   }
+}
+
+.radio {
+  display: flex;
+  &.radio01{
+    .pre{
+      margin-right: 16px;
+    }
+    .after{
+      margin-right: 16px;
+    }
+  }
+
+  .pre {
+    width: 14px;
+    height: 14px;
+
+    background: #EDEDED;
+
+    border-radius: 50%;
+    margin-right: 36px;
+  }
+
+  .after {
+    width: 14px;
+    height: 14px;
+    background: #EDEDED;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-right: 36px;
+
+
+
+    .after-insert{
+      width: 8px;
+      height: 8px;
+      background: #FF2063;
+      border-radius: 50%;
+
+    }
+
+  }
+
 }

@@ -47,6 +47,8 @@ body {
     p {
       font-size: 28px;
       margin-bottom: 40px;
+      color: #FF2063;
+      font-weight: bold;
     }
 
     .single {
@@ -56,10 +58,12 @@ body {
       display: flex;
       align-items: center;
       margin-bottom: 40px;
-      input{
+
+      input {
         height: 100%;
         background-color: #F4F6FA;
       }
+
       img {
         width: 26px;
         height: 26px;
@@ -69,21 +73,35 @@ body {
 
     }
 
-    .auto{
+    .auto {
       display: flex;
       align-items: center;
       padding-bottom: 72px;
-      span{
+
+      span {
         color: #FF2063;
         margin-left: 12px;
       }
     }
-    button{
+
+    button {
       height: 69px;
-      background-color: #FF2063;
+      background-color: #DBDBDB;
       border-radius: 20px;
       color: white;
       cursor: pointer;
+
+      &.active{
+        background-color: #FF2063;
+      }
     }
+  }
+}
+
+
+.check{
+  img{
+    width: 20px;
+    height: 20px;
   }
 }

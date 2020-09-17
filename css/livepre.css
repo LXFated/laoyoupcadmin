@@ -28,6 +28,7 @@ body {
   height: 100px;
   line-height: 100px;
   margin-right: 51px;
+  font-weight: bold;
   font-size: 20px;
   color: #333333;
   box-sizing: border-box;
@@ -67,6 +68,10 @@ body {
   display: flex;
   justify-content: space-between;
   align-items: center;
+}
+.main .title p {
+  font-weight: bold;
+  font-size: 18px;
 }
 .main .title a {
   width: 127px;
@@ -111,6 +116,8 @@ body {
   white-space: nowrap;
   text-overflow: ellipsis;
   width: 1120px;
+  font-weight: bold;
+  font-size: 18px;
 }
 .main .content ul li .right .center {
   color: #999999;
@@ -183,6 +190,7 @@ body {
 }
 .tips .top p {
   font-weight: bold;
+  font-size: 24px;
 }
 .tips .bottom {
   display: flex;
@@ -193,6 +201,7 @@ body {
   background-color: white;
   border-top: 1px solid #EEEEEE;
   border-radius: 0 0 10px 10px;
+  font-size: 20px;
   cursor: pointer;
 }
 .tips .bottom button:nth-child(1) {

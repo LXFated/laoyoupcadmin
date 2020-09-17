@@ -28,6 +28,7 @@ body {
   height: 100px;
   line-height: 100px;
   margin-right: 51px;
+  font-weight: bold;
   font-size: 20px;
   color: #333333;
   box-sizing: border-box;
@@ -128,6 +129,7 @@ body {
 }
 .main .content .info .single strong {
   width: 1223px;
+  line-height: 24px;
 }
 .main .content .info .single img {
   width: 406px;
@@ -214,6 +216,10 @@ body {
   background-color: #FFF2F6;
   height: 68px;
   line-height: 68px;
+  color: #EC1D5B;
+}
+.main .style03 table .top th {
+  font-weight: bold;
 }
 .main .style03 table img {
   width: 109px;
@@ -246,6 +252,11 @@ body {
 .main .style03 table td button:nth-child(1) {
   background-color: #EC1D5B;
   color: white;
+}
+.main .style03 table td button.re {
+  border: 1px solid #EC1D5B;
+  color: #EC1D5B;
+  background-color: white;
 }
 .main .style03 table td button:nth-child(2) {
   border: 1px solid #EC1D5B;
@@ -378,6 +389,7 @@ body {
 }
 .tips .top p {
   font-weight: bold;
+  font-size: 24px;
 }
 .tips .bottom {
   display: flex;
@@ -388,6 +400,7 @@ body {
   background-color: white;
   border-top: 1px solid #EEEEEE;
   border-radius: 0 0 10px 10px;
+  font-size: 20px;
   cursor: pointer;
 }
 .tips .bottom button:nth-child(1) {
@@ -435,6 +448,9 @@ body {
   align-items: center;
   margin-bottom: 20px;
 }
+.sendredpack .input-box .single strong {
+  font-weight: bold;
+}
 .sendredpack .input-box .single input {
   margin: 0;
   border: none;
@@ -461,6 +477,7 @@ body {
 }
 .sendredpack .input-box .single .right {
   display: flex;
+  justify-content: space-between;
 }
 .sendredpack .input-box .single .right p {
   height: 50px;
@@ -508,9 +525,7 @@ body {
 .reco-s .input-box .single .right {
   width: 302px;
   display: flex;
-}
-.reco-s .input-box .single .right span {
-  margin-right: 40px;
+  justify-content: space-between;
 }
 .reco-s .input-box .single .right span:nth-child(6) {
   margin-right: 0;
@@ -583,4 +598,36 @@ body {
 .change-sort .button-list button:nth-child(1) {
   color: #999999;
   border-right: 1px solid #EEEEEE;
+}
+.radio {
+  display: flex;
+}
+.radio.radio01 .pre {
+  margin-right: 16px;
+}
+.radio.radio01 .after {
+  margin-right: 16px;
+}
+.radio .pre {
+  width: 14px;
+  height: 14px;
+  background: #EDEDED;
+  border-radius: 50%;
+  margin-right: 36px;
+}
+.radio .after {
+  width: 14px;
+  height: 14px;
+  background: #EDEDED;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-right: 36px;
+}
+.radio .after .after-insert {
+  width: 8px;
+  height: 8px;
+  background: #FF2063;
+  border-radius: 50%;
 }

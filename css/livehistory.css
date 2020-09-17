@@ -28,6 +28,7 @@ body {
   height: 100px;
   line-height: 100px;
   margin-right: 51px;
+  font-weight: bold;
   font-size: 20px;
   color: #333333;
   box-sizing: border-box;
@@ -90,6 +91,7 @@ body {
 }
 .main .content .info .single strong {
   width: 1223px;
+  line-height: 24px;
 }
 .main .content .info .single img {
   width: 406px;
@@ -159,6 +161,10 @@ body {
   background-color: #FFF2F6;
   height: 68px;
   line-height: 68px;
+  color: #EC1D5B;
+}
+.main .style03 table .top th {
+  font-weight: bold;
 }
 .main .style03 table img {
   width: 109px;

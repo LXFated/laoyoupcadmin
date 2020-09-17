@@ -41,6 +41,8 @@ body {
 .main .login-box p {
   font-size: 28px;
   margin-bottom: 40px;
+  color: #FF2063;
+  font-weight: bold;
 }
 .main .login-box .single {
   background-color: #F4F6FA;
@@ -71,8 +73,15 @@ body {
 }
 .main .login-box button {
   height: 69px;
-  background-color: #FF2063;
+  background-color: #DBDBDB;
   border-radius: 20px;
   color: white;
   cursor: pointer;
+}
+.main .login-box button.active {
+  background-color: #FF2063;
+}
+.check img {
+  width: 20px;
+  height: 20px;
 }

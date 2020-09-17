@@ -24,25 +24,64 @@
       <div class="input-box">
         <div class="single">
           <img src="../img/icon_account @2x.png" alt="">
-          <input type="text" placeholder="请输入登录的账号">
+          <input type="text" placeholder="请输入登录的账号" id="inputaccount" >
         </div>
         <div class="single">
           <img src="../img/icon_password@2x.png" alt="">
-          <input type="password" placeholder="请输入登录密码">
+          <input type="password" placeholder="请输入登录密码" id="inputpass">
         </div>
         <div class='auto'>
-          <input type="checkbox">
+          <div class="check" onclick="check()">
+            <img src="../img/radio_sel@2x.png" alt="" class="checked-img">
+            <img src="../img/radio_nor@2x.png" alt="" class="nochecked-img dn">
+            <input type="checkbox" name="ck1" class="dn" checked="true" />
+          </div>
           <span>下次自动登录</span>
         </div>
       </div>
-      <button onclick="login()">登录</button>
+      <button onclick="login()" disabled>登录</button>
     </div>
   </div>
 </body>
 <script>
   //登录
-  function login(){
-    window.location.href="livepre.html"
+  $('#inputaccount').bind('keyup',function(){
+    if($('#inputpass').val()!='' && $('#inputaccount').val()!=''){
+      $('button').addClass('active')
+      $('button').attr('disabled',false)
+    }else{
+      $('button').removeClass('active')
+      $('button').attr('disabled',true)
+    }
+  })
+
+  $('#inputpass').bind('keyup',function(){
+    if($('#inputpass').val()!='' && $('#inputaccount').val()!=''){
+      $('button').addClass('active')
+      $('button').attr('disabled',false)
+
+    }else{
+      $('button').removeClass('active')
+      $('button').attr('disabled',true)
+    }
+  })
+
+
+  function login() {
+    window.location.href = "livepre.html"
+  }
+
+  function check(){
+    if($('.checked-img').hasClass('dn')){
+      $('.checked-img').removeClass('dn')
+      $('.nochecked-img').addClass('dn')
+      $('.check input').attr('checked',true)
+
+    }else{
+      $('.checked-img').addClass('dn')
+      $('.nochecked-img').removeClass('dn')
+      $('.check input').attr('checked',false)
+    }
   }
 </script>
 

@@ -50,7 +50,7 @@
           <p>今天有请我们最优秀的养生专家给大家讲解如何食用灵芝孢子粉请我们最优秀的养生专请我们最优秀的养生专请我们最优秀的养生专请我们最优秀的养生专请我们最优秀的养生专</p>
         </div>
         <div class="single">
-          <span>标题：</span>
+          <span>简介：</span>
           <strong>
             今天有请我们最优秀的养生专家给大家讲解如何食用灵芝孢子粉今天有请我们最优秀的养生专家给大家讲解如何食用灵芝孢子粉今天有请我们最优秀的养生
             专家给大家讲解如何食用灵芝孢子粉今天有请我们最优秀的养生专家给大家讲解如何食用灵芝孢子粉今天有请我们最优秀的养生专家给大家讲解如何食用灵
@@ -272,10 +272,40 @@
           </td>
           <td>
             <div class="td-button">
-              <button>停止发放</button>
+              <button class="stop-re">停止发放</button>
             </div>
           </td>
         </tr>
+
+        <tr>
+          <td>
+            12
+          </td>
+          <td>2020</td>
+          <td>
+            100
+          </td>
+          <td>
+            平均分配
+          </td>
+          <td>11</td>
+          <td>5454</td>
+          <td>这是第一个红包</td>
+          <td>
+            2020-12-12
+            15:00:12
+          </td>
+          <td>
+            2020-12-12
+            15:00:12
+          </td>
+          <td>
+            <div class="td-button">
+              <button class="re">重新发放</button>
+            </div>
+          </td>
+        </tr>
+
       </table>
       <div class="list-box">
         <div class="M-box m-style" id='list03'></div>
@@ -362,6 +392,16 @@
     </div>
   </div>
 
+  <div class="tips tips04 dn">
+    <div class="top">
+      <p>确认重新发放此红包吗？</p>
+    </div>
+    <div class="bottom">
+      <button>取消</button>
+      <button>确定</button>
+    </div>
+  </div>
+
   <div class="sendredpack dn">
     <div class="title">
       发送红包
@@ -370,10 +410,23 @@
       <div class="single">
         <strong>分配方式</strong>
         <div class="right">
-          <input type="radio" name="meth" checked>
-          <span>随机分配</span>
-          <input type="radio" name="meth">
-          <span>平均分配</span>
+          <div class="radio">
+            <div class="pre dn random"></div>
+            <div class="after">
+              <div class="after-insert"></div>
+            </div>
+
+            <input type="radio" name="meth" checked class="dn">
+            <span>随机分配</span>
+          </div>
+          <div class="radio">
+            <div class="pre avar"></div>
+            <div class="after dn ">
+              <div class="after-insert"></div>
+            </div>
+            <input type="radio" name="meth" class="dn">
+            <span>平均分配</span>
+          </div>
         </div>
       </div>
       <div class="single">
@@ -397,7 +450,7 @@
           </span>
         </strong>
         <div class="right">
-          <textarea ></textarea>
+          <textarea></textarea>
         </div>
       </div>
     </div>
@@ -418,12 +471,33 @@
       <div class="single">
         <strong>产品类型</strong>
         <div class="right">
-          <input type="radio" name='reco' checked>
-          <span>商品</span>
-          <input type="radio" name='reco'>
-          <span>服务</span>
-          <input type="radio" name='reco'>
-          <span>优惠券</span>
+          <div class="radio radio01">
+            <div class="pre dn pro"></div>
+            <div class="after">
+              <div class="after-insert"></div>
+            </div>
+
+            <input type="radio" name="meth" checked class="dn">
+            <span>商品</span>
+          </div>
+          <div class="radio radio01">
+            <div class="pre  ser"></div>
+            <div class="after dn">
+              <div class="after-insert"></div>
+            </div>
+
+            <input type="radio" name="meth"  class="dn">
+            <span>服务</span>
+          </div>
+          <div class="radio radio01">
+            <div class="pre  cou"></div>
+            <div class="after dn">
+              <div class="after-insert"></div>
+            </div>
+
+            <input type="radio" name="meth"  class="dn">
+            <span>优惠券</span>
+          </div>
         </div>
       </div>
       <div class="single">
@@ -457,7 +531,7 @@
         <span>标题</span>
         <input type="text" class="title-input">
         <div class="limit">
-          <p>0</p>/<strong>100</strong>
+          <p>0</p>/<strong>60</strong>
         </div>
       </div>
       <div class="single">
@@ -472,7 +546,7 @@
             点击或将文件拖拽到这里上传
             支持扩展名：.png .jpg
           </p>
-          <img  alt="" class="cover-img">
+          <img alt="" class="cover-img">
         </div>
         <input id="fileupload" type="file" name="files[]" accept="image/*" hidden>
       </div>
@@ -568,7 +642,7 @@
     $('.mask').addClass('dn')
   })
 
-  
+
 
   $('.tips01 .bottom button').eq(1).click(function () {
     $('.tips').addClass('dn');
@@ -583,52 +657,44 @@
   })
 
   //发送红包
-  $('.redpack .button-list button').eq(0).click(function(){
+  $('.redpack .button-list button').eq(0).click(function () {
     $('.mask').removeClass('dn');
     $('.sendredpack').removeClass('dn')
   })
 
-  //随机发放或者平均分配
-  $('.sendredpack input[name="meth"]').change(function(e){
-    if($(this).index()==0){
-      $('.change-red').html('总金额')
-    }else{
-      $('.change-red').html('单个红包')
-    }
-  })
 
   //关闭红包弹窗
-  $('.sendredpack button').click(function(){
+  $('.sendredpack button').click(function () {
     $('.mask').addClass('dn');
     $('.sendredpack').addClass('dn')
   })
 
   //推荐产品
-  $('.reco .title .button-list button').eq(0).click(function(){
+  $('.reco .title .button-list button').eq(0).click(function () {
     $('.mask').removeClass('dn');
     $('.reco-s').removeClass('dn')
   })
 
   //关闭推荐产品
-  $('.reco-s button').click(function(){
+  $('.reco-s button').click(function () {
     $('.mask').addClass('dn');
     $('.reco-s').addClass('dn')
   })
 
   //排序弹窗
-  $('.table-sort').click(function(){
+  $('.table-sort').click(function () {
     $('.mask').removeClass('dn');
     $('.change-sort').removeClass('dn')
   })
 
   //关闭排序弹窗
-  $('.change-sort button').click(function(){
+  $('.change-sort button').click(function () {
     $('.mask').addClass('dn');
     $('.change-sort').addClass('dn')
   })
 
   //停止发放
-  $('.redpack .td-button button').click(function(){
+  $('.redpack .td-button .stop-re').click(function () {
     $('.tips02').removeClass('dn');
     $('.mask').removeClass('dn')
   })
@@ -637,8 +703,18 @@
     $('.mask').addClass('dn')
   })
 
+  //重新发放
+  $('.redpack .td-button .re').click(function () {
+    $('.tips04').removeClass('dn');
+    $('.mask').removeClass('dn')
+  })
+  $('.tips04 .bottom button').click(function () {
+    $('.tips04').addClass('dn');
+    $('.mask').addClass('dn')
+  })
+
   //停止推荐
-  $('.stop-reco ').click(function(){
+  $('.stop-reco ').click(function () {
     $('.tips03').removeClass('dn');
     $('.mask').removeClass('dn')
   })
@@ -648,8 +724,82 @@
   })
 
   //退出登录
-  $('.header span').click(function(){
-    window.location.href='index.html'
+  $('.header span').click(function () {
+    window.location.href = 'index.html'
+  })
+
+  //标题限制次数
+  $('.title-input').bind('keyup', function () {
+    console.log($(this).val().length);
+    if ($(this).val().length >= 60) {
+      $(this).attr('disabled', true)
+    } else {
+      $(this).attr('disabled', false)
+    }
+    $('.limit p').html($(this).val().length)
+  })
+
+  //分配红包选项
+  $('.random').click(function(){
+    $('.avar').parent('.radio').children('input').attr('checked',false)
+    $(this).parent('.radio').children('input').attr('checked',true)
+    // $(this).parent('.radio').children('input').click()
+    $(this).addClass('dn')
+    $(this).parent('.radio').children('.after').removeClass('dn')
+    $('.avar').removeClass('dn')
+    $('.avar').parent('.radio').children('.after').addClass('dn')
+    $('.change-red').html('总金额')
+  })
+
+  $('.avar').click(function(){
+    $('.random').parent('.radio').children('input').attr('checked',false)
+    $(this).parent('.radio').children('input').attr('checked',true)
+    // $(this).parent('.radio').children('input').click()
+    $(this).addClass('dn')
+    $(this).parent('.radio').children('.after').removeClass('dn')
+    $('.random').removeClass('dn')
+    $('.random').parent('.radio').children('.after').addClass('dn')
+    $('.change-red').html('单个红包')
+  })
+
+  //选择不同商品/优惠券
+  $('.pro').click(function(){
+    $('.ser').parent('.radio').children('input').attr('checked',false)
+    $('.cou').parent('.radio').children('input').attr('checked',false)
+    $(this).parent('.radio').children('input').attr('checked',true)
+    // $(this).parent('.radio').children('input').click()
+    $(this).addClass('dn')
+    $(this).parent('.radio').children('.after').removeClass('dn')
+    $('.ser').removeClass('dn')
+    $('.ser').parent('.radio').children('.after').addClass('dn')
+    $('.cou').removeClass('dn')
+    $('.cou').parent('.radio').children('.after').addClass('dn')
+  })
+
+  $('.ser').click(function(){
+    $('.pro').parent('.radio').children('input').attr('checked',false)
+    $('.cou').parent('.radio').children('input').attr('checked',false)
+    $(this).parent('.radio').children('input').attr('checked',true)
+    // $(this).parent('.radio').children('input').click()
+    $(this).addClass('dn')
+    $(this).parent('.radio').children('.after').removeClass('dn')
+    $('.pro').removeClass('dn')
+    $('.pro').parent('.radio').children('.after').addClass('dn')
+    $('.cou').removeClass('dn')
+    $('.cou').parent('.radio').children('.after').addClass('dn')
+  })
+
+  $('.cou').click(function(){
+    $('.ser').parent('.radio').children('input').attr('checked',false)
+    $('.pro').parent('.radio').children('input').attr('checked',false)
+    $(this).parent('.radio').children('input').attr('checked',true)
+    // $(this).parent('.radio').children('input').click()
+    $(this).addClass('dn')
+    $(this).parent('.radio').children('.after').removeClass('dn')
+    $('.ser').removeClass('dn')
+    $('.ser').parent('.radio').children('.after').addClass('dn')
+    $('.pro').removeClass('dn')
+    $('.pro').parent('.radio').children('.after').addClass('dn')
   })
 </script>
 
