@@ -402,6 +402,26 @@
     </div>
   </div>
 
+  <!-- <div class="tips tips05 dn" style="z-index: 101;">
+    <div class="top">
+      <p>确认取消编辑吗？</p>
+    </div>
+    <div class="bottom">
+      <button>取消</button>
+      <button>确定</button>
+    </div>
+  </div> -->
+
+  <!-- <div class="tips tips06 dn" style="z-index: 101;">
+    <div class="top">
+      <p>确认提交编辑吗？</p>
+    </div>
+    <div class="bottom">
+      <button>取消</button>
+      <button>确定</button>
+    </div>
+  </div> -->
+
   <div class="sendredpack dn">
     <div class="title">
       发送红包
@@ -486,7 +506,7 @@
               <div class="after-insert"></div>
             </div>
 
-            <input type="radio" name="meth"  class="dn">
+            <input type="radio" name="meth" class="dn">
             <span>服务</span>
           </div>
           <div class="radio radio01">
@@ -495,7 +515,7 @@
               <div class="after-insert"></div>
             </div>
 
-            <input type="radio" name="meth"  class="dn">
+            <input type="radio" name="meth" class="dn">
             <span>优惠券</span>
           </div>
         </div>
@@ -552,8 +572,8 @@
       </div>
     </div>
     <div class="button-list">
-      <button>取消</button>
-      <button>提交</button>
+      <button class="cancel">取消</button>
+      <button class="submit">提交</button>
     </div>
   </div>
   <div class="footer">
@@ -582,11 +602,7 @@
 
   })
 
-  //关闭编辑弹框
-  $('.edit-wrap .button-list button').click(function () {
-    $('.edit-wrap').addClass('dn')
-    $('.mask').addClass('dn')
-  })
+  
 
   //上传封面
   function upcover() {
@@ -728,6 +744,33 @@
     window.location.href = 'index.html'
   })
 
+  //取消/提交编辑
+  $('.edit-wrap .button-list button').click(function(){
+    $('.mask').addClass('dn')
+    $('.edit-wrap').addClass('dn')
+  })
+
+  //是否删除编辑
+  // $('.edit-wrap .cancel ').click(function () {
+  //   $('.tips05').removeClass('dn');
+  //   $('.mask').removeClass('dn')
+
+  // })
+  // $('.tips05 .bottom button').click(function () {
+  //   $('.tips05').addClass('dn');
+  //   $('.mask').addClass('dn')
+  // })
+
+  //是否提交编辑
+  // $('.edit-wrap .submit ').click(function () {
+  //   $('.tips06').removeClass('dn');
+  //   $('.mask').removeClass('dn')
+  // })
+  // $('.tips06 .bottom button').click(function () {
+  //   $('.tips06').addClass('dn');
+  //   $('.mask').addClass('dn')
+  // })
+
   //标题限制次数
   $('.title-input').bind('keyup', function () {
     console.log($(this).val().length);
@@ -740,9 +783,9 @@
   })
 
   //分配红包选项
-  $('.random').click(function(){
-    $('.avar').parent('.radio').children('input').attr('checked',false)
-    $(this).parent('.radio').children('input').attr('checked',true)
+  $('.random').click(function () {
+    $('.avar').parent('.radio').children('input').attr('checked', false)
+    $(this).parent('.radio').children('input').attr('checked', true)
     // $(this).parent('.radio').children('input').click()
     $(this).addClass('dn')
     $(this).parent('.radio').children('.after').removeClass('dn')
@@ -751,9 +794,9 @@
     $('.change-red').html('总金额')
   })
 
-  $('.avar').click(function(){
-    $('.random').parent('.radio').children('input').attr('checked',false)
-    $(this).parent('.radio').children('input').attr('checked',true)
+  $('.avar').click(function () {
+    $('.random').parent('.radio').children('input').attr('checked', false)
+    $(this).parent('.radio').children('input').attr('checked', true)
     // $(this).parent('.radio').children('input').click()
     $(this).addClass('dn')
     $(this).parent('.radio').children('.after').removeClass('dn')
@@ -763,10 +806,10 @@
   })
 
   //选择不同商品/优惠券
-  $('.pro').click(function(){
-    $('.ser').parent('.radio').children('input').attr('checked',false)
-    $('.cou').parent('.radio').children('input').attr('checked',false)
-    $(this).parent('.radio').children('input').attr('checked',true)
+  $('.pro').click(function () {
+    $('.ser').parent('.radio').children('input').attr('checked', false)
+    $('.cou').parent('.radio').children('input').attr('checked', false)
+    $(this).parent('.radio').children('input').attr('checked', true)
     // $(this).parent('.radio').children('input').click()
     $(this).addClass('dn')
     $(this).parent('.radio').children('.after').removeClass('dn')
@@ -776,10 +819,10 @@
     $('.cou').parent('.radio').children('.after').addClass('dn')
   })
 
-  $('.ser').click(function(){
-    $('.pro').parent('.radio').children('input').attr('checked',false)
-    $('.cou').parent('.radio').children('input').attr('checked',false)
-    $(this).parent('.radio').children('input').attr('checked',true)
+  $('.ser').click(function () {
+    $('.pro').parent('.radio').children('input').attr('checked', false)
+    $('.cou').parent('.radio').children('input').attr('checked', false)
+    $(this).parent('.radio').children('input').attr('checked', true)
     // $(this).parent('.radio').children('input').click()
     $(this).addClass('dn')
     $(this).parent('.radio').children('.after').removeClass('dn')
@@ -789,10 +832,10 @@
     $('.cou').parent('.radio').children('.after').addClass('dn')
   })
 
-  $('.cou').click(function(){
-    $('.ser').parent('.radio').children('input').attr('checked',false)
-    $('.pro').parent('.radio').children('input').attr('checked',false)
-    $(this).parent('.radio').children('input').attr('checked',true)
+  $('.cou').click(function () {
+    $('.ser').parent('.radio').children('input').attr('checked', false)
+    $('.pro').parent('.radio').children('input').attr('checked', false)
+    $(this).parent('.radio').children('input').attr('checked', true)
     // $(this).parent('.radio').children('input').click()
     $(this).addClass('dn')
     $(this).parent('.radio').children('.after').removeClass('dn')

@@ -71,11 +71,30 @@
       </div>
     </div>
     <div class="button-list">
-      <button>取消</button>
-      <button>提交</button>
+      <button class="cancel">取消</button>
+      <button class="submit">提交</button>
     </div>
   </div>
 
+  <div class="mask dn"></div>
+  <div class="tips tips01 dn">
+    <div class="top">
+      <p>确认删除此预告吗？</p>
+    </div>
+    <div class="bottom">
+      <button>取消</button>
+      <button>确定</button>
+    </div>
+  </div>
+  <div class="tips tips02 dn">
+    <div class="top">
+      <p>确认提交此预告吗？</p>
+    </div>
+    <div class="bottom">
+      <button>取消</button>
+      <button>确定</button>
+    </div>
+  </div>
   <div class="footer">
     <span>©2020 广州大健康网络科技有限公司 版权所有</span>
     <p>粤ICP备20014480号-1</p>
@@ -118,11 +137,6 @@
     window.location.href='index.html'
   })
 
-  //button
-  $('.button-list button').click(function(){
-    window.location.href='livepre.html'
-  })
-
   //标题限制次数
   $('.title-input').bind('keyup',function(){
     console.log($(this).val().length);
@@ -132,6 +146,28 @@
       $(this).attr('disabled',false)
     }
     $('.limit p').html($(this).val().length)
+  })
+
+  //是否删除预告
+  $('.button-list .cancel ').click(function () {
+    $('.tips01').removeClass('dn');
+    $('.mask').removeClass('dn')
+  })
+  $('.tips01 .bottom button').click(function () {
+    $('.tips01').addClass('dn');
+    $('.mask').addClass('dn')
+    window.location.href='livepre.html'
+  })
+
+    //是否提交预告
+    $('.button-list .submit ').click(function () {
+    $('.tips02').removeClass('dn');
+    $('.mask').removeClass('dn')
+  })
+  $('.tips02 .bottom button').click(function () {
+    $('.tips02').addClass('dn');
+    $('.mask').addClass('dn')
+    window.location.href='livepre.html'
   })
 </script>
 

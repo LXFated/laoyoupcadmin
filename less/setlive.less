@@ -220,3 +220,56 @@ font-weight: bold;
     background-color: #FF1F63;
   }
 }
+
+.tips {
+  width: 462px;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: white;
+  border-radius: 10px;
+  z-index: 101;
+
+  .top {
+    height: 234px;
+    text-align: center;
+    line-height: 234px;
+
+    p {
+      font-weight: bold;
+      font-size: 24px;
+    }
+  }
+
+  .bottom {
+    display: flex;
+
+    button {
+      flex: 1;
+      height: 76px;
+      background-color: white;
+      border-top: 1px solid #EEEEEE;
+      border-radius: 0 0 10px 10px;
+      font-size: 20px;
+
+      cursor: pointer;
+
+      &:nth-child(1) {
+        border-right: 1px solid #EEEEEE;
+        color: #999999;
+      }
+    }
+  }
+}
+
+.mask {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: black;
+  opacity: .4;
+  z-index: 100;
+}
