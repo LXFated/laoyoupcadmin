@@ -91,6 +91,7 @@ font-weight: bold;
     .single {
       margin-bottom: 38px;
       display: flex;
+      position: relative;
 
       .limit {
         position: absolute;
@@ -171,7 +172,7 @@ font-weight: bold;
     padding-bottom: 75px;
     padding-right: 73px;
 
-    button {
+    .button {
       width: 154px;
       height: 54px;
       border-radius: 27px;
@@ -272,4 +273,15 @@ font-weight: bold;
   background-color: black;
   opacity: .4;
   z-index: 100;
+}
+
+#fileupload{
+  position: absolute;
+  z-index: -1;
+}
+
+.tips03{
+  button{
+    border-right:none !important;
+  }
 }

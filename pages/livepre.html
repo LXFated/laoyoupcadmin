@@ -7,7 +7,9 @@
   <link rel="stylesheet" href="../css/reset.css">
   <link rel="stylesheet" href="../css/livepre.css">
   <script src="../js/jquery1.11.1.min.js"></script>
+  <script src="../js/jquery.cookie.js"></script>
   <script src="../js/url.js"></script>
+  <script src="../js/common.js"></script>
   <title>Document</title>
 </head>
 
@@ -21,8 +23,8 @@
       </div>
       <div class="right">
         <div class="nick">
-          <img src="../img/top_logo@2x.png" alt="">
-          <p>昵称昵称昵称....</p>
+          <img alt="">
+          <p></p>
         </div>
         <span>退出登录</span>
 
@@ -38,7 +40,7 @@
     </div>
     <div class="content">
       <ul>
-        <li>
+        <!-- <li>
           <div class="left">
             <img src="../img/demo.jpg" alt="">
           </div>
@@ -66,65 +68,7 @@
               </div>
             </div>
           </div>
-        </li>
-        <li>
-          <div class="left">
-            <img src="../img/demo.jpg" alt="">
-          </div>
-          <div class="right">
-            <div class="top">
-              <p>标题标题标题标题标题标题标题标题</p>
-            </div>
-            <div class="center">
-              <p>
-                直播简介直播简介直播简介直播简介直播简介直播简介直播简介直播简介直播简介直播简介直播简介直播简介直播简介直播简介直播简介直播简介直播简介直播简介直播简介直播简介直播简介直播简介直播简介直播简介直播简介直播简介直播播简介直播简介直播简介直播简介直播简介直播简介直播简介直播简介直播简介直播简介直播简介直播简介直播简介直播简介直播简介直播简介..
-              </p>
-            </div>
-            <div class="bottom">
-              <div class="info">
-                <span>
-                  开播时间：
-                </span>
-                <p>
-                  2020年12月12日 15:00
-                </p>
-              </div>
-              <div class="button-box">
-                <div class="edit">编辑</div>
-                <div class="delete">删除</div>
-              </div>
-            </div>
-          </div>
-        </li>
-        <li>
-          <div class="left">
-            <img src="../img/demo.jpg" alt="">
-          </div>
-          <div class="right">
-            <div class="top">
-              <p>标题标题标题标题标题标题标题标题</p>
-            </div>
-            <div class="center">
-              <p>
-                直播简介直播简介直播简介直播简介直播简介直播简介直播简介直播简介直播简介直播简介直播简介直播简介直播简介直播简介直播简介直播简介直播简介直播简介直播简介直播简介直播简介直播简介直播简介直播简介直播简介直播简介直播播简介直播简介直播简介直播简介直播简介直播简介直播简介直播简介直播简介直播简介直播简介直播简介直播简介直播简介直播简介直播简介..
-              </p>
-            </div>
-            <div class="bottom">
-              <div class="info">
-                <span>
-                  开播时间：
-                </span>
-                <p>
-                  2020年12月12日 15:00
-                </p>
-              </div>
-              <div class="button-box">
-                <div class="edit">编辑</div>
-                <div class="delete">删除</div>
-              </div>
-            </div>
-          </div>
-        </li>
+        </li> -->
       </ul>
     </div>
   </div>
@@ -133,7 +77,7 @@
     <img src="../img/home_icon_down@2x.png" alt="">
   </div>
   <div class="mask dn"></div>
-  <div class="tips dn">
+  <div class="tips tips01 dn">
     <div class="top">
       <p>确认删除此预告吗？</p>
     </div>
@@ -142,52 +86,102 @@
       <button>确定</button>
     </div>
   </div>
+
+  <div class="tips tips03 dn">
+    <div class="top">
+      <p></p>
+    </div>
+    <div class="bottom">
+      <button>确定</button>
+    </div>
+  </div>
+
   <div class="footer">
     <span>©2020 广州大健康网络科技有限公司 版权所有</span>
     <p>粤ICP备20014480号-1</p>
   </div>
 </body>
 <script>
+  var deleteid = null;
   //获取未开播预告
-  postRequest('/api/room/page',{
-    sessionId:'11111',
-    pageNumber:1,
-    pageSize:10,
-    state:0
-  },function(res){
+  postRequest('/api/room/page', {
+    sessionId: $.cookie('sessionId'),
+    pageNumber: 1,
+    pageSize: 10,
+    state: 0
+  }, function (res) {
     console.log(res);
+    res.data.list.forEach(function (item, index) {
+      var html = '<li><div class="left"><img src="' + IMG_URL + item.image +
+        '"></div><div class="right"><div class="top"><p>' + item.title + '</p></div><div class="center"><p>' +
+        item.desc + '</p></div><div class="bottom"><div class="info"><span>开播时间：</span><p>' + item.startTime +
+        '</p></div><div class="button-box"><div class="edit" data-img="' + IMG_URL + item.image +
+        '" data-title="' + item.title + '" data-desc="' + item.desc + '" data-startTime="' + item.startTime +
+        '" data-id="' + item.id + '">编辑</div><div class="delete" data-id="' + item.id +
+        '">删除</div></div></div></div></li>'
+      $('.content ul').append(html)
+
+    })
+    $('.edit').click(function () {
+      window.location.href = 'setlive.html?img=' + $(this)[0].dataset.img + '&title=' + $(this)[0].dataset
+        .title + '&desc=' + $(this)[0].dataset.desc + '&startTime=' + $(this)[0].dataset.starttime + '&id=' + $(
+          this)[0].dataset.id
+    })
+
+    $('.delete').click(function () {
+      deleteid = $(this)[0].dataset.id
+      $('.mask').removeClass('dn')
+      $('.tips01').removeClass('dn')
+
+    })
   })
 
   //获取正在开播直播
-  postRequest('/api/room/page',{
-    sessionId:'11111',
-    pageNumber:1,
-    pageSize:10,
-    state:1
-  },function(res){
-    console.log(res);
-  })
+  // postRequest('/api/room/page', {
+  //   sessionId: '11111',
+  //   pageNumber: 1,
+  //   pageSize: 10,
+  //   state: 1
+  // }, function (res) {
+  //   console.log(res);
+  // })
 
   //删除预告
-  $('.delete').click(function(){
-    $('.mask').removeClass('dn')
-    $('.tips').removeClass('dn')
+  $('.tips01 .bottom button').eq(1).click(function () {
+    postRequest('/api/room/dels', {
+      ids: deleteid
+    }, function (res) {
+      $('.tips').addClass('dn')
+      $('.tips03').removeClass('dn')
+      if (res.code == 1) {
+
+        $('.tips03 p').html('删除成功')
+      } else {
+        $('.tips03 p').html(res.desc)
+      }
+    })
   })
 
-  //清楚弹窗
-  $('.tips .bottom button').click(function(){
+  //取消删除预告
+  $('.tips01 .bottom button').eq(0).click(function () {
     $('.mask').addClass('dn')
-    $('.tips').addClass('dn')
+    $('.tips01').addClass('dn')
   })
+
+  $('.tips03 .bottom button').click(function () {
+    window.location.reload();
+  })
+
 
   //编辑预告
-  $('.edit').click(function(){
-    window.location.href="setlive.html"
+  $('.edit').click(function () {
+    window.location.href = "setlive.html"
   })
 
-    //退出登录
-    $('.header span').click(function(){
-    window.location.href='index.html'
+  //退出登录
+  $('.header span').click(function () {
+    window.location.href = 'index.html'
   })
 </script>
+
 </html>

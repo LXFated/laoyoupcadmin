@@ -229,3 +229,6 @@ body {
 .footer span {
   margin-bottom: 27px;
 }
+.tips03 button {
+  border-right: none !important;
+}

@@ -6,7 +6,13 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" href="../css/reset.css">
   <link rel="stylesheet" href="../css/setlive.css">
+  <link rel="stylesheet" href="../css/common.css">
   <script src="../js/jquery1.11.1.min.js"></script>
+  <script src="../js/jquery.cookie.js"></script>
+  <script src="../js/jquery.validate.js"></script>
+  <script src="../js/messages_zh.js"></script>
+  <script src="../js/url.js"></script>
+  <script src="../js/common.js"></script>
   <script src="../js/jquery.ui.widget.js"></script>
   <script src="../js/jquery.iframe-transport.js"></script>
   <script src="../js/jquery.fileupload.js"></script>
@@ -24,8 +30,8 @@
       </div>
       <div class="right">
         <div class="nick">
-          <img src="../img/top_logo@2x.png" alt="">
-          <p>昵称昵称昵称....</p>
+          <img alt="">
+          <p></p>
         </div>
         <span>退出登录</span>
 
@@ -34,25 +40,25 @@
 
   </div>
 
-  <div class="main">
+  <form class="main">
     <p class="title">
       创建直播预告
     </p>
     <div class="input-box">
       <div class="single" style="position: relative;">
         <span>标题</span>
-        <input type="text" class="title-input">
+        <input type="text" class="title-input" name="titleinput">
         <div class="limit">
           <p>0</p>/<strong>60</strong>
         </div>
       </div>
       <div class="single">
         <span>简介</span>
-        <textarea></textarea>
+        <textarea name='introinput'></textarea>
       </div>
       <div class="single">
         <span>开播时间</span>
-        <input type="text" id="test1">
+        <input type="text" id="test1" name='timeinput'>
       </div>
       <div class="single">
         <span>封面</span>
@@ -62,19 +68,19 @@
             点击或将文件拖拽到这里上传
             支持扩展名：.png .jpg
           </p>
-          <img  alt="" class="cover-img">
+          <img alt="" class="cover-img">
         </div>
         <!-- <div class="cover upafter">
           <img src="" alt="">
         </div> -->
-        <input id="fileupload" type="file" name="files[]" accept="image/*" hidden>
+        <input id="fileupload" type="file" accept="image/*" name="imginput">
       </div>
     </div>
     <div class="button-list">
-      <button class="cancel">取消</button>
-      <button class="submit">提交</button>
+      <button class="cancel button">取消</button>
+      <input type='submit' class="submit button" value="提交" />
     </div>
-  </div>
+  </form>
 
   <div class="mask dn"></div>
   <div class="tips tips01 dn">
@@ -95,16 +101,41 @@
       <button>确定</button>
     </div>
   </div>
+  <div class="tips tips03 dn">
+    <div class="top">
+      <p></p>
+    </div>
+    <div class="bottom">
+      <button>确定</button>
+    </div>
+  </div>
+
+  
   <div class="footer">
     <span>©2020 广州大健康网络科技有限公司 版权所有</span>
     <p>粤ICP备20014480号-1</p>
   </div>
 </body>
 <script>
+  //从编辑页面过来
+  var img = getUrlParam('img')
+  var title = getUrlParam('title')
+  var desc = getUrlParam('desc')
+  var startTime = getUrlParam('startTime')
+  var id = getUrlParam('id')
+  $('input[name="titleinput"]').val(title)
+  $('textarea[name="introinput"]').val(desc)
+  $('input[name="timeinput"]').val(startTime)
+  $('.cover-img').attr('src', img)
+  // var isupimg = false
+  var imgfile = null;
   //显示时间选择
   laydate.render({
     elem: '#test1', //指定元素
-    type: 'datetime'
+    type: 'datetime',
+    done: function () {
+      $('.single').eq(2).children('label').css('display', 'none')
+    }
   });
 
   //上传封面
@@ -119,31 +150,36 @@
       showImgs(data)
     }
   });
+
+  $('#fileupload').change(function () {
+    $('.single').eq(3).children('label').css('display', 'none')
+  })
   //显示封面
   function showImgs(obj) {
     var file = $(obj)[0].files[0]; //获取文件信息
+    imgfile = file;
     if (file) {
       var reader = new FileReader(); //调用FileReader
       reader.readAsDataURL(file); //将文件读取为 DataURL(base64)
       reader.onload = function (evt) { //读取操作完成时触发。
         $(".cover .cover-img").attr('src', evt.target.result) //将img标签的src绑定为DataURL
-        $(".cover").css("background-color","white")
+        $(".cover").css("background-color", "white")
       };
     }
   }
 
-    //退出登录
-    $('.header span').click(function(){
-    window.location.href='index.html'
+  //退出登录
+  $('.header span').click(function () {
+    window.location.href = 'index.html'
   })
 
   //标题限制次数
-  $('.title-input').bind('keyup',function(){
+  $('.title-input').bind('keyup', function () {
     console.log($(this).val().length);
-    if($(this).val().length>=60){
-      $(this).attr('disabled',true)
-    }else{
-      $(this).attr('disabled',false)
+    if ($(this).val().length >= 60) {
+      $(this).attr('disabled', true)
+    } else {
+      $(this).attr('disabled', false)
     }
     $('.limit p').html($(this).val().length)
   })
@@ -156,19 +192,129 @@
   $('.tips01 .bottom button').click(function () {
     $('.tips01').addClass('dn');
     $('.mask').addClass('dn')
-    window.location.href='livepre.html'
+    window.location.href = 'livepre.html'
   })
 
-    //是否提交预告
-    $('.button-list .submit ').click(function () {
-    $('.tips02').removeClass('dn');
-    $('.mask').removeClass('dn')
+  //验证并提交预告
+  $('form').validate({
+    rules: {
+      titleinput: 'required',
+      introinput: 'required',
+      timeinput: 'required',
+      imginput: {
+        isupimg: true
+      }
+    },
+    submitHandler: function () {
+      $('.tips02').removeClass('dn');
+      $('.mask').removeClass('dn')
+    }
   })
-  $('.tips02 .bottom button').click(function () {
+
+  $('.tips02 .bottom button').eq(1).click(function () {
     $('.tips02').addClass('dn');
+    // postRequest('/api/room/save',{
+    //   sessionId:$.cookie('sessionId'),
+    //   title:$('input[name="titleinput"]').val(),
+    //   desc:$('textarea[name="introinput"]').val(),
+    //   image:imgfile,
+    //   state:0,
+    //   startTime:$('input[name="timeinput"]').val()
+    // },function(res){
+    //   console.log(res);
+    // })
+    if (img) {
+      if (imgfile) {
+        var formdata = new FormData();
+        formdata.append('sessionId', $.cookie('sessionId'))
+        formdata.append('title', $('input[name="titleinput"]').val())
+        formdata.append('desc', $('textarea[name="introinput"]').val())
+        formdata.append('image', imgfile)
+        formdata.append('startTime', $('input[name="timeinput"]').val())
+        formdata.append('id', id)
+        $.ajax({
+          url: BASE_URL + '/api/room/update',
+          type: 'post',
+          dataType: 'json',
+          data: formdata,
+          contentType: false,
+          processData: false,
+          success: function (res) {
+            console.log(res);
+            $('.tips03').removeClass('dn')
+
+            if (res.code == 1) {
+              $('.tips03 p').html('提交成功')
+            } else {
+              $('.tips03 p').html('提交失败')
+            }
+          }
+        })
+      }else{
+        var formdata = new FormData();
+        formdata.append('sessionId', $.cookie('sessionId'))
+        formdata.append('title', $('input[name="titleinput"]').val())
+        formdata.append('desc', $('textarea[name="introinput"]').val())
+        formdata.append('startTime', $('input[name="timeinput"]').val())
+        formdata.append('id', id)
+        $.ajax({
+          url: BASE_URL + '/api/room/update',
+          type: 'post',
+          dataType: 'json',
+          data: formdata,
+          contentType: false,
+          processData: false,
+          success: function (res) {
+            console.log(res);
+            $('.tips03').removeClass('dn')
+
+            if (res.code == 1) {
+              $('.tips03 p').html('提交成功')
+            } else {
+              $('.tips03 p').html('提交失败')
+            }
+          }
+        })
+      }
+    } else {
+      var formdata = new FormData();
+      formdata.append('sessionId', $.cookie('sessionId'))
+      formdata.append('title', $('input[name="titleinput"]').val())
+      formdata.append('desc', $('textarea[name="introinput"]').val())
+      formdata.append('image', imgfile)
+      formdata.append('state', 0)
+      formdata.append('startTime', $('input[name="timeinput"]').val())
+      $.ajax({
+        url: BASE_URL + '/api/room/save',
+        type: 'post',
+        dataType: 'json',
+        data: formdata,
+        contentType: false,
+        processData: false,
+        success: function (res) {
+          console.log(res);
+          $('.tips03').removeClass('dn')
+
+          if (res.code == 1) {
+            $('.tips03 p').html('提交成功')
+          } else {
+            $('.tips03 p').html('提交失败')
+          }
+        }
+      })
+    }
+
+  })
+
+  $('.tips02 .bottom button').eq(0).click(function () {
     $('.mask').addClass('dn')
-    window.location.href='livepre.html'
+    $('.tips02').addClass('dn')
+  })
+
+  $('.tips03 .bottom button').click(function () {
+    window.location.reload();
   })
 </script>
+<script src="../js/additional-methods.js"></script>
 
 </html>

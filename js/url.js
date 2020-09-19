@@ -1,7 +1,7 @@
 //依赖jq
 
 
-var IMG_URL = '';
+var IMG_URL = 'https://laoyouyangsheng.oss-cn-shenzhen.aliyuncs.com';
 var BASE_URL = 'http://yyh.vipgz1.idcfengye.com/lyys';
 var HTTP_URL = '';
 var WEBSITE_NAME = "";

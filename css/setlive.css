@@ -73,6 +73,7 @@ body {
 .main .input-box .single {
   margin-bottom: 38px;
   display: flex;
+  position: relative;
 }
 .main .input-box .single .limit {
   position: absolute;
@@ -131,17 +132,17 @@ body {
   padding-bottom: 75px;
   padding-right: 73px;
 }
-.main .button-list button {
+.main .button-list .button {
   width: 154px;
   height: 54px;
   border-radius: 27px;
   margin-left: 26px;
   cursor: pointer;
 }
-.main .button-list button:nth-child(1) {
+.main .button-list .button:nth-child(1) {
   border: 1px solid #999999;
 }
-.main .button-list button:nth-child(2) {
+.main .button-list .button:nth-child(2) {
   color: white;
   background-color: #FF1F63;
 }
@@ -211,4 +212,11 @@ body {
   background-color: black;
   opacity: 0.4;
   z-index: 100;
+}
+#fileupload {
+  position: absolute;
+  z-index: -1;
+}
+.tips03 button {
+  border-right: none !important;
 }
