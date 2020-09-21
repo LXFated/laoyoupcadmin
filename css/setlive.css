@@ -138,6 +138,8 @@ body {
   border-radius: 27px;
   margin-left: 26px;
   cursor: pointer;
+  line-height: 54px;
+  text-align: center;
 }
 .main .button-list .button:nth-child(1) {
   border: 1px solid #999999;
@@ -145,6 +147,11 @@ body {
 .main .button-list .button:nth-child(2) {
   color: white;
   background-color: #FF1F63;
+}
+.main .button-list .buttons {
+  color: white;
+  background-color: #FF1F63;
+  border: none !important;
 }
 .footer {
   height: 160px;
@@ -219,4 +226,36 @@ body {
 }
 .tips03 button {
   border-right: none !important;
+}
+.radio {
+  display: flex;
+}
+.radio.radio01 .pre {
+  margin-right: 16px;
+}
+.radio.radio01 .after {
+  margin-right: 16px;
+}
+.radio .pre {
+  width: 14px;
+  height: 14px;
+  background: #EDEDED;
+  border-radius: 50%;
+  margin-right: 36px;
+}
+.radio .after {
+  width: 14px;
+  height: 14px;
+  background: #EDEDED;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-right: 36px;
+}
+.radio .after .after-insert {
+  width: 8px;
+  height: 8px;
+  background: #FF2063;
+  border-radius: 50%;
 }

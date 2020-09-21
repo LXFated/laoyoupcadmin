@@ -5,12 +5,18 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" href="../css/reset.css">
+  <link rel="stylesheet" href="../css/common.css">
   <link rel="stylesheet" href="../css/setlive.css">
   <script src="../js/jquery1.11.1.min.js"></script>
+  <script src="../js/jquery.validate.js"></script>
+  <script src="../js/jquery.cookie.js"></script>
+  <script src="../js/messages_zh.js"></script>
+  <script src="../js/additional-methods.js"></script>
   <script src="../js/jquery.ui.widget.js"></script>
   <script src="../js/jquery.iframe-transport.js"></script>
   <script src="../js/jquery.fileupload.js"></script>
   <script src="../js/layDate-v5.0.9/laydate/laydate.js"></script>
+  <script src="../js/url.js"></script>
   <title>Document</title>
 </head>
 
@@ -34,28 +40,45 @@
 
   </div>
 
-  <div class="main">
+  <form class="main">
     <p class="title">
       创建直播
     </p>
     <div class="input-box">
       <div class="single" style="position: relative;">
         <span>标题</span>
-        <input type="text" class="title-input">
+        <input type="text" class="title-input" name="titleinput">
         <div class="limit">
           <p>0</p>/<strong>100</strong>
         </div>
       </div>
       <div class="single">
         <span>简介</span>
-        <textarea></textarea>
+        <textarea name="introinput"></textarea>
       </div>
       <div class="single style06">
         <span>直播类型</span>
-        <input type="radio" name="livetype">
+        <!-- <input type="radio" name="livetype">
         <strong>竖屏直播</strong>
         <input type="radio" name="livetype">
-        <strong>横屏直播</strong>
+        <strong>横屏直播</strong> -->
+        <div class="radio">
+          <div class="pre dn random"></div>
+          <div class="after">
+            <div class="after-insert"></div>
+          </div>
+
+          <input type="radio" name="livetype" checked class="dn" value="0">
+          <span>竖屏直播</span>
+        </div>
+        <div class="radio">
+          <div class="pre avar"></div>
+          <div class="after dn ">
+            <div class="after-insert"></div>
+          </div>
+          <input type="radio" name="livetype" class="dn" value="1">
+          <span>横屏直播</span>
+        </div>
       </div>
       <div class="single">
         <span>封面</span>
@@ -65,23 +88,41 @@
             点击或将文件拖拽到这里上传
             支持扩展名：.png .jpg
           </p>
-          <img  alt="" class="cover-img">
+          <img alt="" class="cover-img">
         </div>
-        <input id="fileupload" type="file" name="files[]" accept="image/*" hidden />
+        <input id="fileupload" type="file" name="imginput" accept="image/*" />
 
       </div>
     </div>
     <div class="button-list style06">
-      <button style="cursor: pointer;">开始直播</button>
+      <input type="submit" value="开始直播" class="button buttons">
+    </div>
+  </form>
+  <div class="tips tips03 dn">
+    <div class="top">
+      <p></p>
+    </div>
+    <div class="bottom">
+      <button>确定</button>
     </div>
   </div>
-
+  <div class="tips tips04 dn">
+    <div class="top">
+      <p></p>
+    </div>
+    <div class="bottom">
+      <button>确定</button>
+    </div>
+  </div>
   <div class="footer">
     <span>©2020 广州大健康网络科技有限公司 版权所有</span>
     <p>粤ICP备20014480号-1</p>
   </div>
+  <div class="mask dn"></div>
+  <img src="../img/timg.gif" alt="" class="loding dn">
 </body>
 <script>
+  var imgfile = null;
   laydate.render({
     elem: '#test1', //指定元素
     type: 'datetime'
@@ -102,6 +143,7 @@
   //显示封面
   function showImgs(obj) {
     var file = $(obj)[0].files[0]; //获取文件信息
+    imgfile = file;
     if (file) {
       var reader = new FileReader(); //调用FileReader
       reader.readAsDataURL(file); //将文件读取为 DataURL(base64)
@@ -112,14 +154,85 @@
     }
   }
 
-  //开始直播
-  $('button').click(function(){
-    window.location.href='livemanage.html'
+
+  //退出登录
+  $('.header span').click(function () {
+    window.location.href = 'index.html'
   })
 
-    //退出登录
-    $('.header span').click(function(){
-    window.location.href='index.html'
+  //屏幕选项
+  $('.random').click(function () {
+    $('.avar').parent('.radio').children('input').attr('checked', false)
+    $(this).parent('.radio').children('input').attr('checked', true)
+    // $(this).parent('.radio').children('input').click()
+    $(this).addClass('dn')
+    $(this).parent('.radio').children('.after').removeClass('dn')
+    $('.avar').removeClass('dn')
+    $('.avar').parent('.radio').children('.after').addClass('dn')
+  })
+
+  $('.avar').click(function () {
+    $('.random').parent('.radio').children('input').attr('checked', false)
+    $(this).parent('.radio').children('input').attr('checked', true)
+    // $(this).parent('.radio').children('input').click()
+    $(this).addClass('dn')
+    $(this).parent('.radio').children('.after').removeClass('dn')
+    $('.random').removeClass('dn')
+    $('.random').parent('.radio').children('.after').addClass('dn')
+  })
+
+  //上传并且验证
+  $('form').validate({
+    rules: {
+      titleinput: 'required',
+      introinput: 'required',
+      imginput: {
+        isupimg: true
+      }
+    },
+    submitHandler: function () {
+      let date = new Date();
+
+      $('.loding').removeClass('dn')
+      console.log($('input[name="livetype"]:checked')[0].value);
+      var formdata = new FormData();
+      formdata.append('sessionId', $.cookie('sessionId'))
+      formdata.append('title', $('input[name="titleinput"]').val())
+      formdata.append('desc', $('textarea[name="introinput"]').val())
+      formdata.append('image', imgfile)
+      formdata.append('state', 1)
+      formdata.append('mold', $('input[name="livetype"]:checked')[0].value)
+      // formdata.append('startTime', dateFormat('YYYY-mm-dd HH:MM:SS', date))
+      $.ajax({
+        url: BASE_URL + '/api/room/save',
+        type: 'post',
+        dataType: 'json',
+        data: formdata,
+        contentType: false,
+        processData: false,
+        success: function (res) {
+          console.log(res);
+          $('.loding').addClass('dn')
+          $('.mask').removeClass('dn')
+          if (res.code == 1) {
+            $('.tips03').removeClass('dn')
+
+            $('.tips03 p').html('创建成功')
+          } else {
+            $('.tips04').removeClass('dn')
+            $('.tips04 p').html('创建失败')
+          }
+        }
+      })
+    }
+  })
+  $('.tips03 .bottom button').click(function () {
+    window.location.href = 'livemanage.html'
+  })
+
+  $('.tips04 .bottom button').click(function () {
+    $('.mask').addClass('dn')
+    $('.tips04').addClass('dn')
   })
 </script>
 

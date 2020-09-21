@@ -77,7 +77,7 @@
       </div>
     </div>
     <div class="button-list">
-      <button class="cancel button">取消</button>
+      <div class="cancel button">取消</div>
       <input type='submit' class="submit button" value="提交" />
     </div>
   </form>
@@ -110,11 +110,22 @@
     </div>
   </div>
 
+  <div class="tips tips04 dn">
+    <div class="top">
+      <p></p>
+    </div>
+    <div class="bottom">
+      <button>确定</button>
+    </div>
+  </div>
+
   
   <div class="footer">
     <span>©2020 广州大健康网络科技有限公司 版权所有</span>
     <p>粤ICP备20014480号-1</p>
   </div>
+
+  <img src="../img/timg.gif" alt="" class="loding dn">
 </body>
 <script>
   //从编辑页面过来
@@ -189,9 +200,11 @@
     $('.tips01').removeClass('dn');
     $('.mask').removeClass('dn')
   })
-  $('.tips01 .bottom button').click(function () {
+  $('.tips01 .bottom button').eq(0).click(function () {
     $('.tips01').addClass('dn');
     $('.mask').addClass('dn')
+  })
+  $('.tips01 .bottom button').eq(1).click(function () {
     window.location.href = 'livepre.html'
   })
 
@@ -225,6 +238,7 @@
     // })
     if (img) {
       if (imgfile) {
+        $('.loding').removeClass('dn')
         var formdata = new FormData();
         formdata.append('sessionId', $.cookie('sessionId'))
         formdata.append('title', $('input[name="titleinput"]').val())
@@ -242,7 +256,7 @@
           success: function (res) {
             console.log(res);
             $('.tips03').removeClass('dn')
-
+            $('.loding').addClass('dn')
             if (res.code == 1) {
               $('.tips03 p').html('提交成功')
             } else {
@@ -251,6 +265,7 @@
           }
         })
       }else{
+        $('.loding').removeClass('dn')
         var formdata = new FormData();
         formdata.append('sessionId', $.cookie('sessionId'))
         formdata.append('title', $('input[name="titleinput"]').val())
@@ -267,7 +282,7 @@
           success: function (res) {
             console.log(res);
             $('.tips03').removeClass('dn')
-
+            $('.loding').addClass('dn')
             if (res.code == 1) {
               $('.tips03 p').html('提交成功')
             } else {
@@ -277,6 +292,7 @@
         })
       }
     } else {
+      $('.loding').removeClass('dn')
       var formdata = new FormData();
       formdata.append('sessionId', $.cookie('sessionId'))
       formdata.append('title', $('input[name="titleinput"]').val())
@@ -294,11 +310,11 @@
         success: function (res) {
           console.log(res);
           $('.tips03').removeClass('dn')
-
+          $('.loding').addClass('dn')
           if (res.code == 1) {
             $('.tips03 p').html('提交成功')
           } else {
-            $('.tips03 p').html('提交失败')
+            $('.tips04 p').html('提交失败')
           }
         }
       })
@@ -312,7 +328,12 @@
   })
 
   $('.tips03 .bottom button').click(function () {
-    window.location.reload();
+    window.location.href='livepre.html'
+  })
+
+  $('.tips04 .bottom button').click(function () {
+    $('.mask').addClass('dn')
+    $('.tips04').addClass('dn')
   })
 </script>
 <script src="../js/additional-methods.js"></script>

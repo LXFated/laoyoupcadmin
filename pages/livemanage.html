@@ -7,11 +7,15 @@
   <link rel="stylesheet" href="../css/reset.css">
   <link rel="stylesheet" href="../css/livemanage.css">
   <link rel="stylesheet" href="../css/pagination.css">
+  <link rel="stylesheet" href="../css/common.css">
   <script src="../js/jquery1.11.1.min.js"></script>
+  <script src="../js/jquery.cookie.js"></script>
   <script src="../js/jquery.pagination.js"></script>
   <script src="../js/jquery.ui.widget.js"></script>
   <script src="../js/jquery.iframe-transport.js"></script>
   <script src="../js/jquery.fileupload.js"></script>
+  <script src="../js/url.js"></script>
+  <script src="../js/clipboard.min.js"></script>
   <title>Document</title>
 </head>
 
@@ -36,7 +40,7 @@
   </div>
 
   <div class="main">
-    <div class="content islive">
+    <div class="content islive dn">
       <div class="title">
         <p>正在直播</p>
         <div class="button-list">
@@ -63,13 +67,13 @@
         </div>
         <div class="single01">
           <span style="width: auto;">服务器（obs推流地址）：</span>
-          <p>https://www.zhongugo.congh/sdf/ssdfsdf/df4545//326</p>
-          <button>复制</button>
+          <p class="addp"></p>
+          <button class="copy01" data-clipboard-target=".addp">复制</button>
         </div>
         <div class="single01">
           <span>串流密钥（obs推流名称）：</span>
-          <p>//sd/df//wef/f//ds/e//fsf</p>
-          <button>复制</button>
+          <p class="namep"></p>
+          <button class="copy02" data-clipboard-target=".namep">复制</button>
         </div>
       </div>
     </div>
@@ -549,14 +553,14 @@
     <div class="input-box">
       <div class="single" style="position: relative;">
         <span>标题</span>
-        <input type="text" class="title-input">
+        <input type="text" class="title-input" name='titleinput'>
         <div class="limit">
           <p>0</p>/<strong>60</strong>
         </div>
       </div>
       <div class="single">
         <span>简介</span>
-        <textarea></textarea>
+        <textarea name='introinput'></textarea>
       </div>
       <div class="single">
         <span>封面</span>
@@ -568,20 +572,23 @@
           </p>
           <img alt="" class="cover-img">
         </div>
-        <input id="fileupload" type="file" name="files[]" accept="image/*" hidden>
+        <input id="fileupload" type="file" name="imginput" accept="image/*" hidden>
       </div>
     </div>
     <div class="button-list">
-      <button class="cancel">取消</button>
-      <button class="submit">提交</button>
+      <div class="cancel button">取消</div>
+      <button class="button">提交</button>
     </div>
   </div>
+  <img src="../img/timg.gif" alt="" class="loding dn">
   <div class="footer">
     <span>©2020 广州大健康网络科技有限公司 版权所有</span>
     <p>粤ICP备20014480号-1</p>
   </div>
 </body>
 <script>
+  var liveid = 0;
+  var imgfile = null;
   $('#list01').pagination({
     mode: 'fixed'
   })
@@ -602,8 +609,6 @@
 
   })
 
-  
-
   //上传封面
   function upcover() {
     $('#fileupload').click()
@@ -619,6 +624,7 @@
   //显示封面
   function showImgs(obj) {
     var file = $(obj)[0].files[0]; //获取文件信息
+    imgfile = file;
     if (file) {
       var reader = new FileReader(); //调用FileReader
       reader.readAsDataURL(file); //将文件读取为 DataURL(base64)
@@ -661,10 +667,19 @@
 
 
   $('.tips01 .bottom button').eq(1).click(function () {
-    $('.tips').addClass('dn');
+    $('.tips01').addClass('dn');
     $('.mask').addClass('dn')
-    $('.nolive').removeClass('dn');
-    $('.islive').addClass('dn')
+    postRequest('/api/room/down', {
+      id: liveid
+    }, function (res) {
+      console.log(res);
+      if (res.code == 1) {
+        $('.nolive').removeClass('dn');
+        $('.islive').addClass('dn')
+      }
+
+    })
+
   })
 
   //创建直播
@@ -745,9 +760,46 @@
   })
 
   //取消/提交编辑
-  $('.edit-wrap .button-list button').click(function(){
+  // $('.edit-wrap .button-list button').click(function () {
+  //   $('.mask').addClass('dn')
+  //   $('.edit-wrap').addClass('dn')
+  // })
+  //取消编辑
+  $('.edit-wrap .button-list .cancel').click(function () {
     $('.mask').addClass('dn')
     $('.edit-wrap').addClass('dn')
+  })
+
+  //提交编辑
+  $('.edit-wrap .button-list button').click(function () {
+    // $('.mask').addClass('dn')
+    // $('.edit-wrap').addClass('dn')
+    $('.loding').removeClass('dn')
+    var formdata = new FormData();
+    formdata.append('sessionId', $.cookie('sessionId'))
+    formdata.append('title', $('input[name="titleinput"]').val())
+    formdata.append('desc', $('textarea[name="introinput"]').val())
+    formdata.append('id', liveid)
+    if(imgfile){
+      formdata.append('image', imgfile)
+    }
+    $.ajax({
+          url: BASE_URL + '/api/room/update',
+          type: 'post',
+          dataType: 'json',
+          data: formdata,
+          contentType: false,
+          processData: false,
+          success: function (res) {
+            console.log(res);
+            if (res.code == 1) {
+              window.location.reload()
+            } else {
+              alert('提交失败')
+            }
+          }
+        })
+
   })
 
   //是否删除编辑
@@ -843,6 +895,43 @@
     $('.ser').parent('.radio').children('.after').addClass('dn')
     $('.pro').removeClass('dn')
     $('.pro').parent('.radio').children('.after').addClass('dn')
+  })
+
+  //获取正在直播
+  postRequest('/api/room/getNow', {
+    sessionId: $.cookie('sessionId')
+  }, function (res) {
+    console.log(res);
+    if (res.data != null) {
+      $('.islive').removeClass('dn')
+      $('.islive .info .single').eq(0).children('p').html(res.data.title)
+      $('.islive .info .single').eq(1).children('strong').html(res.data.desc)
+      $('.islive .info .single').eq(2).children('img').attr('src', IMG_URL + res.data.image)
+      $('.islive .info .single01').eq(0).children('p').html(res.data.pushUrl)
+      $('.islive .info .single01').eq(1).children('p').html(res.data.streamName)
+
+      $('.edit-wrap .single').eq(0).children('input').val(res.data.title)
+      $('.edit-wrap .single').eq(1).children('textarea').val(res.data.desc)
+      $('.edit-wrap .cover-img').attr('src', IMG_URL + res.data.image)
+      liveid = res.data.id;
+
+
+    } else {
+      $('.nolive').removeClass('dn')
+    }
+  })
+  //复制地址
+  var copy01=new ClipboardJS('.copy01')
+  var copy02=new ClipboardJS('.copy02')
+  
+
+  //获取正在推荐产品
+  postRequest('/api/zb/goods/recommendedProduct',{
+    pageNumber:1,
+    pageSize:6,
+    roomId:liveid
+  },function(res){
+    console.log(res);
   })
 </script>
 

@@ -36,7 +36,7 @@ body {
       height: 100px;
       line-height: 100px;
       margin-right: 51px;
-font-weight: bold;
+      font-weight: bold;
       font-size: 20px;
       color: #333333;
       box-sizing: border-box;
@@ -51,7 +51,8 @@ font-weight: bold;
   .right {
     display: flex;
     align-items: center;
-    span{
+
+    span {
       cursor: pointer;
       color: #999999;
     }
@@ -178,6 +179,8 @@ font-weight: bold;
       border-radius: 27px;
       margin-left: 26px;
       cursor: pointer;
+      line-height: 54px;
+      text-align: center;
 
       &:nth-child(1) {
 
@@ -189,6 +192,12 @@ font-weight: bold;
         background-color: #FF1F63;
 
       }
+    }
+
+    .buttons {
+      color: white;
+      background-color: #FF1F63;
+      border: none !important;
     }
   }
 }
@@ -253,6 +262,7 @@ font-weight: bold;
       border-top: 1px solid #EEEEEE;
       border-radius: 0 0 10px 10px;
       font-size: 20px;
+      
 
       cursor: pointer;
 
@@ -275,13 +285,58 @@ font-weight: bold;
   z-index: 100;
 }
 
-#fileupload{
+#fileupload {
   position: absolute;
   z-index: -1;
 }
 
-.tips03{
-  button{
-    border-right:none !important;
+.tips03 {
+  button {
+    border-right: none !important;
   }
+}
+
+.radio {
+  display: flex;
+  &.radio01{
+    .pre{
+      margin-right: 16px;
+    }
+    .after{
+      margin-right: 16px;
+    }
+  }
+
+  .pre {
+    width: 14px;
+    height: 14px;
+
+    background: #EDEDED;
+
+    border-radius: 50%;
+    margin-right: 36px;
+  }
+
+  .after {
+    width: 14px;
+    height: 14px;
+    background: #EDEDED;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-right: 36px;
+
+
+
+    .after-insert{
+      width: 8px;
+      height: 8px;
+      background: #FF2063;
+      border-radius: 50%;
+
+    }
+
+  }
+
 }

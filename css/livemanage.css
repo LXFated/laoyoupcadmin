@@ -105,6 +105,8 @@ body {
 .main .content .info .single01 p {
   margin-right: 54px;
   color: #019FE8;
+  max-width: 600px;
+  word-break: break-all;
 }
 .main .content .info .single01 button {
   width: 70px;
@@ -112,6 +114,7 @@ body {
   border-radius: 15px;
   border: 1px solid #BBBBBB;
   background-color: white;
+  cursor: pointer;
 }
 .main .content .info .single {
   display: flex;
@@ -351,17 +354,19 @@ body {
   padding-bottom: 75px;
   padding-right: 73px;
 }
-.edit-wrap .button-list button {
+.edit-wrap .button-list .button {
   width: 154px;
   height: 54px;
   border-radius: 27px;
   margin-left: 26px;
+  text-align: center;
+  line-height: 54px;
   cursor: pointer;
 }
-.edit-wrap .button-list button:nth-child(1) {
+.edit-wrap .button-list .button:nth-child(1) {
   border: 1px solid #999999;
 }
-.edit-wrap .button-list button:nth-child(2) {
+.edit-wrap .button-list .button:nth-child(2) {
   color: white;
   background-color: #FF1F63;
 }
