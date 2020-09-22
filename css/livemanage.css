@@ -553,15 +553,17 @@ body {
 .reco-s .button-list {
   display: flex;
 }
-.reco-s .button-list button {
+.reco-s .button-list .button {
   height: 76px;
   border-top: 1px solid #EEEEEE;
   flex: 1;
   background-color: white;
   cursor: pointer;
   border-radius: 0 0 10px 10px;
+  text-align: center;
+  line-height: 76px;
 }
-.reco-s .button-list button:nth-child(1) {
+.reco-s .button-list .button:nth-child(1) {
   color: #999999;
   border-right: 1px solid #EEEEEE;
 }
@@ -652,4 +654,7 @@ body {
 }
 .no-result p {
   color: #8C8C8C;
+}
+label {
+  left: 0 !important;
 }
