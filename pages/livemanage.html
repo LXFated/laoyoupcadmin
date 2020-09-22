@@ -111,7 +111,7 @@
             <th>操作</th>
           </tr>
 
-          <tr>
+          <tr class="dn">
 
             <td>商品</td>
             <td>
@@ -145,7 +145,7 @@
             </td>
           </tr>
 
-          <tr>
+          <tr class="dn">
 
             <td>商品</td>
             <td>
@@ -179,10 +179,15 @@
             </td>
           </tr>
         </table>
-        <div class="list-box">
+        <div class="list-box dn">
           <div class="M-box m-style" id='list01'></div>
           <span class="test03">共100条</span>
         </div>
+
+      </div>
+      <div class="no-result product-no dn">
+        <img src="../img/history_icon_product@2x.png" alt="">
+        <p>暂无推荐产品</p>
       </div>
       <div class="coupon dn">
         <table>
@@ -198,7 +203,7 @@
             <th>操作</th>
 
           </tr>
-          <tr>
+          <tr class="dn">
             <td>商品</td>
             <td>12</td>
             <td>124</td>
@@ -223,11 +228,16 @@
 
           </tr>
         </table>
-        <div class="list-box">
+        <div class="list-box dn">
           <div class="M-box m-style" id='list02'></div>
           <span class="test03">共100条</span>
         </div>
       </div>
+      <div class="no-result coupon-no dn">
+        <img src="../img/history_icon_yhq@2x.png" alt="">
+        <p>暂无推荐优惠券</p>
+      </div>
+
     </div>
 
     <div class="redpack style03">
@@ -252,7 +262,7 @@
           <th>操作</th>
         </tr>
 
-        <tr>
+        <tr class="dn">
           <td>
             12
           </td>
@@ -281,7 +291,7 @@
           </td>
         </tr>
 
-        <tr>
+        <tr class="dn">
           <td>
             12
           </td>
@@ -311,11 +321,16 @@
         </tr>
 
       </table>
-      <div class="list-box">
+      <div class="list-box dn">
         <div class="M-box m-style" id='list03'></div>
         <span class="test03">共100条</span>
       </div>
+      <div class="no-result redpack-no dn">
+        <img src="../img/history_icon_hongbao@2x.png" alt="">
+        <p>暂无红包</p>
+      </div>
     </div>
+    
 
     <div class="history style03">
       <div class="title">
@@ -635,6 +650,18 @@
     }
   }
 
+  //获取正在推荐产品
+  postRequest('/api/zb/goods/recommendedProduct', {
+    pageNumber: 1,
+    pageSize: 6,
+    roomId: liveid
+  }, function (res) {
+    console.log(res);
+    if (res.data.list.length == 0) {
+      $('.product-no').removeClass('dn')
+    }
+  })
+
   //切换商品/优惠券
   $('.cata button').click(function () {
     $('.cata button').removeClass('active')
@@ -642,9 +669,42 @@
     if ($(this).index() == 0) {
       $('.coupon').addClass('dn')
       $('.product').removeClass('dn')
+      $('.coupon-no').addClass('dn')
+      postRequest('/api/zb/goods/recommendedProduct', {
+        pageNumber: 1,
+        pageSize: 6,
+        roomId: liveid
+      }, function (res) {
+        console.log(res);
+        if (res.data.list.length == 0) {
+          $('.product-no').removeClass('dn')
+        }
+      })
     } else {
       $('.coupon').removeClass('dn')
       $('.product').addClass('dn')
+      $('.product-no').addClass('dn')
+      postRequest('/api/zb/coupon/recommendedCoupon', {
+        pageNumber: 1,
+        pageSize: 6,
+      }, function (res) {
+        console.log(res);
+        if (res.data.list.length == 0) {
+          $('.coupon-no').removeClass('dn')
+        }
+      })
+    }
+  })
+
+  //获取正在发送红包
+  postRequest('/api/zb/red/recommendedRed',{
+    pageNumber:1,
+    pageSize:6,
+    roomId:liveid
+  },function(res){
+    console.log(res);
+    if(res.data.list.length == 0){
+      $('.redpack-no').removeClass('dn')
     }
   })
 
@@ -780,25 +840,25 @@
     formdata.append('title', $('input[name="titleinput"]').val())
     formdata.append('desc', $('textarea[name="introinput"]').val())
     formdata.append('id', liveid)
-    if(imgfile){
+    if (imgfile) {
       formdata.append('image', imgfile)
     }
     $.ajax({
-          url: BASE_URL + '/api/room/update',
-          type: 'post',
-          dataType: 'json',
-          data: formdata,
-          contentType: false,
-          processData: false,
-          success: function (res) {
-            console.log(res);
-            if (res.code == 1) {
-              window.location.reload()
-            } else {
-              alert('提交失败')
-            }
-          }
-        })
+      url: BASE_URL + '/api/room/update',
+      type: 'post',
+      dataType: 'json',
+      data: formdata,
+      contentType: false,
+      processData: false,
+      success: function (res) {
+        console.log(res);
+        if (res.code == 1) {
+          window.location.reload()
+        } else {
+          alert('提交失败')
+        }
+      }
+    })
 
   })
 
@@ -921,18 +981,8 @@
     }
   })
   //复制地址
-  var copy01=new ClipboardJS('.copy01')
-  var copy02=new ClipboardJS('.copy02')
-  
-
-  //获取正在推荐产品
-  postRequest('/api/zb/goods/recommendedProduct',{
-    pageNumber:1,
-    pageSize:6,
-    roomId:liveid
-  },function(res){
-    console.log(res);
-  })
+  var copy01 = new ClipboardJS('.copy01')
+  var copy02 = new ClipboardJS('.copy02')
 </script>
 
 </html>
