@@ -1118,7 +1118,7 @@
   // })
 
   //标题限制次数
-  $('.title-input').bind('keyup', function () {
+  $('.title-input').bind('input', function () {
     console.log($(this).val().length);
     if ($(this).val().length >= 60) {
       $(this).attr('disabled', true)
