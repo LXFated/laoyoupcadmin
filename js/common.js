@@ -7,3 +7,17 @@ $(function(){
   $('.header .right img').attr('src',$.cookie('avatar'))
   $('.header .right p').html($.cookie('nick'))
 })
+
+//退出登录
+function loginout(){
+  if($.cookie('sessionId')){
+    postRequest('/api/account/zbLoginOut',{
+      sessionId:$.cookie('sessionId')
+    },function(res){
+      if(res.code ==1){
+        $.removeCookie('sessionId')
+        window.location.href='index.html';
+      }
+    })
+  }
+}

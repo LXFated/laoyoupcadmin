@@ -33,7 +33,7 @@
           <img alt="">
           <p></p>
         </div>
-        <span>退出登录</span>
+        <span onclick="loginout()">退出登录</span>
 
       </div>
     </div>
@@ -179,10 +179,7 @@
     }
   }
 
-  //退出登录
-  $('.header span').click(function () {
-    window.location.href = 'index.html'
-  })
+
 
   //标题限制次数
   $('.title-input').bind('input', function () {

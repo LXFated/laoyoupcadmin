@@ -498,15 +498,17 @@ body {
 .sendredpack .button-list {
   display: flex;
 }
-.sendredpack .button-list button {
+.sendredpack .button-list .button {
   height: 76px;
   border-top: 1px solid #EEEEEE;
   flex: 1;
   background-color: white;
   cursor: pointer;
   border-radius: 0 0 10px 10px;
+  line-height: 76px;
+  text-align: center;
 }
-.sendredpack .button-list button:nth-child(1) {
+.sendredpack .button-list .button:nth-child(1) {
   color: #999999;
   border-right: 1px solid #EEEEEE;
 }
@@ -657,4 +659,7 @@ body {
 }
 label {
   left: 0 !important;
+}
+.sendredpack label {
+  bottom: -20px;
 }

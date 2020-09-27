@@ -618,13 +618,15 @@ body {
   .button-list {
     display: flex;
 
-    button {
+    .button {
       height: 76px;
       border-top: 1px solid #EEEEEE;
       flex: 1;
       background-color: white;
       cursor: pointer;
       border-radius: 0 0 10px 10px;
+      line-height: 76px;
+      text-align: center;
 
 
       &:nth-child(1) {
@@ -820,4 +822,8 @@ body {
 
 label{
   left:0 !important;
+}
+
+.sendredpack label{
+  bottom:-20px
 }
