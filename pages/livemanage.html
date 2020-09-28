@@ -1056,7 +1056,7 @@
       postRequest('/api/zb/goods/recommendedProduct', {
         pageNumber: 1,
         pageSize: 6,
-        roomId: 11
+        roomId: liveid
       }, function (res) {
         console.log(res);
         if (res.data.list.length == 0) {
@@ -1180,7 +1180,7 @@
           postRequest('/api/zb/goods/recommendedProduct', {
             pageNumber: 1,
             pageSize: 6,
-            roomId: 11
+            roomId: liveid
           }, function (res) {
             console.log(res);
             if (res.data.list.length == 0) {
