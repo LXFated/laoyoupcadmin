@@ -597,15 +597,17 @@ body {
 .change-sort .button-list {
   display: flex;
 }
-.change-sort .button-list button {
+.change-sort .button-list .button {
   height: 76px;
   border-top: 1px solid #EEEEEE;
   flex: 1;
   background-color: white;
   border-radius: 0 0 10px 10px;
+  line-height: 76px;
+  text-align: center;
   cursor: pointer;
 }
-.change-sort .button-list button:nth-child(1) {
+.change-sort .button-list .button:nth-child(1) {
   color: #999999;
   border-right: 1px solid #EEEEEE;
 }
