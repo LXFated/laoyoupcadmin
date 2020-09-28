@@ -25,7 +25,7 @@
       <div class="input-box">
         <div class="single">
           <img src="../img/icon_account @2x.png" alt="">
-          <input type="text" placeholder="请输入登录的账号" id="inputaccount" >
+          <input type="text" placeholder="请输入登录的账号" id="inputaccount">
         </div>
         <div class="single">
           <img src="../img/icon_password@2x.png" alt="">
@@ -45,67 +45,83 @@
   </div>
 </body>
 <script>
+  //自动登录
+  if ($.cookie('sessionId')) {
+    window.location.href = 'livepre.html'
+  }
   //登录
-  $('#inputaccount').bind('input',function(){
-    if($('#inputpass').val()!='' && $('#inputaccount').val()!=''){
+  $('#inputaccount').bind('input', function () {
+    if ($('#inputpass').val() != '' && $('#inputaccount').val() != '') {
       $('button').addClass('active')
-      $('button').attr('disabled',false)
-    }else{
+      $('button').attr('disabled', false)
+    } else {
       $('button').removeClass('active')
-      $('button').attr('disabled',true)
+      $('button').attr('disabled', true)
     }
   })
 
-  $('#inputpass').bind('input',function(){
-    if($('#inputpass').val()!='' && $('#inputaccount').val()!=''){
+  $('#inputpass').bind('input', function () {
+    if ($('#inputpass').val() != '' && $('#inputaccount').val() != '') {
       $('button').addClass('active')
-      $('button').attr('disabled',false)
+      $('button').attr('disabled', false)
 
-    }else{
+    } else {
       $('button').removeClass('active')
-      $('button').attr('disabled',true)
+      $('button').attr('disabled', true)
     }
   })
 
 
   function login() {
-    var isauto=true;
-    if($('.auto input').attr('checked') == undefined){
-      isauto=false;
+    var isauto = true;
+    if ($('.auto input').attr('checked') == undefined) {
+      isauto = false;
     }
-    postRequest('/api/account/loginZBByMobile',{
-      mobile:$('#inputaccount').val(),
-      password:$('#inputpass').val(),
-      keepLogin:isauto
-    },function(res){
-      if(res.code ==1){
-        if(isauto){
-          $.cookie('sessionId', res.data.sessionId, { expires: 30 });
-        }else{
-          $.cookie('sessionId',res.data.sessionId)
+    postRequest('/api/account/loginZBByMobile', {
+      mobile: $('#inputaccount').val(),
+      password: $('#inputpass').val(),
+      keepLogin: isauto
+    }, function (res) {
+      if (res.code == 1) {
+        if (isauto) {
+          $.cookie('sessionId', res.data.sessionId, {
+            expires: 30
+          });
+          $.cookie('nick', res.data.nick,{
+            expires: 30
+          })
+          $.cookie('zhuid', res.data.id,{
+            expires: 30
+          })
+          $.cookie('avatar', IMG_URL + res.data.avatar,{
+            expires: 30
+          })
+        } else {
+          $.cookie('sessionId', res.data.sessionId)
+          $.cookie('nick', res.data.nick)
+          $.cookie('zhuid', res.data.id)
+          $.cookie('avatar', IMG_URL + res.data.avatar)
         }
 
-        $.cookie('nick',res.data.nick)
-        $.cookie('zhuid',res.data.id)
-        $.cookie('avatar',IMG_URL+res.data.avatar)
 
-        window.location.href='livepre.html'
-      }else{
+
+        window.location.href = 'livepre.html'
+      } else {
         alert(res.desc)
       }
     })
   }
 
-  function check(){
-    if($('.checked-img').hasClass('dn')){
+  function check() {
+    if ($('.checked-img').hasClass('dn')) {
       $('.checked-img').removeClass('dn')
       $('.nochecked-img').addClass('dn')
-      $('.check input').attr('checked',true)
+      $('.check input').attr('checked', true)
 
-    }else{
+    } else {
       $('.checked-img').addClass('dn')
       $('.nochecked-img').removeClass('dn')
-      $('.check input').attr('checked',false)
+      $('.check input').attr('checked', false)
     }
     console.log($('.check input').attr('checked'));
 
