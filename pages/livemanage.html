@@ -943,8 +943,14 @@
       //发送新红包
       $('.sendredpack').validate({
         rules: {
-          num: 'required',
-          money: 'required'
+          num: {
+            required:true,
+            number:true
+          },
+          money:{
+            required:true,
+            number:true
+          }
         },
         submitHandler: function () {
           if ($('.sendredpack textarea').val() != '') {
@@ -958,6 +964,7 @@
               desc: $('.sendredpack textarea').val()
             }, function (res) {
               console.log(res);
+              window.location.reload()
             })
           } else {
             postRequest('/api/zb/red/create', {
@@ -969,6 +976,7 @@
               amount: $('input[name="money"]').val(),
             }, function (res) {
               console.log(res);
+              window.location.reload()
             })
           }
 
@@ -1258,7 +1266,7 @@
       postRequest('/api/zb/red/recommendedRed', {
         pageNumber: 1,
         pageSize: 6,
-        roomId: 11
+        roomId: liveid
       }, function (res) {
         console.log(res);
         if (res.data.list.length == 0) {
@@ -1291,6 +1299,58 @@
 
             }
             $('.redpack table').append(html)
+          })
+          var pageCount = res.data.totalPage
+          $('#list03').pagination({
+            pageCount: pageCount,
+            callback: function (api) {
+              var pageNumber = api.getCurrent()
+              postRequest('/api/zb/red/recommendedRed', {
+                pageNumber: pageNumber,
+                pageSize: 6,
+                roomId:liveid
+              }, function (res) {
+                $('.redpack table .content').remove();
+                if (res.code == 1) {
+                  res.data.list.forEach(function (item, index) {
+                    if (item.state == 0) {
+                      var html = '<tr class="content"><td>' + item.id + '</td><td>' + item
+                        .amount + '</td><td>' +
+                        item.num + '</td><td>' + item.mold + '</td><td>' + item.receivedCount +
+                        '</td><td>' + item
+                        .receivedMoney + '</td><td>' + item.desc + '</td><td>' + item.startTime +
+                        '</td><td>' + item
+                        .endTime +
+                        '</td><td><div class="td-button"><button class="stop-re" data-id="' + item
+                        .id +
+                        '">停止发放</button></div></td></tr>"'
+
+                    } else if (item.state == 1) {
+                      var html = '<tr class="content"><td>' + item.id + '</td><td>' + item
+                        .amount + '</td><td>' +
+                        item.num + '</td><td>' + item.mold + '</td><td>' + item.receivedCount +
+                        '</td><td>' + item
+                        .receivedMoney + '</td><td>' + item.desc + '</td><td>' + item.startTime +
+                        '</td><td>' + item
+                        .endTime +
+                        '</td><td><div class="td-button"><button class="re" data-id="' + item.id +
+                        '">重新发放</button></div></td></tr>"'
+
+                    } else {
+                      var html = '<tr class="content"><td>' + item.id + '</td><td>' + item
+                        .amount + '</td><td>' +
+                        item.num + '</td><td>' + item.mold + '</td><td>' + item.receivedCount +
+                        '</td><td>' + item
+                        .receivedMoney + '</td><td>' + item.desc + '</td><td>' + item.startTime +
+                        '</td><td>' + item
+                        .endTime + '</td><td></td></tr>"'
+
+                    }
+                    $('.redpack table').append(html)
+                  })
+                }
+              })
+            }
           })
           //停止发放红包
 

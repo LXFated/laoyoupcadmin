@@ -6,6 +6,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" href="../css/reset.css">
   <link rel="stylesheet" href="../css/index.css">
+  <link rel="stylesheet" href="../css/common.css">
   <script src="../js/jquery1.11.1.min.js"></script>
   <script src="../js/jquery.cookie.js"></script>
   <script src="../js/url.js"></script>
@@ -43,11 +44,31 @@
       <button onclick="login()" disabled>登录</button>
     </div>
   </div>
+  <img src="../img/timg.gif" alt="" class="loding dn">
 </body>
 <script>
   //自动登录
-  if ($.cookie('sessionId')) {
-    window.location.href = 'livepre.html'
+  if ($.cookie('isauto')) {
+    $('#inputaccount').val($.cookie('mobile'))
+    $('#inputpass').val($.cookie('password'))
+    postRequest('/api/account/loginZBByMobile', {
+      mobile: $.cookie('mobile'),
+      password: $.cookie('password'),
+      keepLogin: true
+    }, function (res) {
+      if (res.code == 1) {
+        $.cookie('sessionId', res.data.sessionId)
+        $.cookie('nick', res.data.nick)
+        $.cookie('zhuid', res.data.id)
+        $.cookie('avatar', IMG_URL + res.data.avatar)
+        $('.loding').removeClass('dn')
+        setTimeout(function () {
+          window.location.href = 'livepre.html'
+        }, 1500)
+      } else {
+        alert(res.desc)
+      }
+    })
   }
   //登录
   $('#inputaccount').bind('input', function () {
@@ -84,16 +105,17 @@
     }, function (res) {
       if (res.code == 1) {
         if (isauto) {
-          $.cookie('sessionId', res.data.sessionId, {
-            expires: 30
-          });
-          $.cookie('nick', res.data.nick,{
-            expires: 30
-          })
-          $.cookie('zhuid', res.data.id,{
+          $.cookie('sessionId', res.data.sessionId)
+          $.cookie('nick', res.data.nick)
+          $.cookie('zhuid', res.data.id)
+          $.cookie('avatar', IMG_URL + res.data.avatar)
+          $.cookie('isauto', true, {
             expires: 30
           })
-          $.cookie('avatar', IMG_URL + res.data.avatar,{
+          $.cookie('mobile', $('#inputaccount').val(), {
+            expires: 30
+          })
+          $.cookie('password', $('#inputpass').val(), {
             expires: 30
           })
         } else {
@@ -102,9 +124,6 @@
           $.cookie('zhuid', res.data.id)
           $.cookie('avatar', IMG_URL + res.data.avatar)
         }
-
-
-
         window.location.href = 'livepre.html'
       } else {
         alert(res.desc)

@@ -16,6 +16,12 @@ function loginout(){
     },function(res){
       if(res.code ==1){
         $.removeCookie('sessionId')
+        $.removeCookie('nick')
+        $.removeCookie('zhuid')
+        $.removeCookie('avatar')
+        $.removeCookie('isauto')
+        $.removeCookie('mobile')
+        $.removeCookie('password')
         window.location.href='index.html';
       }
     })
