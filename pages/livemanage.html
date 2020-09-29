@@ -1523,7 +1523,13 @@
       $('.nolive').removeClass('dn')
     }
   })
-
+  //刷新数据
+  $('.reco .title .button-list button').eq(1).click(function(){
+    window.location.reload()
+  })
+  $('.redpack .title .button-list button').eq(1).click(function(){
+    window.location.reload()
+  })
 
   //复制地址
   var copy01 = new ClipboardJS('.copy01')
