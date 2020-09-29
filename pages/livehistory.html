@@ -9,6 +9,8 @@
   <link rel="stylesheet" href="../css/pagination.css">
   <script src="../js/jquery1.11.1.min.js"></script>
   <script src="../js/jquery.pagination.js"></script>
+  <script src="../js/jquery.cookie.js"></script>
+  <script src="../js/url.js"></script>
   <title>Document</title>
 </head>
 
@@ -91,9 +93,9 @@
             <th>推荐后点击次数</th>
             <th>开始时间</th>
             <th>结束时间</th>
-  
+
           </tr>
-          <tr>
+          <!-- <tr>
             <td>商品</td>
             <td>
               12
@@ -117,37 +119,17 @@
               15:00:12
             </td>
   
-          </tr>
-          <tr>
-            <td>商品</td>
-            <td>
-              12
-            </td>
-            <td>宁夏特级黑枸杞...</td>
-            <td>
-              <img src="../img/demo.jpg" alt="">
-            </td>
-            <td>
-              5454
-            </td>
-            <td>2121</td>
-            <td>2121</td>
-            <td>2121</td>
-            <td>
-              2020-12-12
-              15:00:12
-            </td>
-            <td>
-              2020-12-12
-              15:00:12
-            </td>
-  
-          </tr>
+          </tr> -->
+
         </table>
-        <div class="list-box">
+        <div class="list-box dn">
           <div class="M-box m-style" id='list01'></div>
           <span class="test03">共100条</span>
         </div>
+      </div>
+      <div class="no-result product-no dn">
+        <img src="../img/history_icon_product@2x.png" alt="">
+        <p>暂无推荐产品</p>
       </div>
       <div class="coupon dn">
         <table>
@@ -159,9 +141,9 @@
             <th>推荐后领取数量</th>
             <th>开始时间</th>
             <th>结束时间</th>
-  
+
           </tr>
-          <tr>
+          <!-- <tr>
             <td>商品</td>
             <td>12</td>
             <td>124</td>
@@ -175,16 +157,19 @@
               2020-12-12
               15:00:12
             </td>
-  
-          </tr>
+
+          </tr> -->
         </table>
-        <div class="list-box">
+        <div class="list-box dn">
           <div class="M-box m-style" id='list02'></div>
           <span class="test03">共100条</span>
         </div>
       </div>
-    
-     
+      <div class="no-result coupon-no dn">
+        <img src="../img/history_icon_yhq@2x.png" alt="">
+        <p>暂无推荐优惠券</p>
+      </div>
+
     </div>
 
     <div class="redpack style03">
@@ -204,7 +189,7 @@
           <th>结束时间</th>
 
         </tr>
-        <tr>
+        <!-- <tr>
           <td>
             12
           </td>
@@ -227,49 +212,29 @@
             15:00:12
           </td>
 
-        </tr>
-        <tr>
-          <td>
-            12
-          </td>
-          <td>2020</td>
-          <td>
-            100
-          </td>
-          <td>
-            平均分配
-          </td>
-          <td>11</td>
-          <td>5454</td>
-          <td>这是第一个红包</td>
-          <td>
-            2020-12-12
-            15:00:12
-          </td>
-          <td>
-            2020-12-12
-            15:00:12
-          </td>
-        </tr>
+        </tr> -->
       </table>
-      <div class="list-box">
+      <div class="list-box dn">
         <div class="M-box m-style" id='list03'></div>
         <span class="test03">共100条</span>
       </div>
-
+      <div class="no-result redpack-no dn">
+        <img src="../img/history_icon_hongbao@2x.png" alt="">
+        <p>暂无红包</p>
+      </div>
     </div>
   </div>
   <div class="mask dn"></div>
-  
+
   <div class="footer">
     <span>©2020 广州大健康网络科技有限公司 版权所有</span>
     <p>粤ICP备20014480号-1</p>
   </div>
 </body>
 <script>
-  $('#list01').pagination({
-    mode: 'fixed'
-  })
+  // $('#list01').pagination({
+  //   mode: 'fixed'
+  // })
   $('#list02').pagination({
     mode: 'fixed'
   })
@@ -277,20 +242,332 @@
     mode: 'fixed'
   })
 
-   //切换商品/优惠券
-   $('.cata button').click(function(){
+  //切换商品/优惠券
+  $('.cata button').click(function () {
     $('.cata button').removeClass('active')
     $(this).addClass('active')
-    if($(this).index() == 0){
+    if ($(this).index() == 0) {
       $('.coupon').addClass('dn')
       $('.product').removeClass('dn')
-    }else{
+    } else {
       $('.coupon').removeClass('dn')
       $('.product').addClass('dn')
     }
   })
 
+  //获取直播历史数据
+  var id = getUrlParam('id')
+  postRequest('/api/room/get', {
+    sessionId: $.cookie('sessionId'),
+    id: id
+  }, function (res) {
+    console.log(res);
+    if (res.code == 1) {
+      $('.main .content .title').html(res.data.startTime + '场直播数据')
+      $('.main .content .info .single').eq(0).children('p').html(res.data.title)
+      $('.main .content .info .single').eq(1).children('strong').html(res.data.desc)
+      $('.main .content .info .single').eq(2).children('img').attr('src', IMG_URL + res.data.image)
+      $('.main .content .info .single').eq(3).children('p').html(res.data.endTime)
+      $('.main .content .info .single').eq(4).children('.left').children('div').html(res.data.peakNum + '人')
+      $('.main .content .info .single').eq(4).children('.right').children('div').html(res.data.totalNum + '人')
+    }
 
+  })
+
+
+  //获取历史推荐产品
+  postRequest('/api/zb/goods/recommendedProduct', {
+    pageNumber: 1,
+    pageSize: 6,
+    roomId: id
+  }, function (res) {
+    console.log(res);
+    if (res.data.list.length == 0) {
+      $('.product-no').removeClass('dn')
+    } else {
+      $('.product .list-box').removeClass('dn')
+      $('.product .list-box span').html('共' + res.data.totalRow + '条')
+      res.data.list.forEach(function (item, index) {
+        var type = "商品"
+        if (item.type == 1) {
+          type = "服务"
+        }
+        var html = '<tr class="content"><td>' + type + '</td><td>' + item.goodsId + '</td><td>' + item
+          .name +
+          '</td><td><img src="' +
+          IMG_URL + item.image + '" /></td><td>' + item.oldPrice + '</td><td>' + item.price +
+          '</td><td>' + item.totalSellCount + '</td><td>' + item.hitCount +
+          '</td><td>' + item
+          .startTime +
+          '</td><td>' + item.endTime +
+          '</td><tr>'
+        $('.product table').append(html)
+      })
+      var pageCount = res.data.totalPage
+      $('#list01').pagination({
+        pageCount: pageCount,
+        callback: function (api) {
+          var pageNumber = api.getCurrent()
+          postRequest('/api/zb/goods/recommendedProduct', {
+            pageNumber: pageNumber,
+            pageSize: 6,
+            roomId: id
+          }, function (res) {
+            $('.product table .content').remove();
+            if (res.code == 1) {
+              res.data.list.forEach(function (item, index) {
+                var type = "商品"
+                if (item.type == 1) {
+                  type = "服务"
+                }
+                var html = '<tr class="content"><td>' + type + '</td><td>' + item.goodsId +
+                  '</td><td>' + item.name + '</td><td><img src="' +
+                  IMG_URL + item.image + '" /></td><td>' + item.oldPrice + '</td><td>' + item
+                  .price +
+                  '</td><td>' + item.totalSellCount +
+                  '</td><td>' + item.hitCount + '</td><td>' + item
+                  .startTime +
+                  '</td><td>' + item.endTime +
+                  '</td><tr>'
+                $('.product table').append(html)
+              })
+            }
+          })
+        }
+      })
+
+    }
+  })
+
+
+  //切换商品/优惠券
+  $('.cata button').click(function () {
+    $('.cata button').removeClass('active')
+    $('.product table .content').remove()
+    $('.coupon table .content').remove();
+    $(this).addClass('active')
+    if ($(this).index() == 0) {
+      $('.coupon').addClass('dn')
+      $('.product').removeClass('dn')
+      $('.coupon-no').addClass('dn')
+      $('.coupon list-box').addClass('dn')
+      //获取正在推荐产品
+      postRequest('/api/zb/goods/recommendedProduct', {
+        pageNumber: 1,
+        pageSize: 6,
+        roomId: id
+      }, function (res) {
+        console.log(res);
+        if (res.data.list.length == 0) {
+          $('.product-no').removeClass('dn')
+        } else {
+          $('.product .list-box').removeClass('dn')
+          $('.product .list-box span').html('共' + res.data.totalRow + '条')
+          res.data.list.forEach(function (item, index) {
+            var type = "商品"
+            if (item.type == 1) {
+              type = "服务"
+            }
+            var html = '<tr class="content"><td>' + type + '</td><td>' + item.goodsId +
+              '</td><td>' + item
+              .name +
+              '</td><td><img src="' +
+              IMG_URL + item.image + '" /></td><td>' + item.oldPrice + '</td><td>' + item.price +
+              '</td><td>' + item.totalSellCount + '</td><td>' + item.hitCount +
+              '</td><td>' + item
+              .startTime +
+              '</td><td>' + item.endTime +
+              '</td><tr>'
+            $('.product table').append(html)
+          })
+          var pageCount = res.data.totalPage
+          $('#list01').pagination({
+            pageCount: pageCount,
+            callback: function (api) {
+              var pageNumber = api.getCurrent()
+              postRequest('/api/zb/goods/recommendedProduct', {
+                pageNumber: pageNumber,
+                pageSize: 6,
+                roomId: id
+              }, function (res) {
+                $('.product table .content').remove();
+                if (res.code == 1) {
+                  res.data.list.forEach(function (item, index) {
+                    var type = "商品"
+                    if (item.type == 1) {
+                      type = "服务"
+                    }
+                    var html = '<tr class="content"><td>' + type + '</td><td>' + item
+                      .goodsId +
+                      '</td><td>' + item.name + '</td><td><img src="' +
+                      IMG_URL + item.image + '" /></td><td>' + item.oldPrice +
+                      '</td><td>' +
+                      item
+                      .price +
+                      '</td><td>' + item.totalSellCount +
+                      '</td><td>' + item.hitCount + '</td><td>' + item
+                      .startTime +
+                      '</td><td>' + item.endTime +
+                      '</td><tr>'
+                    $('.product table').append(html)
+                  })
+                }
+              })
+            }
+          })
+
+
+        }
+      })
+    } else {
+      $('.coupon').removeClass('dn')
+      $('.product').addClass('dn')
+      $('.product-no').addClass('dn')
+      $('.product list-box').addClass('dn')
+      postRequest('/api/zb/coupon/recommendedCoupon', {
+        pageNumber: 1,
+        pageSize: 6,
+        roomId: id
+      }, function (res) {
+        console.log(res);
+        if (res.data.list.length == 0) {
+          $('.coupon-no').removeClass('dn')
+        } else {
+          $('.coupon .list-box').removeClass('dn')
+          $('.coupon .list-box span').html('共' + res.data.totalRow + '条')
+          res.data.list.forEach(function (item, index) {
+            var html = '<tr class="content"><td>优惠券</td><td>' + item.couponId + '</td><td>' + item
+              .count +
+              '</td><td>' +
+              item.limitCount + '</td><td>' + item.receivedCount + '</td><td>' +
+              item
+              .startTime +
+              '</td><td>' + item.endTime +
+              '</td><tr>'
+            $('.coupon table').append(html)
+          })
+          var pageCount = res.data.totalPage
+          $('#list02').pagination({
+            pageCount: pageCount,
+            callback: function (api) {
+              var pageNumber = api.getCurrent()
+              postRequest('/api/zb/coupon/recommendedCoupon', {
+                pageNumber: 1,
+                pageSize: 6,
+              }, function (res) {
+                $('.coupon table .content').remove();
+                if (res.code == 1) {
+                  res.data.list.forEach(function (item, index) {
+                    var html = '<tr class="content"><td>优惠券</td><td>' + item.couponId +
+                      '</td><td>' + item
+                      .count +
+                      '</td><td>' +
+                      item.limitCount + '</td><td>' + item.receivedCount + '</td><td>' +
+                      item
+                      .startTime +
+                      '</td><td>' + item.endTime +
+                      '</td><tr>'
+                    $('.coupon table').append(html)
+                  })
+                }
+              })
+            }
+          })
+
+
+        }
+      })
+    }
+  })
+
+
+  //获取正在发送红包
+  postRequest('/api/zb/red/recommendedRed', {
+    pageNumber: 1,
+    pageSize: 6,
+    roomId: id
+  }, function (res) {
+    console.log(res);
+    if (res.data.list.length == 0) {
+      $('.redpack-no').removeClass('dn')
+    } else {
+      $('.redpack .list-box').removeClass('dn')
+      $('.redpack .list-box span').html('共' + res.data.totalRow + '条')
+      res.data.list.forEach(function (item, index) {
+        if (item.state == 0) {
+          var html = '<tr class="content"><td>' + item.id + '</td><td>' + item.amount + '</td><td>' +
+            item.num + '</td><td>' + item.mold + '</td><td>' + item.receivedCount + '</td><td>' + item
+            .receivedMoney + '</td><td>' + item.desc + '</td><td>' + item.startTime + '</td><td>' + item
+            .endTime +
+            '</td></tr>"'
+
+        } else if (item.state == 1) {
+          var html = '<tr class="content"><td>' + item.id + '</td><td>' + item.amount + '</td><td>' +
+            item.num + '</td><td>' + item.mold + '</td><td>' + item.receivedCount + '</td><td>' + item
+            .receivedMoney + '</td><td>' + item.desc + '</td><td>' + item.startTime + '</td><td>' + item
+            .endTime +
+            '</td></tr>"'
+
+        } else {
+          var html = '<tr class="content"><td>' + item.id + '</td><td>' + item.amount + '</td><td>' +
+            item.num + '</td><td>' + item.mold + '</td><td>' + item.receivedCount + '</td><td>' + item
+            .receivedMoney + '</td><td>' + item.desc + '</td><td>' + item.startTime + '</td><td>' + item
+            .endTime + '</td></tr>"'
+
+        }
+        $('.redpack table').append(html)
+      })
+      var pageCount = res.data.totalPage
+      $('#list03').pagination({
+        pageCount: pageCount,
+        callback: function (api) {
+          var pageNumber = api.getCurrent()
+          postRequest('/api/zb/red/recommendedRed', {
+            pageNumber: pageNumber,
+            pageSize: 6,
+            roomId: id
+          }, function (res) {
+            $('.redpack table .content').remove();
+            if (res.code == 1) {
+              res.data.list.forEach(function (item, index) {
+                if (item.state == 0) {
+                  var html = '<tr class="content"><td>' + item.id + '</td><td>' + item
+                    .amount + '</td><td>' +
+                    item.num + '</td><td>' + item.mold + '</td><td>' + item.receivedCount +
+                    '</td><td>' + item
+                    .receivedMoney + '</td><td>' + item.desc + '</td><td>' + item.startTime +
+                    '</td><td>' + item
+                    .endTime +
+                    '</td></tr>"'
+
+                } else if (item.state == 1) {
+                  var html = '<tr class="content"><td>' + item.id + '</td><td>' + item
+                    .amount + '</td><td>' +
+                    item.num + '</td><td>' + item.mold + '</td><td>' + item.receivedCount +
+                    '</td><td>' + item
+                    .receivedMoney + '</td><td>' + item.desc + '</td><td>' + item.startTime +
+                    '</td><td>' + item
+                    .endTime +
+                    '</td></tr>"'
+
+                } else {
+                  var html = '<tr class="content"><td>' + item.id + '</td><td>' + item
+                    .amount + '</td><td>' +
+                    item.num + '</td><td>' + item.mold + '</td><td>' + item.receivedCount +
+                    '</td><td>' + item
+                    .receivedMoney + '</td><td>' + item.desc + '</td><td>' + item.startTime +
+                    '</td><td>' + item
+                    .endTime + '</td></tr>"'
+
+                }
+                $('.redpack table').append(html)
+              })
+            }
+          })
+        }
+      })
+    }
+  })
 </script>
 
 </html>
