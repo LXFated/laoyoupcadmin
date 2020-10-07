@@ -130,8 +130,8 @@
 <script>
   //从编辑页面过来
   var img = getUrlParam('img')
-  var title = getUrlParam('title')
-  var desc = getUrlParam('desc')
+  var title = decodeURI(getUrlParam('title'))
+  var desc = decodeURI(getUrlParam('desc'))
   var startTime = getUrlParam('startTime')
   var id = getUrlParam('id')
   $('input[name="titleinput"]').val(title)

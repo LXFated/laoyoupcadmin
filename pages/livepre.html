@@ -138,8 +138,9 @@
 
     })
     $('.edit').click(function () {
-      window.location.href = 'setlive.html?img=' + $(this)[0].dataset.img + '&title=' + $(this)[0].dataset
-        .title + '&desc=' + $(this)[0].dataset.desc + '&startTime=' + $(this)[0].dataset.starttime + '&id=' + $(
+      var title=encodeURI(encodeURI($(this)[0].dataset.title))
+      var desc=encodeURI(encodeURI($(this)[0].dataset.desc))
+      window.location.href = 'setlive.html?img=' + $(this)[0].dataset.img + '&title=' + title + '&desc=' + desc + '&startTime=' + $(this)[0].dataset.starttime + '&id=' + $(
           this)[0].dataset.id
     })
 

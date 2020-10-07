@@ -32,8 +32,8 @@
       </div>
       <div class="right">
         <div class="nick">
-          <img src="../img/top_logo@2x.png" alt="">
-          <p>昵称昵称昵称....</p>
+          <img src="" alt="">
+          <p></p>
         </div>
         <span onclick="loginout()">退出登录</span>
 
@@ -424,6 +424,14 @@
     </div>
     <div class="bottom">
       <button>取消</button>
+      <button>确定</button>
+    </div>
+  </div>
+  <div class="tips tips05 dn">
+    <div class="top">
+      <p>复制成功</p>
+    </div>
+    <div class="bottom">
       <button>确定</button>
     </div>
   </div>
@@ -1534,6 +1542,20 @@
   //复制地址
   var copy01 = new ClipboardJS('.copy01')
   var copy02 = new ClipboardJS('.copy02')
+  copy01.on('success',function(){
+    $('.mask').removeClass('dn')
+    $('.tips05').removeClass('dn')
+  })
+
+  copy02.on('success',function(){
+    $('.mask').removeClass('dn')
+    $('.tips05').removeClass('dn')
+  })
+
+  $('.tips05 .bottom button').eq(0).click(function () {
+    $('.tips05').addClass('dn');
+    $('.mask').addClass('dn')
+  })
 </script>
 
 </html>
