@@ -411,7 +411,7 @@
 
   <div class="tips tips03 dn">
     <div class="top">
-      <p>确认停止推荐此产品吗？</p>
+      <p>确认停止推荐吗？</p>
     </div>
     <div class="bottom">
       <button>取消</button>
@@ -689,6 +689,13 @@
       $('.history .list-box').removeClass('dn')
       $('.history .list-box span').html('共' + res.data.totalRow + '条')
       res.data.list.forEach(function (item, index) {
+        for (x in item) {
+          console.log(x);
+          if (item[x] == null) {
+            console.log('我的');
+            item[x] = ''
+          }
+        }
         var html = '<tr class="content"><td>' + item.title + '</td><td>' + item.desc + '</td><td><img src="' +
           IMG_URL + item
           .image + '" /></td><td>' + item.peakNum + '</td><td>' + item.totalNum + '</td><td>' + item.startTime +
@@ -711,6 +718,13 @@
             $('.history table .content').remove();
             if (res.code == 1) {
               res.data.list.forEach(function (item, index) {
+                for (x in item) {
+          console.log(x);
+          if (item[x] == null) {
+            console.log('我的');
+            item[x] = ''
+          }
+        }
                 var html = '<tr class="content"><td>' + item.title + '</td><td>' + item.desc +
                   '</td><td><img src="' + IMG_URL + item
                   .image + '" /></td><td>' + item.peakNum + '</td><td>' + item.totalNum +
@@ -1073,24 +1087,63 @@
           $('.product .list-box').removeClass('dn')
           $('.product .list-box span').html('共' + res.data.totalRow + '条')
           res.data.list.forEach(function (item, index) {
+            for (x in item) {
+          console.log(x);
+          if (item[x] == null) {
+            console.log('我的');
+            item[x] = ''
+          }
+        }
             var type = "商品"
             if (item.type == 1) {
               type = "服务"
             }
-            var html = '<tr class="content"><td>' + type + '</td><td>' + item.goodsId + '</td><td>' + item
-              .name +
-              '</td><td><img src="' +
-              IMG_URL + item.image + '" /></td><td>' + item.oldPrice + '</td><td>' + item.price +
-              '</td><td>' +
-              item
-              .totaStockCount + '</td><td>' + item.totalSellCount + '</td><td>' + item.hitCount +
-              '</td><td>' + item.sort + '</td><td>' + item
-              .startTime +
-              '</td><td>' + item.endTime +
-              '</td><td><div class="td-button"><button class="stop-reco" data-id="' + item.id +
-              '" data-type="' + item.type +
-              '">停止推荐</button><button class="table-sort" data-id="' + item.id +
-              '">排序</button></div></td><tr>'
+            for(x in item){
+              console.log(x);
+              if(item[x]==null){
+                console.log('我的');
+                item[x]=''
+              }
+            }
+            if (item.recommend == 1) {
+              var html = '<tr class="content"><td>' + type + '</td><td>' + item.goodsId +
+                '</td><td>' + item
+                .name +
+                '</td><td><img src="' +
+                IMG_URL + item.image + '" /></td><td>' + item.oldPrice + '</td><td>' +
+                item
+                .price +
+                '</td><td>' +
+                item
+                .totaStockCount + '</td><td>' + item.totalSellCount + '</td><td>' + item
+                .hitCount +
+                '</td><td>' + item.sort + '</td><td>' + item
+                .startTime +
+                '</td><td>' + item.endTime +
+                '</td><td><div class="td-button"><button class="stop-reco" data-id="' +
+                item
+                .id +
+                '" data-type="' + item.type +
+                '">停止推荐</button><button class="table-sort" data-id="' + item.id +
+                '">排序</button></div></td><tr>'
+            } else {
+              var html = '<tr class="content"><td>' + type + '</td><td>' + item.goodsId +
+                '</td><td>' + item
+                .name +
+                '</td><td><img src="' +
+                IMG_URL + item.image + '" /></td><td>' + item.oldPrice + '</td><td>' +
+                item
+                .price +
+                '</td><td>' +
+                item
+                .totaStockCount + '</td><td>' + item.totalSellCount + '</td><td>' + item
+                .hitCount +
+                '</td><td>' + item.sort + '</td><td>' + item
+                .startTime +
+                '</td><td>' + item.endTime +
+                '</td><td></td><tr>'
+            }
+
             $('.product table').append(html)
           })
           var pageCount = res.data.totalPage
@@ -1106,23 +1159,56 @@
                 $('.product table .content').remove();
                 if (res.code == 1) {
                   res.data.list.forEach(function (item, index) {
+                    for (x in item) {
+          console.log(x);
+          if (item[x] == null) {
+            console.log('我的');
+            item[x] = ''
+          }
+        }
                     var type = "商品"
                     if (item.type == 1) {
                       type = "服务"
                     }
-                    var html = '<tr class="content"><td>' + type + '</td><td>' + item.goodsId +
-                      '</td><td>' + item.name + '</td><td><img src="' +
-                      IMG_URL + item.image + '" /></td><td>' + item.oldPrice + '</td><td>' + item
-                      .price +
-                      '</td><td>' + item
-                      .totaStockCount + '</td><td>' + item.totalSellCount +
-                      '</td><td>' + item.hitCount + '</td><td>' + item.sort + '</td><td>' + item
-                      .startTime +
-                      '</td><td>' + item.endTime +
-                      '</td><td><div class="td-button"><button class="stop-reco" data-id="' + item
-                      .id + '" data-type="' + item.type +
-                      '">停止推荐</button><button class="table-sort" data-id="' + item.id +
-                      '">排序</button></div></td><tr>'
+                    if (item.recommend == 1) {
+                      var html = '<tr class="content"><td>' + type + '</td><td>' + item.goodsId +
+                        '</td><td>' + item
+                        .name +
+                        '</td><td><img src="' +
+                        IMG_URL + item.image + '" /></td><td>' + item.oldPrice + '</td><td>' +
+                        item
+                        .price +
+                        '</td><td>' +
+                        item
+                        .totaStockCount + '</td><td>' + item.totalSellCount + '</td><td>' + item
+                        .hitCount +
+                        '</td><td>' + item.sort + '</td><td>' + item
+                        .startTime +
+                        '</td><td>' + item.endTime +
+                        '</td><td><div class="td-button"><button class="stop-reco" data-id="' +
+                        item
+                        .id +
+                        '" data-type="' + item.type +
+                        '">停止推荐</button><button class="table-sort" data-id="' + item.id +
+                        '">排序</button></div></td><tr>'
+                    } else {
+                      var html = '<tr class="content"><td>' + type + '</td><td>' + item.goodsId +
+                        '</td><td>' + item
+                        .name +
+                        '</td><td><img src="' +
+                        IMG_URL + item.image + '" /></td><td>' + item.oldPrice + '</td><td>' +
+                        item
+                        .price +
+                        '</td><td>' +
+                        item
+                        .totaStockCount + '</td><td>' + item.totalSellCount + '</td><td>' + item
+                        .hitCount +
+                        '</td><td>' + item.sort + '</td><td>' + item
+                        .startTime +
+                        '</td><td>' + item.endTime +
+                        '</td><td></td><tr>'
+                    }
+
                     $('.product table').append(html)
                   })
                 }
@@ -1209,28 +1295,53 @@
               $('.product .list-box').removeClass('dn')
               $('.product .list-box span').html('共' + res.data.totalRow + '条')
               res.data.list.forEach(function (item, index) {
+                for (x in item) {
+          console.log(x);
+          if (item[x] == null) {
+            console.log('我的');
+            item[x] = ''
+          }
+        }
                 var type = "商品"
                 if (item.type == 1) {
                   type = "服务"
                 }
-                var html = '<tr class="content"><td>' + type + '</td><td>' + item.goodsId +
-                  '</td><td>' + item
-                  .name +
-                  '</td><td><img src="' +
-                  IMG_URL + item.image + '" /></td><td>' + item.oldPrice + '</td><td>' + item
-                  .price +
-                  '</td><td>' +
-                  item
-                  .totaStockCount + '</td><td>' + item.totalSellCount + '</td><td>' + item
-                  .hitCount +
-                  '</td><td>' + item.sort + '</td><td>' + item
-                  .startTime +
-                  '</td><td>' + item.endTime +
-                  '</td><td><div class="td-button"><button class="stop-reco" data-id="' + item
-                  .id +
-                  '" data-type="' + item.type +
-                  '">停止推荐</button><button class="table-sort" data-id="' + item.id +
-                  '">排序</button></div></td><tr>'
+                if (item.recommend == 1) {
+                  var html = '<tr class="content"><td>' + type + '</td><td>' + item.goodsId +
+                    '</td><td>' + item
+                    .name +
+                    '</td><td><img src="' +
+                    IMG_URL + item.image + '" /></td><td>' + item.oldPrice + '</td><td>' + item
+                    .price +
+                    '</td><td>' +
+                    item
+                    .totaStockCount + '</td><td>' + item.totalSellCount + '</td><td>' + item
+                    .hitCount +
+                    '</td><td>' + item.sort + '</td><td>' + item
+                    .startTime +
+                    '</td><td>' + item.endTime +
+                    '</td><td><div class="td-button"><button class="stop-reco" data-id="' + item
+                    .id +
+                    '" data-type="' + item.type +
+                    '">停止推荐</button><button class="table-sort" data-id="' + item.id +
+                    '">排序</button></div></td><tr>'
+                } else {
+                  var html = '<tr class="content"><td>' + type + '</td><td>' + item.goodsId +
+                    '</td><td>' + item
+                    .name +
+                    '</td><td><img src="' +
+                    IMG_URL + item.image + '" /></td><td>' + item.oldPrice + '</td><td>' + item
+                    .price +
+                    '</td><td>' +
+                    item
+                    .totaStockCount + '</td><td>' + item.totalSellCount + '</td><td>' + item
+                    .hitCount +
+                    '</td><td>' + item.sort + '</td><td>' + item
+                    .startTime +
+                    '</td><td>' + item.endTime +
+                    '</td><td></td><tr>'
+                }
+
                 $('.product table').append(html)
               })
               var pageCount = res.data.totalPage
@@ -1246,29 +1357,62 @@
                     $('.product table .content').remove();
                     if (res.code == 1) {
                       res.data.list.forEach(function (item, index) {
+                        for (x in item) {
+          console.log(x);
+          if (item[x] == null) {
+            console.log('我的');
+            item[x] = ''
+          }
+        }
                         var type = "商品"
                         if (item.type == 1) {
                           type = "服务"
                         }
-                        var html = '<tr class="content"><td>' + type + '</td><td>' +
-                          item
-                          .goodsId +
-                          '</td><td>' + item.name + '</td><td><img src="' +
-                          IMG_URL + item.image + '" /></td><td>' + item.oldPrice +
-                          '</td><td>' +
-                          item
-                          .price +
-                          '</td><td>' + item
-                          .totaStockCount + '</td><td>' + item.totalSellCount +
-                          '</td><td>' + item.hitCount + '</td><td>' + item.sort +
-                          '</td><td>' + item
-                          .startTime +
-                          '</td><td>' + item.endTime +
-                          '</td><td><div class="td-button"><button class="stop-reco" data-id="' +
-                          item.id + '" data-type="' + item.type +
-                          '">停止推荐</button><button class="table-sort" data-id="' + item
-                          .id +
-                          '">排序</button></div></td><tr>'
+                        if (item.recommend == 1) {
+                          var html = '<tr class="content"><td>' + type + '</td><td>' + item
+                            .goodsId +
+                            '</td><td>' + item
+                            .name +
+                            '</td><td><img src="' +
+                            IMG_URL + item.image + '" /></td><td>' + item.oldPrice +
+                            '</td><td>' +
+                            item
+                            .price +
+                            '</td><td>' +
+                            item
+                            .totaStockCount + '</td><td>' + item.totalSellCount +
+                            '</td><td>' + item
+                            .hitCount +
+                            '</td><td>' + item.sort + '</td><td>' + item
+                            .startTime +
+                            '</td><td>' + item.endTime +
+                            '</td><td><div class="td-button"><button class="stop-reco" data-id="' +
+                            item
+                            .id +
+                            '" data-type="' + item.type +
+                            '">停止推荐</button><button class="table-sort" data-id="' + item.id +
+                            '">排序</button></div></td><tr>'
+                        } else {
+                          var html = '<tr class="content"><td>' + type + '</td><td>' + item
+                            .goodsId +
+                            '</td><td>' + item
+                            .name +
+                            '</td><td><img src="' +
+                            IMG_URL + item.image + '" /></td><td>' + item.oldPrice +
+                            '</td><td>' +
+                            item
+                            .price +
+                            '</td><td>' +
+                            item
+                            .totaStockCount + '</td><td>' + item.totalSellCount +
+                            '</td><td>' + item
+                            .hitCount +
+                            '</td><td>' + item.sort + '</td><td>' + item
+                            .startTime +
+                            '</td><td>' + item.endTime +
+                            '</td><td></td><tr>'
+                        }
+
                         $('.product table').append(html)
                       })
                     }
@@ -1346,20 +1490,41 @@
               $('.coupon .list-box').removeClass('dn')
               $('.coupon .list-box span').html('共' + res.data.totalRow + '条')
               res.data.list.forEach(function (item, index) {
-                var html = '<tr class="content"><td>优惠券</td><td>' + item.couponId + '</td><td>' +
-                  item
-                  .count +
-                  '</td><td>' +
-                  item.limitCount + '</td><td>' + item.receivedCount + '</td><td>' + item.sort +
-                  '</td><td>' +
-                  item
-                  .startTime +
-                  '</td><td>' + item.endTime +
-                  '</td><td><div class="td-button"><button class="stop-reco" data-id="' + item
-                  .id +
-                  '" data-type="' + item.type +
-                  '">停止推荐</button><button class="table-sort" data-id="' +
-                  item.id + '">排序</button></div></td><tr>'
+                for (x in item) {
+          console.log(x);
+          if (item[x] == null) {
+            console.log('我的');
+            item[x] = ''
+          }
+        }
+                if (item.recommend == 1) {
+                  var html = '<tr class="content"><td>优惠券</td><td>' + item.couponId + '</td><td>' +
+                    item
+                    .count +
+                    '</td><td>' +
+                    item.limitCount + '</td><td>' + item.receivedCount + '</td><td>' + item.sort +
+                    '</td><td>' +
+                    item
+                    .startTime +
+                    '</td><td>' + item.endTime +
+                    '</td><td><div class="td-button"><button class="stop-reco" data-id="' + item
+                    .id +
+                    '" data-type="' + item.type +
+                    '">停止推荐</button><button class="table-sort" data-id="' +
+                    item.id + '">排序</button></div></td><tr>'
+                } else {
+                  var html = '<tr class="content"><td>优惠券</td><td>' + item.couponId + '</td><td>' +
+                    item
+                    .count +
+                    '</td><td>' +
+                    item.limitCount + '</td><td>' + item.receivedCount + '</td><td>' + item.sort +
+                    '</td><td>' +
+                    item
+                    .startTime +
+                    '</td><td>' + item.endTime +
+                    '</td><td></td><tr>'
+                }
+
                 $('.coupon table').append(html)
               })
               var pageCount = res.data.totalPage
@@ -1374,23 +1539,46 @@
                     $('.coupon table .content').remove();
                     if (res.code == 1) {
                       res.data.list.forEach(function (item, index) {
-                        var html = '<tr class="content"><td>优惠券</td><td>' + item
-                          .couponId +
-                          '</td><td>' + item
-                          .count +
-                          '</td><td>' +
-                          item.limitCount + '</td><td>' + item.receivedCount +
-                          '</td><td>' +
-                          item
-                          .sort + '</td><td>' +
-                          item
-                          .startTime +
-                          '</td><td>' + item.endTime +
-                          '</td><td><div class="td-button"><button class="stop-reco"   data-id="' +
-                          item.id + '" data-type="' + item.type +
-                          '">停止推荐</button><button class="table-sort" data-id="' + item
-                          .id +
-                          '">排序</button></div></td><tr>'
+                        for (x in item) {
+          console.log(x);
+          if (item[x] == null) {
+            console.log('我的');
+            item[x] = ''
+          }
+        }
+                        if (item.recommend == 1) {
+                          var html = '<tr class="content"><td>优惠券</td><td>' + item.couponId +
+                            '</td><td>' +
+                            item
+                            .count +
+                            '</td><td>' +
+                            item.limitCount + '</td><td>' + item.receivedCount + '</td><td>' +
+                            item.sort +
+                            '</td><td>' +
+                            item
+                            .startTime +
+                            '</td><td>' + item.endTime +
+                            '</td><td><div class="td-button"><button class="stop-reco" data-id="' +
+                            item
+                            .id +
+                            '" data-type="' + item.type +
+                            '">停止推荐</button><button class="table-sort" data-id="' +
+                            item.id + '">排序</button></div></td><tr>'
+                        } else {
+                          var html = '<tr class="content"><td>优惠券</td><td>' + item.couponId +
+                            '</td><td>' +
+                            item
+                            .count +
+                            '</td><td>' +
+                            item.limitCount + '</td><td>' + item.receivedCount + '</td><td>' +
+                            item.sort +
+                            '</td><td>' +
+                            item
+                            .startTime +
+                            '</td><td>' + item.endTime +
+                            '</td><td></td><tr>'
+                        }
+
                         $('.coupon table').append(html)
                       })
                     }
@@ -1400,14 +1588,25 @@
 
               //停止推荐
               $('.stop-reco ').click(function () {
+                $('.mask').removeClass('dn')
+                $('.tips03').removeClass('dn')
+                tuiid = $(this).attr('data-id')
+                tuitype = $(this).attr('data-type')
+              })
+
+              $('.tips03 .bottom button').eq(1).click(function () {
                 postRequest('/api/zb/goods/stopRecommend', {
-                  id: $(this).attr('data-id'),
-                  type: $(this).attr('data-type'),
+                  id: tuiid,
+                  type: tuitype,
                 }, function (res) {
                   if (res.code == 1) {
                     window.location.reload()
                   }
                 })
+              })
+              $('.tips03 .bottom button').eq(0).click(function () {
+                $('.tips03').addClass('dn');
+                $('.mask').addClass('dn')
               })
 
               //排序弹窗
@@ -1456,6 +1655,13 @@
           $('.redpack .list-box').removeClass('dn')
           $('.redpack .list-box span').html('共' + res.data.totalRow + '条')
           res.data.list.forEach(function (item, index) {
+            for (x in item) {
+          console.log(x);
+          if (item[x] == null) {
+            console.log('我的');
+            item[x] = ''
+          }
+        }
             if (item.state == 0) {
               var html = '<tr class="content"><td>' + item.id + '</td><td>' + item.amount +
                 '</td><td>' +
@@ -1503,6 +1709,13 @@
                 $('.redpack table .content').remove();
                 if (res.code == 1) {
                   res.data.list.forEach(function (item, index) {
+                    for (x in item) {
+          console.log(x);
+          if (item[x] == null) {
+            console.log('我的');
+            item[x] = ''
+          }
+        }
                     if (item.state == 0) {
                       var html = '<tr class="content"><td>' + item.id + '</td><td>' + item
                         .amount + '</td><td>' +

@@ -2,7 +2,7 @@
 <html lang="en">
 
 <head>
-    <meta charset="UTF-8">
+  <meta charset="UTF-8">
   <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" href="../css/reset.css">
@@ -37,7 +37,7 @@
   <div class="main">
     <div class="content">
       <div class="title">
-        
+
       </div>
       <div class="info">
         <div class="single">
@@ -47,7 +47,7 @@
         <div class="single">
           <span>简介：</span>
           <strong>
-            
+
           </strong>
         </div>
         <div class="single">
@@ -287,6 +287,13 @@
       $('.product .list-box').removeClass('dn')
       $('.product .list-box span').html('共' + res.data.totalRow + '条')
       res.data.list.forEach(function (item, index) {
+        for (x in item) {
+          console.log(x);
+          if (item[x] == null) {
+            console.log('我的');
+            item[x] = ''
+          }
+        }
         var type = "商品"
         if (item.type == 1) {
           type = "服务"
@@ -315,6 +322,13 @@
             $('.product table .content').remove();
             if (res.code == 1) {
               res.data.list.forEach(function (item, index) {
+                for (x in item) {
+                  console.log(x);
+                  if (item[x] == null) {
+                    console.log('我的');
+                    item[x] = ''
+                  }
+                }
                 var type = "商品"
                 if (item.type == 1) {
                   type = "服务"
@@ -363,6 +377,13 @@
           $('.product .list-box').removeClass('dn')
           $('.product .list-box span').html('共' + res.data.totalRow + '条')
           res.data.list.forEach(function (item, index) {
+            for (x in item) {
+          console.log(x);
+          if (item[x] == null) {
+            console.log('我的');
+            item[x] = ''
+          }
+        }
             var type = "商品"
             if (item.type == 1) {
               type = "服务"
@@ -392,6 +413,13 @@
                 $('.product table .content').remove();
                 if (res.code == 1) {
                   res.data.list.forEach(function (item, index) {
+                    for (x in item) {
+          console.log(x);
+          if (item[x] == null) {
+            console.log('我的');
+            item[x] = ''
+          }
+        }
                     var type = "商品"
                     if (item.type == 1) {
                       type = "服务"
@@ -435,6 +463,13 @@
           $('.coupon .list-box').removeClass('dn')
           $('.coupon .list-box span').html('共' + res.data.totalRow + '条')
           res.data.list.forEach(function (item, index) {
+            for (x in item) {
+          console.log(x);
+          if (item[x] == null) {
+            console.log('我的');
+            item[x] = ''
+          }
+        }
             var html = '<tr class="content"><td>优惠券</td><td>' + item.couponId + '</td><td>' + item
               .count +
               '</td><td>' +
@@ -457,6 +492,13 @@
                 $('.coupon table .content').remove();
                 if (res.code == 1) {
                   res.data.list.forEach(function (item, index) {
+                    for (x in item) {
+          console.log(x);
+          if (item[x] == null) {
+            console.log('我的');
+            item[x] = ''
+          }
+        }
                     var html = '<tr class="content"><td>优惠券</td><td>' + item.couponId +
                       '</td><td>' + item
                       .count +
@@ -493,6 +535,13 @@
       $('.redpack .list-box').removeClass('dn')
       $('.redpack .list-box span').html('共' + res.data.totalRow + '条')
       res.data.list.forEach(function (item, index) {
+        for (x in item) {
+          console.log(x);
+          if (item[x] == null) {
+            console.log('我的');
+            item[x] = ''
+          }
+        }
         if (item.state == 0) {
           var html = '<tr class="content"><td>' + item.id + '</td><td>' + item.amount + '</td><td>' +
             item.num + '</td><td>' + item.mold + '</td><td>' + item.receivedCount + '</td><td>' + item
@@ -529,6 +578,13 @@
             $('.redpack table .content').remove();
             if (res.code == 1) {
               res.data.list.forEach(function (item, index) {
+                for (x in item) {
+          console.log(x);
+          if (item[x] == null) {
+            console.log('我的');
+            item[x] = ''
+          }
+        }
                 if (item.state == 0) {
                   var html = '<tr class="content"><td>' + item.id + '</td><td>' + item
                     .amount + '</td><td>' +
