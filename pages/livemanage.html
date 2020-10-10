@@ -2,7 +2,7 @@
 <html lang="en">
 
 <head>
-    <meta charset="UTF-8">
+  <meta charset="UTF-8">
   <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" href="../css/reset.css">
@@ -620,6 +620,9 @@
 <script>
   var liveid = 0;
   var imgfile = null;
+  var redid = 0;
+  var tuiid = 0;
+  var tuitype = 0;
   $('#list01').pagination({
     mode: 'fixed'
   })
@@ -637,7 +640,7 @@
   $('.edit').click(function () {
     $('.edit-wrap').removeClass('dn')
     $('.mask').removeClass('dn')
-
+    $('.limit p').html($('.title-input').val().length)
   })
 
   //上传封面
@@ -690,7 +693,8 @@
           IMG_URL + item
           .image + '" /></td><td>' + item.peakNum + '</td><td>' + item.totalNum + '</td><td>' + item.startTime +
           '</td><td>' + item.endTime +
-          '</td><td><div class="td-button"><a href="livehistory.html?id='+item.id+'"><button class="style04">查看详情</button></a></div></td></tr>'
+          '</td><td><div class="td-button"><a href="livehistory.html?id=' + item.id +
+          '"><button class="style04">查看详情</button></a></div></td></tr>'
         $('.history table').append(html)
       })
       var pageCount = res.data.totalPage
@@ -712,7 +716,8 @@
                   .image + '" /></td><td>' + item.peakNum + '</td><td>' + item.totalNum +
                   '</td><td>' + item.startTime +
                   '</td><td>' + item.endTime +
-                  '</td><td><div class="td-button"><a href="livehistory.html?id='+item.id+'"><button class="style04">查看详情</button></a></div></td></tr>'
+                  '</td><td><div class="td-button"><a href="livehistory.html?id=' + item.id +
+                  '"><button class="style04">查看详情</button></a></div></td></tr>'
                 $('.history table').append(html)
               })
             }
@@ -789,24 +794,18 @@
   })
 
   //停止发放
-  $('.redpack .td-button .stop-re').click(function () {
-    $('.tips02').removeClass('dn');
-    $('.mask').removeClass('dn')
-  })
-  $('.tips02 .bottom button').click(function () {
-    $('.tips02').addClass('dn');
-    $('.mask').addClass('dn')
-  })
+  // $('.redpack .td-button .stop-re').click(function () {
+  //   $('.tips02').removeClass('dn');
+  //   $('.mask').removeClass('dn')
+  // })
+
 
   //重新发放
-  $('.redpack .td-button .re').click(function () {
-    $('.tips04').removeClass('dn');
-    $('.mask').removeClass('dn')
-  })
-  $('.tips04 .bottom button').click(function () {
-    $('.tips04').addClass('dn');
-    $('.mask').addClass('dn')
-  })
+  // $('.redpack .td-button .re').click(function () {
+  //   $('.tips04').removeClass('dn');
+  //   $('.mask').removeClass('dn')
+  // })
+
 
 
   $('.tips03 .bottom button').click(function () {
@@ -1133,15 +1132,27 @@
 
           //停止推荐
           $('.stop-reco ').click(function () {
+            $('.mask').removeClass('dn')
+            $('.tips03').removeClass('dn')
+            tuiid = $(this).attr('data-id')
+            tuitype = $(this).attr('data-type')
+          })
+
+          $('.tips03 .bottom button').eq(1).click(function () {
             postRequest('/api/zb/goods/stopRecommend', {
-              id: $(this).attr('data-id'),
-              type: $(this).attr('data-type'),
+              id: tuiid,
+              type: tuitype,
             }, function (res) {
               if (res.code == 1) {
                 window.location.reload()
               }
             })
           })
+          $('.tips03 .bottom button').eq(0).click(function () {
+            $('.tips03').addClass('dn');
+            $('.mask').addClass('dn')
+          })
+
 
           //排序弹窗
           $('.table-sort').click(function () {
@@ -1206,14 +1217,17 @@
                   '</td><td>' + item
                   .name +
                   '</td><td><img src="' +
-                  IMG_URL + item.image + '" /></td><td>' + item.oldPrice + '</td><td>' + item.price +
+                  IMG_URL + item.image + '" /></td><td>' + item.oldPrice + '</td><td>' + item
+                  .price +
                   '</td><td>' +
                   item
-                  .totaStockCount + '</td><td>' + item.totalSellCount + '</td><td>' + item.hitCount +
+                  .totaStockCount + '</td><td>' + item.totalSellCount + '</td><td>' + item
+                  .hitCount +
                   '</td><td>' + item.sort + '</td><td>' + item
                   .startTime +
                   '</td><td>' + item.endTime +
-                  '</td><td><div class="td-button"><button class="stop-reco" data-id="' + item.id +
+                  '</td><td><div class="td-button"><button class="stop-reco" data-id="' + item
+                  .id +
                   '" data-type="' + item.type +
                   '">停止推荐</button><button class="table-sort" data-id="' + item.id +
                   '">排序</button></div></td><tr>'
@@ -1236,7 +1250,8 @@
                         if (item.type == 1) {
                           type = "服务"
                         }
-                        var html = '<tr class="content"><td>' + type + '</td><td>' + item
+                        var html = '<tr class="content"><td>' + type + '</td><td>' +
+                          item
                           .goodsId +
                           '</td><td>' + item.name + '</td><td><img src="' +
                           IMG_URL + item.image + '" /></td><td>' + item.oldPrice +
@@ -1251,7 +1266,8 @@
                           '</td><td>' + item.endTime +
                           '</td><td><div class="td-button"><button class="stop-reco" data-id="' +
                           item.id + '" data-type="' + item.type +
-                          '">停止推荐</button><button class="table-sort" data-id="' + item.id +
+                          '">停止推荐</button><button class="table-sort" data-id="' + item
+                          .id +
                           '">排序</button></div></td><tr>'
                         $('.product table').append(html)
                       })
@@ -1262,14 +1278,25 @@
 
               //停止推荐
               $('.stop-reco ').click(function () {
+                $('.mask').removeClass('dn')
+                $('.tips03').removeClass('dn')
+                tuiid = $(this).attr('data-id')
+                tuitype = $(this).attr('data-type')
+              })
+
+              $('.tips03 .bottom button').eq(1).click(function () {
                 postRequest('/api/zb/goods/stopRecommend', {
-                  id: $(this).attr('data-id'),
-                  type: $(this).attr('data-type'),
+                  id: tuiid,
+                  type: tuitype,
                 }, function (res) {
                   if (res.code == 1) {
                     window.location.reload()
                   }
                 })
+              })
+              $('.tips03 .bottom button').eq(0).click(function () {
+                $('.tips03').addClass('dn');
+                $('.mask').addClass('dn')
               })
 
               //排序弹窗
@@ -1310,7 +1337,7 @@
           postRequest('/api/zb/coupon/recommendedCoupon', {
             pageNumber: 1,
             pageSize: 6,
-            roomId:liveid
+            roomId: liveid
           }, function (res) {
             console.log(res);
             if (res.data.list.length == 0) {
@@ -1319,7 +1346,8 @@
               $('.coupon .list-box').removeClass('dn')
               $('.coupon .list-box span').html('共' + res.data.totalRow + '条')
               res.data.list.forEach(function (item, index) {
-                var html = '<tr class="content"><td>优惠券</td><td>' + item.couponId + '</td><td>' + item
+                var html = '<tr class="content"><td>优惠券</td><td>' + item.couponId + '</td><td>' +
+                  item
                   .count +
                   '</td><td>' +
                   item.limitCount + '</td><td>' + item.receivedCount + '</td><td>' + item.sort +
@@ -1327,8 +1355,10 @@
                   item
                   .startTime +
                   '</td><td>' + item.endTime +
-                  '</td><td><div class="td-button"><button class="stop-reco" data-id="' + item.id +
-                  '" data-type="' + item.type + '">停止推荐</button><button class="table-sort" data-id="' +
+                  '</td><td><div class="td-button"><button class="stop-reco" data-id="' + item
+                  .id +
+                  '" data-type="' + item.type +
+                  '">停止推荐</button><button class="table-sort" data-id="' +
                   item.id + '">排序</button></div></td><tr>'
                 $('.coupon table').append(html)
               })
@@ -1344,11 +1374,13 @@
                     $('.coupon table .content').remove();
                     if (res.code == 1) {
                       res.data.list.forEach(function (item, index) {
-                        var html = '<tr class="content"><td>优惠券</td><td>' + item.couponId +
+                        var html = '<tr class="content"><td>优惠券</td><td>' + item
+                          .couponId +
                           '</td><td>' + item
                           .count +
                           '</td><td>' +
-                          item.limitCount + '</td><td>' + item.receivedCount + '</td><td>' +
+                          item.limitCount + '</td><td>' + item.receivedCount +
+                          '</td><td>' +
                           item
                           .sort + '</td><td>' +
                           item
@@ -1356,7 +1388,8 @@
                           '</td><td>' + item.endTime +
                           '</td><td><div class="td-button"><button class="stop-reco"   data-id="' +
                           item.id + '" data-type="' + item.type +
-                          '">停止推荐</button><button class="table-sort" data-id="' + item.id +
+                          '">停止推荐</button><button class="table-sort" data-id="' + item
+                          .id +
                           '">排序</button></div></td><tr>'
                         $('.coupon table').append(html)
                       })
@@ -1424,25 +1457,34 @@
           $('.redpack .list-box span').html('共' + res.data.totalRow + '条')
           res.data.list.forEach(function (item, index) {
             if (item.state == 0) {
-              var html = '<tr class="content"><td>' + item.id + '</td><td>' + item.amount + '</td><td>' +
-                item.num + '</td><td>' + item.mold + '</td><td>' + item.receivedCount + '</td><td>' + item
-                .receivedMoney + '</td><td>' + item.desc + '</td><td>' + item.startTime + '</td><td>' + item
+              var html = '<tr class="content"><td>' + item.id + '</td><td>' + item.amount +
+                '</td><td>' +
+                item.num + '</td><td>' + item.mold + '</td><td>' + item.receivedCount + '</td><td>' +
+                item
+                .receivedMoney + '</td><td>' + item.desc + '</td><td>' + item.startTime +
+                '</td><td>' + item
                 .endTime +
                 '</td><td><div class="td-button"><button class="stop-re" data-id="' + item.id +
                 '">停止发放</button></div></td></tr>"'
 
             } else if (item.state == 1) {
-              var html = '<tr class="content"><td>' + item.id + '</td><td>' + item.amount + '</td><td>' +
-                item.num + '</td><td>' + item.mold + '</td><td>' + item.receivedCount + '</td><td>' + item
-                .receivedMoney + '</td><td>' + item.desc + '</td><td>' + item.startTime + '</td><td>' + item
+              var html = '<tr class="content"><td>' + item.id + '</td><td>' + item.amount +
+                '</td><td>' +
+                item.num + '</td><td>' + item.mold + '</td><td>' + item.receivedCount + '</td><td>' +
+                item
+                .receivedMoney + '</td><td>' + item.desc + '</td><td>' + item.startTime +
+                '</td><td>' + item
                 .endTime +
                 '</td><td><div class="td-button"><button class="re" data-id="' + item.id +
                 '">重新发放</button></div></td></tr>"'
 
             } else {
-              var html = '<tr class="content"><td>' + item.id + '</td><td>' + item.amount + '</td><td>' +
-                item.num + '</td><td>' + item.mold + '</td><td>' + item.receivedCount + '</td><td>' + item
-                .receivedMoney + '</td><td>' + item.desc + '</td><td>' + item.startTime + '</td><td>' + item
+              var html = '<tr class="content"><td>' + item.id + '</td><td>' + item.amount +
+                '</td><td>' +
+                item.num + '</td><td>' + item.mold + '</td><td>' + item.receivedCount + '</td><td>' +
+                item
+                .receivedMoney + '</td><td>' + item.desc + '</td><td>' + item.startTime +
+                '</td><td>' + item
                 .endTime + '</td><td></td></tr>"'
 
             }
@@ -1464,32 +1506,40 @@
                     if (item.state == 0) {
                       var html = '<tr class="content"><td>' + item.id + '</td><td>' + item
                         .amount + '</td><td>' +
-                        item.num + '</td><td>' + item.mold + '</td><td>' + item.receivedCount +
+                        item.num + '</td><td>' + item.mold + '</td><td>' + item
+                        .receivedCount +
                         '</td><td>' + item
-                        .receivedMoney + '</td><td>' + item.desc + '</td><td>' + item.startTime +
+                        .receivedMoney + '</td><td>' + item.desc + '</td><td>' + item
+                        .startTime +
                         '</td><td>' + item
                         .endTime +
-                        '</td><td><div class="td-button"><button class="stop-re" data-id="' + item
+                        '</td><td><div class="td-button"><button class="stop-re" data-id="' +
+                        item
                         .id +
                         '">停止发放</button></div></td></tr>"'
 
                     } else if (item.state == 1) {
                       var html = '<tr class="content"><td>' + item.id + '</td><td>' + item
                         .amount + '</td><td>' +
-                        item.num + '</td><td>' + item.mold + '</td><td>' + item.receivedCount +
+                        item.num + '</td><td>' + item.mold + '</td><td>' + item
+                        .receivedCount +
                         '</td><td>' + item
-                        .receivedMoney + '</td><td>' + item.desc + '</td><td>' + item.startTime +
+                        .receivedMoney + '</td><td>' + item.desc + '</td><td>' + item
+                        .startTime +
                         '</td><td>' + item
                         .endTime +
-                        '</td><td><div class="td-button"><button class="re" data-id="' + item.id +
+                        '</td><td><div class="td-button"><button class="re" data-id="' +
+                        item.id +
                         '">重新发放</button></div></td></tr>"'
 
                     } else {
                       var html = '<tr class="content"><td>' + item.id + '</td><td>' + item
                         .amount + '</td><td>' +
-                        item.num + '</td><td>' + item.mold + '</td><td>' + item.receivedCount +
+                        item.num + '</td><td>' + item.mold + '</td><td>' + item
+                        .receivedCount +
                         '</td><td>' + item
-                        .receivedMoney + '</td><td>' + item.desc + '</td><td>' + item.startTime +
+                        .receivedMoney + '</td><td>' + item.desc + '</td><td>' + item
+                        .startTime +
                         '</td><td>' + item
                         .endTime + '</td><td></td></tr>"'
 
@@ -1503,8 +1553,14 @@
           //停止发放红包
 
           $('.stop-re').click(function () {
+            $('.mask').removeClass('dn')
+            $('.tips02').removeClass('dn')
+            redid = $(this).attr('data-id')
+
+          })
+          $('.tips02 .bottom button').eq(1).click(function () {
             postRequest('/api/zb/red/stop', {
-              roomRedId: $(this).attr('data-id'),
+              roomRedId: redid,
               sessionId: $.cookie('sessionId')
             }, function (res) {
               console.log(res);
@@ -1513,17 +1569,31 @@
               }
             })
           })
+          $('.tips02 .bottom button').eq(0).click(function () {
+            $('.tips02').addClass('dn');
+            $('.mask').addClass('dn')
+          })
+
 
           //重新发红包
           $('.re').click(function () {
+            $('.tips04').removeClass('dn');
+            $('.mask').removeClass('dn')
+            redid = $(this).attr('data-id')
+          })
+          $('.tips04 button').eq(1).click(function () {
             postRequest('/api/zb/red/restart', {
-              roomRedId: $(this).attr('data-id'),
+              roomRedId: redid,
               sessionId: $.cookie('sessionId')
             }, function (res) {
               if (res.code == 1) {
                 window.location.reload()
               }
             })
+          })
+          $('.tips04 button').eq(0).click(function () {
+            $('.tips04').addClass('dn');
+            $('.mask').addClass('dn')
           })
         }
       })
@@ -1533,22 +1603,22 @@
     }
   })
   //刷新数据
-  $('.reco .title .button-list button').eq(1).click(function(){
+  $('.reco .title .button-list button').eq(1).click(function () {
     window.location.reload()
   })
-  $('.redpack .title .button-list button').eq(1).click(function(){
+  $('.redpack .title .button-list button').eq(1).click(function () {
     window.location.reload()
   })
 
   //复制地址
   var copy01 = new ClipboardJS('.copy01')
   var copy02 = new ClipboardJS('.copy02')
-  copy01.on('success',function(){
+  copy01.on('success', function () {
     $('.mask').removeClass('dn')
     $('.tips05').removeClass('dn')
   })
 
-  copy02.on('success',function(){
+  copy02.on('success', function () {
     $('.mask').removeClass('dn')
     $('.tips05').removeClass('dn')
   })

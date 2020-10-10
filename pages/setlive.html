@@ -2,7 +2,7 @@
 <html lang="en">
 
 <head>
-    <meta charset="UTF-8">
+  <meta charset="UTF-8">
   <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" href="../css/reset.css">
@@ -120,7 +120,7 @@
     </div>
   </div>
 
-  
+
   <div class="footer">
     <span>©2020 广州大健康网络科技有限公司 版权所有</span>
     <p>粤ICP备20014480号-1</p>
@@ -135,10 +135,17 @@
   var desc = decodeURI(getUrlParam('desc'))
   var startTime = getUrlParam('startTime')
   var id = getUrlParam('id')
-  $('input[name="titleinput"]').val(title)
-  $('textarea[name="introinput"]').val(desc)
-  $('input[name="timeinput"]').val(startTime)
-  $('.cover-img').attr('src', img)
+  console.log(title);
+  if (title!='null') {
+    $('input[name="titleinput"]').val(title)
+    $('textarea[name="introinput"]').val(desc)
+    $('input[name="timeinput"]').val(startTime)
+    $('.cover-img').attr('src', img)
+    var titlelength=$('input[name="titleinput"]').val().length;
+    console.log(titlelength);
+    $('.limit p').html(titlelength)
+  }
+
   // var isupimg = false
   var imgfile = null;
   //显示时间选择
@@ -262,7 +269,7 @@
             }
           }
         })
-      }else{
+      } else {
         $('.loding').removeClass('dn')
         var formdata = new FormData();
         formdata.append('sessionId', $.cookie('sessionId'))
@@ -326,7 +333,7 @@
   })
 
   $('.tips03 .bottom button').click(function () {
-    window.location.href='livepre.html'
+    window.location.href = 'livepre.html'
   })
 
   $('.tips04 .bottom button').click(function () {

@@ -50,7 +50,7 @@
         <span>标题</span>
         <input type="text" class="title-input" name="titleinput">
         <div class="limit">
-          <p>0</p>/<strong>100</strong>
+          <p>0</p>/<strong>60</strong>
         </div>
       </div>
       <div class="single">
@@ -231,6 +231,17 @@
   $('.tips04 .bottom button').click(function () {
     $('.mask').addClass('dn')
     $('.tips04').addClass('dn')
+  })
+
+  //标题限制次数
+  $('.title-input').bind('input', function () {
+    console.log($(this).val().length);
+    if ($(this).val().length >= 60) {
+      $(this).attr('disabled', true)
+    } else {
+      $(this).attr('disabled', false)
+    }
+    $('.limit p').html($(this).val().length)
   })
 </script>
 
