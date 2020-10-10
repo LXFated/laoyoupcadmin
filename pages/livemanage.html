@@ -18,6 +18,7 @@
   <script src="../js/url.js"></script>
   <script src="../js/clipboard.min.js"></script>
   <script src="../js/jquery.validate.js"></script>
+  <script src="../js/additional-methods.js"></script>
   <script src="../js/messages_zh.js"></script>
   <script src="../js/common.js"></script>
   <title>Document</title>
@@ -623,6 +624,7 @@
   var redid = 0;
   var tuiid = 0;
   var tuitype = 0;
+  var issendred = false;
   $('#list01').pagination({
     mode: 'fixed'
   })
@@ -719,12 +721,12 @@
             if (res.code == 1) {
               res.data.list.forEach(function (item, index) {
                 for (x in item) {
-          console.log(x);
-          if (item[x] == null) {
-            console.log('我的');
-            item[x] = ''
-          }
-        }
+                  console.log(x);
+                  if (item[x] == null) {
+                    console.log('我的');
+                    item[x] = ''
+                  }
+                }
                 var html = '<tr class="content"><td>' + item.title + '</td><td>' + item.desc +
                   '</td><td><img src="' + IMG_URL + item
                   .image + '" /></td><td>' + item.peakNum + '</td><td>' + item.totalNum +
@@ -775,8 +777,22 @@
 
   //发送红包
   $('.redpack .button-list button').eq(0).click(function () {
-    $('.mask').removeClass('dn');
-    $('.sendredpack').removeClass('dn')
+    if (issendred) {
+      alert('您有正在发放中的红包，请停止后重试')
+    } else {
+      postRequest('/api/account/getAccountUserInfo', {
+        accountId: $.cookie('zhuid')
+      }, function (res) {
+        console.log(res);
+        if (res.code == 1) {
+          $.cookie('zhumoney',res.data.balance)
+          $('.mask').removeClass('dn');
+          $('.sendredpack').removeClass('dn')
+        }
+      })
+
+    }
+
   })
 
 
@@ -963,7 +979,10 @@
           },
           money: {
             required: true,
-            number: true
+            number: true,
+            allmoney: true,
+            singlemoney: true,
+            zhumoney:true
           }
         },
         submitHandler: function () {
@@ -978,7 +997,7 @@
               desc: $('.sendredpack textarea').val()
             }, function (res) {
               console.log(res);
-              window.location.reload()
+              // window.location.reload()
             })
           } else {
             postRequest('/api/zb/red/create', {
@@ -990,7 +1009,7 @@
               amount: $('input[name="money"]').val(),
             }, function (res) {
               console.log(res);
-              window.location.reload()
+              // window.location.reload()
             })
           }
 
@@ -1088,21 +1107,21 @@
           $('.product .list-box span').html('共' + res.data.totalRow + '条')
           res.data.list.forEach(function (item, index) {
             for (x in item) {
-          console.log(x);
-          if (item[x] == null) {
-            console.log('我的');
-            item[x] = ''
-          }
-        }
+              console.log(x);
+              if (item[x] == null) {
+                console.log('我的');
+                item[x] = ''
+              }
+            }
             var type = "商品"
             if (item.type == 1) {
               type = "服务"
             }
-            for(x in item){
+            for (x in item) {
               console.log(x);
-              if(item[x]==null){
+              if (item[x] == null) {
                 console.log('我的');
-                item[x]=''
+                item[x] = ''
               }
             }
             if (item.recommend == 1) {
@@ -1160,12 +1179,12 @@
                 if (res.code == 1) {
                   res.data.list.forEach(function (item, index) {
                     for (x in item) {
-          console.log(x);
-          if (item[x] == null) {
-            console.log('我的');
-            item[x] = ''
-          }
-        }
+                      console.log(x);
+                      if (item[x] == null) {
+                        console.log('我的');
+                        item[x] = ''
+                      }
+                    }
                     var type = "商品"
                     if (item.type == 1) {
                       type = "服务"
@@ -1296,12 +1315,12 @@
               $('.product .list-box span').html('共' + res.data.totalRow + '条')
               res.data.list.forEach(function (item, index) {
                 for (x in item) {
-          console.log(x);
-          if (item[x] == null) {
-            console.log('我的');
-            item[x] = ''
-          }
-        }
+                  console.log(x);
+                  if (item[x] == null) {
+                    console.log('我的');
+                    item[x] = ''
+                  }
+                }
                 var type = "商品"
                 if (item.type == 1) {
                   type = "服务"
@@ -1358,12 +1377,12 @@
                     if (res.code == 1) {
                       res.data.list.forEach(function (item, index) {
                         for (x in item) {
-          console.log(x);
-          if (item[x] == null) {
-            console.log('我的');
-            item[x] = ''
-          }
-        }
+                          console.log(x);
+                          if (item[x] == null) {
+                            console.log('我的');
+                            item[x] = ''
+                          }
+                        }
                         var type = "商品"
                         if (item.type == 1) {
                           type = "服务"
@@ -1491,12 +1510,12 @@
               $('.coupon .list-box span').html('共' + res.data.totalRow + '条')
               res.data.list.forEach(function (item, index) {
                 for (x in item) {
-          console.log(x);
-          if (item[x] == null) {
-            console.log('我的');
-            item[x] = ''
-          }
-        }
+                  console.log(x);
+                  if (item[x] == null) {
+                    console.log('我的');
+                    item[x] = ''
+                  }
+                }
                 if (item.recommend == 1) {
                   var html = '<tr class="content"><td>优惠券</td><td>' + item.couponId + '</td><td>' +
                     item
@@ -1540,12 +1559,12 @@
                     if (res.code == 1) {
                       res.data.list.forEach(function (item, index) {
                         for (x in item) {
-          console.log(x);
-          if (item[x] == null) {
-            console.log('我的');
-            item[x] = ''
-          }
-        }
+                          console.log(x);
+                          if (item[x] == null) {
+                            console.log('我的');
+                            item[x] = ''
+                          }
+                        }
                         if (item.recommend == 1) {
                           var html = '<tr class="content"><td>优惠券</td><td>' + item.couponId +
                             '</td><td>' +
@@ -1656,13 +1675,14 @@
           $('.redpack .list-box span').html('共' + res.data.totalRow + '条')
           res.data.list.forEach(function (item, index) {
             for (x in item) {
-          console.log(x);
-          if (item[x] == null) {
-            console.log('我的');
-            item[x] = ''
-          }
-        }
+              console.log(x);
+              if (item[x] == null) {
+                console.log('我的');
+                item[x] = ''
+              }
+            }
             if (item.state == 0) {
+              issendred = true;
               var html = '<tr class="content"><td>' + item.id + '</td><td>' + item.amount +
                 '</td><td>' +
                 item.num + '</td><td>' + item.mold + '</td><td>' + item.receivedCount + '</td><td>' +
@@ -1710,12 +1730,12 @@
                 if (res.code == 1) {
                   res.data.list.forEach(function (item, index) {
                     for (x in item) {
-          console.log(x);
-          if (item[x] == null) {
-            console.log('我的');
-            item[x] = ''
-          }
-        }
+                      console.log(x);
+                      if (item[x] == null) {
+                        console.log('我的');
+                        item[x] = ''
+                      }
+                    }
                     if (item.state == 0) {
                       var html = '<tr class="content"><td>' + item.id + '</td><td>' + item
                         .amount + '</td><td>' +
