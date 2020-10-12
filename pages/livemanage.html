@@ -785,9 +785,11 @@
       }, function (res) {
         console.log(res);
         if (res.code == 1) {
-          $.cookie('zhumoney',res.data.balance)
+          $.cookie('zhumoney', res.data.balance)
           $('.mask').removeClass('dn');
           $('.sendredpack').removeClass('dn')
+        } else {
+          alert(res.desc)
         }
       })
 
@@ -982,7 +984,7 @@
             number: true,
             allmoney: true,
             singlemoney: true,
-            zhumoney:true
+            zhumoney: true
           }
         },
         submitHandler: function () {
@@ -997,7 +999,12 @@
               desc: $('.sendredpack textarea').val()
             }, function (res) {
               console.log(res);
-              // window.location.reload()
+              if (res.code == 1) {
+                window.location.reload()
+
+              } else {
+                alert(res.desc)
+              }
             })
           } else {
             postRequest('/api/zb/red/create', {
@@ -1009,7 +1016,12 @@
               amount: $('input[name="money"]').val(),
             }, function (res) {
               console.log(res);
-              // window.location.reload()
+              if (res.code == 1) {
+                window.location.reload()
+
+              } else {
+                alert(res.desc)
+              }
             })
           }
 
@@ -1087,6 +1099,8 @@
           if (res.code == 1) {
             $('.nolive').removeClass('dn');
             $('.islive').addClass('dn')
+          }else{
+            alert(res.desc)
           }
 
         })
@@ -1250,6 +1264,8 @@
             }, function (res) {
               if (res.code == 1) {
                 window.location.reload()
+              }else{
+                alert(res.desc)
               }
             })
           })
@@ -1282,6 +1298,8 @@
                   if (res.code == 1) {
                     console.log(res);
                     window.location.reload()
+                  }else{
+                    alert(res.desc)
                   }
                 })
               }
@@ -1454,6 +1472,8 @@
                 }, function (res) {
                   if (res.code == 1) {
                     window.location.reload()
+                  }else{
+                    alert(res.desc)
                   }
                 })
               })
@@ -1485,6 +1505,8 @@
                       if (res.code == 1) {
                         console.log(res);
                         window.location.reload()
+                      }else{
+                        alert(res.desc)
                       }
                     })
                   }
@@ -1620,6 +1642,8 @@
                 }, function (res) {
                   if (res.code == 1) {
                     window.location.reload()
+                  }else{
+                    alert(res.desc)
                   }
                 })
               })
@@ -1651,6 +1675,8 @@
                       if (res.code == 1) {
                         console.log(res);
                         window.location.reload()
+                      }else{
+                        alert(res.desc)
                       }
                     })
                   }
@@ -1799,6 +1825,8 @@
               console.log(res);
               if (res.code == 1) {
                 window.location.reload()
+              }else{
+                alert(res.desc)
               }
             })
           })
@@ -1821,6 +1849,8 @@
             }, function (res) {
               if (res.code == 1) {
                 window.location.reload()
+              }else{
+                alert(res.desc)
               }
             })
           })
