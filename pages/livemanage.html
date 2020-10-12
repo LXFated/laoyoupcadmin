@@ -982,12 +982,26 @@
           money: {
             required: true,
             number: true,
-            allmoney: true,
-            singlemoney: true,
-            zhumoney: true
+            zhumoney: true,
+            minNumber:true
           }
         },
         submitHandler: function () {
+          var type = $('.sendredpack input[type="radio"]:checked')[0].value
+          if(type ==1){
+            var single = parseFloat($('input[name="money"]').val()) / parseFloat($('input[name="num"]').val())
+            if (single < 0.01){
+              alert('单个红包金额不可低于0.01元')
+              return false
+            }
+          }
+
+          if(type ==2){
+            if(parseFloat($('input[name="money"]').val())<0.01){
+              alert('单个红包金额不可低于0.01元')
+              return false
+            }
+          }
           if ($('.sendredpack textarea').val() != '') {
             postRequest('/api/zb/red/create', {
               sessionId: $.cookie('sessionId'),
