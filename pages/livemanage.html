@@ -1158,7 +1158,7 @@
                 .id +
                 '" data-type="' + item.type +
                 '">停止推荐</button><button class="table-sort" data-id="' + item.id +
-                '">排序</button></div></td><tr>'
+                '" data-sort="'+item.sort+'">排序</button></div></td><tr>'
             } else {
               var html = '<tr class="content"><td>' + type + '</td><td>' + item.goodsId +
                 '</td><td>' + item
@@ -1223,7 +1223,7 @@
                         .id +
                         '" data-type="' + item.type +
                         '">停止推荐</button><button class="table-sort" data-id="' + item.id +
-                        '">排序</button></div></td><tr>'
+                        '" data-sort="'+item.sort+'">排序</button></div></td><tr>'
                     } else {
                       var html = '<tr class="content"><td>' + type + '</td><td>' + item.goodsId +
                         '</td><td>' + item
@@ -1280,6 +1280,7 @@
             console.log($(this).attr('data-id'));
             $('.mask').removeClass('dn');
             $('.change-sort').removeClass('dn')
+            $(' .change-sort input').val($(this).attr('data-sort'))
             var that = this
             // var id=$(this).attr('data-id')
             $('.change-sort').validate({
@@ -1361,7 +1362,7 @@
                     .id +
                     '" data-type="' + item.type +
                     '">停止推荐</button><button class="table-sort" data-id="' + item.id +
-                    '">排序</button></div></td><tr>'
+                    '" data-sort="'+item.sort+'">排序</button></div></td><tr>'
                 } else {
                   var html = '<tr class="content"><td>' + type + '</td><td>' + item.goodsId +
                     '</td><td>' + item
@@ -1428,7 +1429,7 @@
                             .id +
                             '" data-type="' + item.type +
                             '">停止推荐</button><button class="table-sort" data-id="' + item.id +
-                            '">排序</button></div></td><tr>'
+                            '" data-sort="'+item.sort+'">排序</button></div></td><tr>'
                         } else {
                           var html = '<tr class="content"><td>' + type + '</td><td>' + item
                             .goodsId +
@@ -1487,6 +1488,7 @@
                 console.log($(this).attr('data-id'));
                 $('.mask').removeClass('dn');
                 $('.change-sort').removeClass('dn')
+                $(' .change-sort input').val($(this).attr('data-sort'))
                 var that = this
                 // var id=$(this).attr('data-id')
                 $('.change-sort').validate({
@@ -1552,7 +1554,7 @@
                     .id +
                     '" data-type="' + item.type +
                     '">停止推荐</button><button class="table-sort" data-id="' +
-                    item.id + '">排序</button></div></td><tr>'
+                    item.id + '" data-sort="'+item.sort+'">排序</button></div></td><tr>'
                 } else {
                   var html = '<tr class="content"><td>优惠券</td><td>' + item.couponId + '</td><td>' +
                     item
@@ -1604,7 +1606,7 @@
                             .id +
                             '" data-type="' + item.type +
                             '">停止推荐</button><button class="table-sort" data-id="' +
-                            item.id + '">排序</button></div></td><tr>'
+                            item.id + '" data-sort="'+item.sort+'">排序</button></div></td><tr>'
                         } else {
                           var html = '<tr class="content"><td>优惠券</td><td>' + item.couponId +
                             '</td><td>' +
@@ -1657,6 +1659,7 @@
                 console.log($(this).attr('data-id'));
                 $('.mask').removeClass('dn');
                 $('.change-sort').removeClass('dn')
+                $(' .change-sort input').val($(this).attr('data-sort'))
                 var that = this
                 // var id=$(this).attr('data-id')
                 $('.change-sort').validate({
