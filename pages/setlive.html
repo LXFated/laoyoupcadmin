@@ -136,12 +136,12 @@
   var startTime = getUrlParam('startTime')
   var id = getUrlParam('id')
   console.log(title);
-  if (title!='null') {
+  if (title != 'null') {
     $('input[name="titleinput"]').val(title)
     $('textarea[name="introinput"]').val(desc)
     $('input[name="timeinput"]').val(startTime)
     $('.cover-img').attr('src', img)
-    var titlelength=$('input[name="titleinput"]').val().length;
+    var titlelength = $('input[name="titleinput"]').val().length;
     console.log(titlelength);
     $('.limit p').html(titlelength)
   }
@@ -264,8 +264,17 @@
             $('.loding').addClass('dn')
             if (res.code == 1) {
               $('.tips03 p').html('提交成功')
+            } else if (res.code == 2) {
+              $.removeCookie('sessionId')
+              $.removeCookie('nick')
+              $.removeCookie('zhuid')
+              $.removeCookie('avatar')
+              $.removeCookie('isauto')
+              $.removeCookie('mobile')
+              $.removeCookie('password')
+              window.location.href = "index.html"
             } else {
-              $('.tips03 p').html('提交失败')
+              $('.tips03 p').html(res.desc)
             }
           }
         })

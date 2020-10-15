@@ -86,7 +86,7 @@
       <button>还未开播，去开播</button>
     </div>
 
-    <div class="reco style03">
+    <div class="reco style03 dn">
       <div class="title">
         <p>正在推荐产品</p>
         <div class="button-list">
@@ -245,7 +245,7 @@
 
     </div>
 
-    <div class="redpack style03">
+    <div class="redpack style03 dn">
       <div class="title">
         <p>红包列表</p>
         <div class="button-list">
@@ -788,6 +788,15 @@
           $.cookie('zhumoney', res.data.balance)
           $('.mask').removeClass('dn');
           $('.sendredpack').removeClass('dn')
+        } else if (res.code == 2) {
+          $.removeCookie('sessionId')
+          $.removeCookie('nick')
+          $.removeCookie('zhuid')
+          $.removeCookie('avatar')
+          $.removeCookie('isauto')
+          $.removeCookie('mobile')
+          $.removeCookie('password')
+          window.location.href = "index.html"
         } else {
           alert(res.desc)
         }
@@ -961,6 +970,8 @@
   }, function (res) {
     console.log(res);
     if (res.data != null) {
+      $('.reco').removeClass('dn')
+      $('.redpack').removeClass('dn')
       $('.islive').removeClass('dn')
       $('.islive .info .single').eq(0).children('p').html(res.data.title)
       $('.islive .info .single').eq(1).children('strong').html(res.data.desc)
@@ -983,21 +994,21 @@
             required: true,
             number: true,
             zhumoney: true,
-            minNumber:true
+            minNumber: true
           }
         },
         submitHandler: function () {
           var type = $('.sendredpack input[type="radio"]:checked')[0].value
-          if(type ==1){
+          if (type == 1) {
             var single = parseFloat($('input[name="money"]').val()) / parseFloat($('input[name="num"]').val())
-            if (single < 0.01){
+            if (single < 0.01) {
               alert('单个红包金额不可低于0.01元')
               return false
             }
           }
 
-          if(type ==2){
-            if(parseFloat($('input[name="money"]').val())<0.01){
+          if (type == 2) {
+            if (parseFloat($('input[name="money"]').val()) < 0.01) {
               alert('单个红包金额不可低于0.01元')
               return false
             }
@@ -1016,6 +1027,15 @@
               if (res.code == 1) {
                 window.location.reload()
 
+              } else if (res.code == 2) {
+                $.removeCookie('sessionId')
+                $.removeCookie('nick')
+                $.removeCookie('zhuid')
+                $.removeCookie('avatar')
+                $.removeCookie('isauto')
+                $.removeCookie('mobile')
+                $.removeCookie('password')
+                window.location.href = "index.html"
               } else {
                 alert(res.desc)
               }
@@ -1033,6 +1053,15 @@
               if (res.code == 1) {
                 window.location.reload()
 
+              } else if (res.code == 2) {
+                $.removeCookie('sessionId')
+                $.removeCookie('nick')
+                $.removeCookie('zhuid')
+                $.removeCookie('avatar')
+                $.removeCookie('isauto')
+                $.removeCookie('mobile')
+                $.removeCookie('password')
+                window.location.href = "index.html"
               } else {
                 alert(res.desc)
               }
@@ -1096,6 +1125,15 @@
             console.log(res);
             if (res.code == 1) {
               window.location.reload()
+            } else if (res.code == 2) {
+              $.removeCookie('sessionId')
+              $.removeCookie('nick')
+              $.removeCookie('zhuid')
+              $.removeCookie('avatar')
+              $.removeCookie('isauto')
+              $.removeCookie('mobile')
+              $.removeCookie('password')
+              window.location.href = "index.html"
             } else {
               alert(res.desc)
             }
@@ -1111,9 +1149,19 @@
         }, function (res) {
           console.log(res);
           if (res.code == 1) {
-            $('.nolive').removeClass('dn');
-            $('.islive').addClass('dn')
-          }else{
+            // $('.nolive').removeClass('dn');
+            // $('.islive').addClass('dn')
+            window.location.reload()
+          } else if (res.code == 2) {
+            $.removeCookie('sessionId')
+            $.removeCookie('nick')
+            $.removeCookie('zhuid')
+            $.removeCookie('avatar')
+            $.removeCookie('isauto')
+            $.removeCookie('mobile')
+            $.removeCookie('password')
+            window.location.href = "index.html"
+          } else {
             alert(res.desc)
           }
 
@@ -1172,7 +1220,7 @@
                 .id +
                 '" data-type="' + item.type +
                 '">停止推荐</button><button class="table-sort" data-id="' + item.id +
-                '" data-sort="'+item.sort+'">排序</button></div></td><tr>'
+                '" data-sort="' + item.sort + '">排序</button></div></td><tr>'
             } else {
               var html = '<tr class="content"><td>' + type + '</td><td>' + item.goodsId +
                 '</td><td>' + item
@@ -1237,7 +1285,7 @@
                         .id +
                         '" data-type="' + item.type +
                         '">停止推荐</button><button class="table-sort" data-id="' + item.id +
-                        '" data-sort="'+item.sort+'">排序</button></div></td><tr>'
+                        '" data-sort="' + item.sort + '">排序</button></div></td><tr>'
                     } else {
                       var html = '<tr class="content"><td>' + type + '</td><td>' + item.goodsId +
                         '</td><td>' + item
@@ -1278,7 +1326,16 @@
             }, function (res) {
               if (res.code == 1) {
                 window.location.reload()
-              }else{
+              } else if (res.code == 2) {
+                $.removeCookie('sessionId')
+                $.removeCookie('nick')
+                $.removeCookie('zhuid')
+                $.removeCookie('avatar')
+                $.removeCookie('isauto')
+                $.removeCookie('mobile')
+                $.removeCookie('password')
+                window.location.href = "index.html"
+              } else {
                 alert(res.desc)
               }
             })
@@ -1313,7 +1370,16 @@
                   if (res.code == 1) {
                     console.log(res);
                     window.location.reload()
-                  }else{
+                  } else if (res.code == 2) {
+                    $.removeCookie('sessionId')
+                    $.removeCookie('nick')
+                    $.removeCookie('zhuid')
+                    $.removeCookie('avatar')
+                    $.removeCookie('isauto')
+                    $.removeCookie('mobile')
+                    $.removeCookie('password')
+                    window.location.href = "index.html"
+                  } else {
                     alert(res.desc)
                   }
                 })
@@ -1376,7 +1442,7 @@
                     .id +
                     '" data-type="' + item.type +
                     '">停止推荐</button><button class="table-sort" data-id="' + item.id +
-                    '" data-sort="'+item.sort+'">排序</button></div></td><tr>'
+                    '" data-sort="' + item.sort + '">排序</button></div></td><tr>'
                 } else {
                   var html = '<tr class="content"><td>' + type + '</td><td>' + item.goodsId +
                     '</td><td>' + item
@@ -1443,7 +1509,7 @@
                             .id +
                             '" data-type="' + item.type +
                             '">停止推荐</button><button class="table-sort" data-id="' + item.id +
-                            '" data-sort="'+item.sort+'">排序</button></div></td><tr>'
+                            '" data-sort="' + item.sort + '">排序</button></div></td><tr>'
                         } else {
                           var html = '<tr class="content"><td>' + type + '</td><td>' + item
                             .goodsId +
@@ -1487,7 +1553,16 @@
                 }, function (res) {
                   if (res.code == 1) {
                     window.location.reload()
-                  }else{
+                  } else if (res.code == 2) {
+                    $.removeCookie('sessionId')
+                    $.removeCookie('nick')
+                    $.removeCookie('zhuid')
+                    $.removeCookie('avatar')
+                    $.removeCookie('isauto')
+                    $.removeCookie('mobile')
+                    $.removeCookie('password')
+                    window.location.href = "index.html"
+                  } else {
                     alert(res.desc)
                   }
                 })
@@ -1521,7 +1596,16 @@
                       if (res.code == 1) {
                         console.log(res);
                         window.location.reload()
-                      }else{
+                      } else if (res.code == 2) {
+                        $.removeCookie('sessionId')
+                        $.removeCookie('nick')
+                        $.removeCookie('zhuid')
+                        $.removeCookie('avatar')
+                        $.removeCookie('isauto')
+                        $.removeCookie('mobile')
+                        $.removeCookie('password')
+                        window.location.href = "index.html"
+                      } else {
                         alert(res.desc)
                       }
                     })
@@ -1568,7 +1652,7 @@
                     .id +
                     '" data-type="' + item.type +
                     '">停止推荐</button><button class="table-sort" data-id="' +
-                    item.id + '" data-sort="'+item.sort+'">排序</button></div></td><tr>'
+                    item.id + '" data-sort="' + item.sort + '">排序</button></div></td><tr>'
                 } else {
                   var html = '<tr class="content"><td>优惠券</td><td>' + item.couponId + '</td><td>' +
                     item
@@ -1620,7 +1704,8 @@
                             .id +
                             '" data-type="' + item.type +
                             '">停止推荐</button><button class="table-sort" data-id="' +
-                            item.id + '" data-sort="'+item.sort+'">排序</button></div></td><tr>'
+                            item.id + '" data-sort="' + item.sort +
+                            '">排序</button></div></td><tr>'
                         } else {
                           var html = '<tr class="content"><td>优惠券</td><td>' + item.couponId +
                             '</td><td>' +
@@ -1658,7 +1743,16 @@
                 }, function (res) {
                   if (res.code == 1) {
                     window.location.reload()
-                  }else{
+                  } else if (res.code == 2) {
+                    $.removeCookie('sessionId')
+                    $.removeCookie('nick')
+                    $.removeCookie('zhuid')
+                    $.removeCookie('avatar')
+                    $.removeCookie('isauto')
+                    $.removeCookie('mobile')
+                    $.removeCookie('password')
+                    window.location.href = "index.html"
+                  } else {
                     alert(res.desc)
                   }
                 })
@@ -1692,7 +1786,16 @@
                       if (res.code == 1) {
                         console.log(res);
                         window.location.reload()
-                      }else{
+                      } else if (res.code == 2) {
+                        $.removeCookie('sessionId')
+                        $.removeCookie('nick')
+                        $.removeCookie('zhuid')
+                        $.removeCookie('avatar')
+                        $.removeCookie('isauto')
+                        $.removeCookie('mobile')
+                        $.removeCookie('password')
+                        window.location.href = "index.html"
+                      } else {
                         alert(res.desc)
                       }
                     })
@@ -1842,7 +1945,16 @@
               console.log(res);
               if (res.code == 1) {
                 window.location.reload()
-              }else{
+              } else if (res.code == 2) {
+                $.removeCookie('sessionId')
+                $.removeCookie('nick')
+                $.removeCookie('zhuid')
+                $.removeCookie('avatar')
+                $.removeCookie('isauto')
+                $.removeCookie('mobile')
+                $.removeCookie('password')
+                window.location.href = "index.html"
+              } else {
                 alert(res.desc)
               }
             })
@@ -1866,7 +1978,16 @@
             }, function (res) {
               if (res.code == 1) {
                 window.location.reload()
-              }else{
+              } else if (res.code == 2) {
+                $.removeCookie('sessionId')
+                $.removeCookie('nick')
+                $.removeCookie('zhuid')
+                $.removeCookie('avatar')
+                $.removeCookie('isauto')
+                $.removeCookie('mobile')
+                $.removeCookie('password')
+                window.location.href = "index.html"
+              } else {
                 alert(res.desc)
               }
             })

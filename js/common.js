@@ -23,6 +23,15 @@ function loginout(){
         $.removeCookie('mobile')
         $.removeCookie('password')
         window.location.href='index.html';
+      }else if(res.code ==2){
+        $.removeCookie('sessionId')
+        $.removeCookie('nick')
+        $.removeCookie('zhuid')
+        $.removeCookie('avatar')
+        $.removeCookie('isauto')
+        $.removeCookie('mobile')
+        $.removeCookie('password')
+        window.location.href="index.html"
       }else{
         alert(res.desc)
       }
