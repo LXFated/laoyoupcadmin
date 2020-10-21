@@ -1829,9 +1829,13 @@
             }
             if (item.state == 0) {
               issendred = true;
+              var mold = '平均分配'
+              if (item.mold == 1) {
+                mold = '随机分配'
+              }
               var html = '<tr class="content"><td>' + item.id + '</td><td>' + item.amount +
                 '</td><td>' +
-                item.num + '</td><td>' + item.mold + '</td><td>' + item.receivedCount + '</td><td>' +
+                item.num + '</td><td>' + mold + '</td><td>' + item.receivedCount + '</td><td>' +
                 item
                 .receivedMoney + '</td><td>' + item.desc + '</td><td>' + item.startTime +
                 '</td><td>' + item
@@ -1840,9 +1844,13 @@
                 '">停止发放</button></div></td></tr>"'
 
             } else if (item.state == 1) {
+              var mold = '平均分配'
+              if (item.mold == 1) {
+                mold = '随机分配'
+              }
               var html = '<tr class="content"><td>' + item.id + '</td><td>' + item.amount +
                 '</td><td>' +
-                item.num + '</td><td>' + item.mold + '</td><td>' + item.receivedCount + '</td><td>' +
+                item.num + '</td><td>' + mold + '</td><td>' + item.receivedCount + '</td><td>' +
                 item
                 .receivedMoney + '</td><td>' + item.desc + '</td><td>' + item.startTime +
                 '</td><td>' + item
@@ -1851,9 +1859,13 @@
                 '">重新发放</button></div></td></tr>"'
 
             } else {
+              var mold = '平均分配'
+              if (item.mold == 1) {
+                mold = '随机分配'
+              }
               var html = '<tr class="content"><td>' + item.id + '</td><td>' + item.amount +
                 '</td><td>' +
-                item.num + '</td><td>' + item.mold + '</td><td>' + item.receivedCount + '</td><td>' +
+                item.num + '</td><td>' + mold + '</td><td>' + item.receivedCount + '</td><td>' +
                 item
                 .receivedMoney + '</td><td>' + item.desc + '</td><td>' + item.startTime +
                 '</td><td>' + item
@@ -1883,9 +1895,13 @@
                       }
                     }
                     if (item.state == 0) {
+                      var mold = '平均分配'
+                      if (item.mold == 1) {
+                        mold = '随机分配'
+                      }
                       var html = '<tr class="content"><td>' + item.id + '</td><td>' + item
                         .amount + '</td><td>' +
-                        item.num + '</td><td>' + item.mold + '</td><td>' + item
+                        item.num + '</td><td>' + mold + '</td><td>' + item
                         .receivedCount +
                         '</td><td>' + item
                         .receivedMoney + '</td><td>' + item.desc + '</td><td>' + item
@@ -1898,9 +1914,13 @@
                         '">停止发放</button></div></td></tr>"'
 
                     } else if (item.state == 1) {
+                      var mold = '平均分配'
+                      if (item.mold == 1) {
+                        mold = '随机分配'
+                      }
                       var html = '<tr class="content"><td>' + item.id + '</td><td>' + item
                         .amount + '</td><td>' +
-                        item.num + '</td><td>' + item.mold + '</td><td>' + item
+                        item.num + '</td><td>' + mold + '</td><td>' + item
                         .receivedCount +
                         '</td><td>' + item
                         .receivedMoney + '</td><td>' + item.desc + '</td><td>' + item
@@ -1912,9 +1932,13 @@
                         '">重新发放</button></div></td></tr>"'
 
                     } else {
+                      var mold = '平均分配'
+                      if (item.mold == 1) {
+                        mold = '随机分配'
+                      }
                       var html = '<tr class="content"><td>' + item.id + '</td><td>' + item
                         .amount + '</td><td>' +
-                        item.num + '</td><td>' + item.mold + '</td><td>' + item
+                        item.num + '</td><td>' + mold + '</td><td>' + item
                         .receivedCount +
                         '</td><td>' + item
                         .receivedMoney + '</td><td>' + item.desc + '</td><td>' + item
