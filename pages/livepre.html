@@ -107,12 +107,7 @@
 </body>
 <script>
   var deleteid = null;
-  var noplay = 0;
-  var nownoplay = 0;
-  var nowisplay = 0;
-  var isplay = 0;
   var pagenumber = 1;
-  var pagenumber02 = 1;
   //获取未开播预告
   $('.loding').removeClass('dn')
   postRequest('/api/room/page', {
@@ -124,9 +119,7 @@
     console.log(res);
     if (res.data.list.length != 0) {
       pagenumber++;
-      nownoplay += res.data.list.length
     }
-    noplay = res.data.totalRow
     res.data.list.forEach(function (item, index) {
       for (x in item) {
           console.log(x);
@@ -135,16 +128,28 @@
             item[x] = ''
           }
         }
-      var html = '<li><div class="left"><img src="' + IMG_URL + item.image +
+      if(item.state ==0){
+        var html = '<li><div class="left"><img src="' + IMG_URL + item.image +
         '"></div><div class="right"><div class="top"><p>' + item.title + '</p></div><div class="center"><p>' +
         item.desc + '</p></div><div class="bottom"><div class="info"><span>开播时间：</span><p>' + item.startTime +
         '</p></div><div class="button-box"><div class="edit" data-img="' + IMG_URL + item.image +
         '" data-title="' + item.title + '" data-desc="' + item.desc + '" data-startTime="' + item.startTime +
         '" data-id="' + item.id + '">编辑</div><div class="delete" data-id="' + item.id +
         '">删除</div></div></div></div></li>'
+      }else{
+        var html = '<li><div class="left"><img src="' + IMG_URL + item.image +
+            '"></div><div class="right"><div class="top"><p>' + item.title +
+            '</p></div><div class="center"><p>' +
+            item.desc + '</p></div><div class="bottom"><div class="info"><span>开播时间：</span><p>' + item
+            .startTime +
+            '</p></div><div class="button-box"><div class="delete" data-id="' + item.id +
+            '">删除</div></div></div></div></li>'
+      }
+      
       $('.content ul').append(html)
 
     })
+    $('.loding').addClass('dn')
     $('.edit').click(function () {
       var title=encodeURI(encodeURI($(this)[0].dataset.title))
       var desc=encodeURI(encodeURI($(this)[0].dataset.desc))
@@ -158,251 +163,72 @@
       $('.tips01').removeClass('dn')
 
     })
-
-    if (nownoplay < 6) {
-      //获取正在开播直播
-      postRequest('/api/room/page', {
-        sessionId: $.cookie('sessionId'),
-        pageNumber: 1,
-        pageSize: 6-nownoplay,
-        state: 1
-      }, function (res) {
-        console.log(res);
-        if (res.data.list.length != 0) {
-          pagenumber02++;
-          nowisplay += res.data.list.length
-        }
-        isplay = res.data.totalRow
-        res.data.list.forEach(function (item, index) {
-          for (x in item) {
-          console.log(x);
-          if (item[x] == null) {
-            console.log('我的');
-            item[x] = ''
-          }
-        }
-          var html = '<li><div class="left"><img src="' + IMG_URL + item.image +
-            '"></div><div class="right"><div class="top"><p>' + item.title +
-            '</p></div><div class="center"><p>' +
-            item.desc + '</p></div><div class="bottom"><div class="info"><span>开播时间：</span><p>' + item
-            .startTime +
-            '</p></div><div class="button-box"><div class="delete" data-id="' + item.id +
-            '">删除</div></div></div></div></li>'
-          $('.content ul').append(html)
-
-        })
-        $('.loding').addClass('dn')
-        $('.delete').click(function () {
-          deleteid = $(this)[0].dataset.id
-          $('.mask').removeClass('dn')
-          $('.tips01').removeClass('dn')
-
-        })
-      })
-    }else{
-      $('.loding').addClass('dn')
-    }
   })
 
 
 
   //加载更多
   $('.more').click(function () {
-    $('.loding').removeClass('dn')
-    if (noplay > nownoplay) {
-      if (noplay - nownoplay >= 6) {
-        //获取未开播预告
-        postRequest('/api/room/page', {
-          sessionId: $.cookie('sessionId'),
-          pageNumber: pagenumber,
-          pageSize: 6,
-          state: 0
-        }, function (res) {
-          console.log(res);
-          if (res.data.list.length != 0) {
-            pagenumber++;
-            nownoplay += res.data.list.length
-          }
-          res.data.list.forEach(function (item, index) {
-            for (x in item) {
-          console.log(x);
-          if (item[x] == null) {
-            console.log('我的');
-            item[x] = ''
-          }
-        }
-            var html = '<li><div class="left"><img src="' + IMG_URL + item.image +
-              '"></div><div class="right"><div class="top"><p>' + item.title +
-              '</p></div><div class="center"><p>' +
-              item.desc + '</p></div><div class="bottom"><div class="info"><span>开播时间：</span><p>' + item
-              .startTime +
-              '</p></div><div class="button-box"><div class="edit" data-img="' + IMG_URL + item.image +
-              '" data-title="' + item.title + '" data-desc="' + item.desc + '" data-startTime="' + item
-              .startTime +
-              '" data-id="' + item.id + '">编辑</div><div class="delete" data-id="' + item.id +
-              '">删除</div></div></div></div></li>'
-            $('.content ul').append(html)
-
-          })
-          $('.edit').click(function () {
-            window.location.href = 'setlive.html?img=' + $(this)[0].dataset.img + '&title=' + $(this)[0]
-              .dataset
-              .title + '&desc=' + $(this)[0].dataset.desc + '&startTime=' + $(this)[0].dataset.starttime +
-              '&id=' + $(
-                this)[0].dataset.id
-          })
-
-          $('.delete').click(function () {
-            deleteid = $(this)[0].dataset.id
-            $('.mask').removeClass('dn')
-            $('.tips01').removeClass('dn')
-
-          })
-
-          $('.loding').addClass('dn')
-        })
-      } else {
-        //获取未开播预告
-        postRequest('/api/room/page', {
-          sessionId: $.cookie('sessionId'),
-          pageNumber: pagenumber,
-          pageSize: noplay - nownoplay,
-          state: 0
-        }, function (res) {
-          console.log(res);
-          if (res.data.list.length != 0) {
-            pagenumber++;
-            nownoplay += res.data.list.length
-          }
-          res.data.list.forEach(function (item, index) {
-            for (x in item) {
-          console.log(x);
-          if (item[x] == null) {
-            console.log('我的');
-            item[x] = ''
-          }
-        }
-            var html = '<li><div class="left"><img src="' + IMG_URL + item.image +
-              '"></div><div class="right"><div class="top"><p>' + item.title +
-              '</p></div><div class="center"><p>' +
-              item.desc + '</p></div><div class="bottom"><div class="info"><span>开播时间：</span><p>' + item
-              .startTime +
-              '</p></div><div class="button-box"><div class="edit" data-img="' + IMG_URL + item.image +
-              '" data-title="' + item.title + '" data-desc="' + item.desc + '" data-startTime="' + item
-              .startTime +
-              '" data-id="' + item.id + '">编辑</div><div class="delete" data-id="' + item.id +
-              '">删除</div></div></div></div></li>'
-            $('.content ul').append(html)
-
-          })
-          $('.edit').click(function () {
-            window.location.href = 'setlive.html?img=' + $(this)[0].dataset.img + '&title=' + $(this)[0]
-              .dataset
-              .title + '&desc=' + $(this)[0].dataset.desc + '&startTime=' + $(this)[0].dataset.starttime +
-              '&id=' + $(
-                this)[0].dataset.id
-          })
-
-          $('.delete').click(function () {
-            deleteid = $(this)[0].dataset.id
-            $('.mask').removeClass('dn')
-            $('.tips01').removeClass('dn')
-
-          })
-
-          //获取正在开播直播
-          postRequest('/api/room/page', {
-            sessionId: $.cookie('sessionId'),
-            pageNumber: pagenumber02,
-            pageSize: 6 - noplay + nownoplay,
-            state: 1
-          }, function (res) {
-            console.log(res);
-            if (res.data.list.length != 0) {
-              pagenumber02++;
-              nowisplay += res.data.list.length
-            }
-            res.data.list.forEach(function (item, index) {
-              for (x in item) {
-          console.log(x);
-          if (item[x] == null) {
-            console.log('我的');
-            item[x] = ''
-          }
-        }
-              var html = '<li><div class="left"><img src="' + IMG_URL + item.image +
-                '"></div><div class="right"><div class="top"><p>' + item.title +
-                '</p></div><div class="center"><p>' +
-                item.desc + '</p></div><div class="bottom"><div class="info"><span>开播时间：</span><p>' +
-                item
-                .startTime +
-                '</p></div><div class="button-box"><div class="delete" data-id="' + item.id +
-                '">删除</div></div></div></div></li>'
-              $('.content ul').append(html)
-
-            })
-            $('.delete').click(function () {
-              deleteid = $(this)[0].dataset.id
-              $('.mask').removeClass('dn')
-              $('.tips01').removeClass('dn')
-
-            })
-
-            $('.loding').addClass('dn')
-          })
-        })
-
-
-
-      }
-
-    } else {
-      if (isplay > nowisplay) {
-        //获取正在开播直播
-        postRequest('/api/room/page', {
-          sessionId: $.cookie('sessionId'),
-          pageNumber: pagenumber02,
-          pageSize: 6,
-          state: 1
-        }, function (res) {
-          console.log(res);
-          if (res.data.list.length != 0) {
-            pagenumber02++;
-            nowisplay += res.data.list.length
-          }
-          res.data.list.forEach(function (item, index) {
-            for (x in item) {
-          console.log(x);
-          if (item[x] == null) {
-            console.log('我的');
-            item[x] = ''
-          }
-        }
-            var html = '<li><div class="left"><img src="' + IMG_URL + item.image +
-              '"></div><div class="right"><div class="top"><p>' + item.title +
-              '</p></div><div class="center"><p>' +
-              item.desc + '</p></div><div class="bottom"><div class="info"><span>开播时间：</span><p>' + item
-              .startTime +
-              '</p></div><div class="button-box"><div class="delete" data-id="' + item.id +
-              '">删除</div></div></div></div></li>'
-            $('.content ul').append(html)
-
-          })
-          $('.delete').click(function () {
-            deleteid = $(this)[0].dataset.id
-            $('.mask').removeClass('dn')
-            $('.tips01').removeClass('dn')
-
-          })
-
-          $('.loding').addClass('dn')
-        })
-      } else {
-        $('.loding').addClass('dn')
-        alert('没有更多了')
-      }
-
+    //获取未开播预告
+  $('.loding').removeClass('dn')
+  postRequest('/api/room/page', {
+    sessionId: $.cookie('sessionId'),
+    pageNumber: pagenumber,
+    pageSize: 6,
+    state: 0
+  }, function (res) {
+    console.log(res);
+    if (res.data.list.length != 0) {
+      pagenumber++;
+    }else{
+      $('.loding').addClass('dn')
+      alert('没有更多了！')
+      return false;
     }
+    res.data.list.forEach(function (item, index) {
+      for (x in item) {
+          console.log(x);
+          if (item[x] == null) {
+            console.log('我的');
+            item[x] = ''
+          }
+        }
+      if(item.state ==0){
+        var html = '<li><div class="left"><img src="' + IMG_URL + item.image +
+        '"></div><div class="right"><div class="top"><p>' + item.title + '</p></div><div class="center"><p>' +
+        item.desc + '</p></div><div class="bottom"><div class="info"><span>开播时间：</span><p>' + item.startTime +
+        '</p></div><div class="button-box"><div class="edit" data-img="' + IMG_URL + item.image +
+        '" data-title="' + item.title + '" data-desc="' + item.desc + '" data-startTime="' + item.startTime +
+        '" data-id="' + item.id + '">编辑</div><div class="delete" data-id="' + item.id +
+        '">删除</div></div></div></div></li>'
+      }else{
+        var html = '<li><div class="left"><img src="' + IMG_URL + item.image +
+            '"></div><div class="right"><div class="top"><p>' + item.title +
+            '</p></div><div class="center"><p>' +
+            item.desc + '</p></div><div class="bottom"><div class="info"><span>开播时间：</span><p>' + item
+            .startTime +
+            '</p></div><div class="button-box"><div class="delete" data-id="' + item.id +
+            '">删除</div></div></div></div></li>'
+      }
+      
+      $('.content ul').append(html)
+
+    })
+    $('.loding').addClass('dn')
+    $('.edit').click(function () {
+      var title=encodeURI(encodeURI($(this)[0].dataset.title))
+      var desc=encodeURI(encodeURI($(this)[0].dataset.desc))
+      window.location.href = 'setlive.html?img=' + $(this)[0].dataset.img + '&title=' + title + '&desc=' + desc + '&startTime=' + $(this)[0].dataset.starttime + '&id=' + $(
+          this)[0].dataset.id
+    })
+
+    $('.delete').click(function () {
+      deleteid = $(this)[0].dataset.id
+      $('.mask').removeClass('dn')
+      $('.tips01').removeClass('dn')
+
+    })
+  })
   })
 
   //删除预告

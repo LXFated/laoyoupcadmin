@@ -682,7 +682,7 @@
     sessionId: $.cookie('sessionId'),
     pageNumber: 1,
     pageSize: 3,
-    state: 2
+    state: 1
   }, function (res) {
     console.log(res);
     if (res.data.list.length == 0) {
@@ -715,7 +715,7 @@
             sessionId: $.cookie('sessionId'),
             pageNumber: pageNumber,
             pageSize: 3,
-            state: 2
+            state: 1
           }, function (res) {
             $('.history table .content').remove();
             if (res.code == 1) {
