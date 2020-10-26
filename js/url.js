@@ -3,7 +3,8 @@
 
 var IMG_URL = 'https://laoyouyangsheng.oss-cn-shenzhen.aliyuncs.com';
 // var BASE_URL = 'http://yyh.vipgz1.idcfengye.com/lyys';
-var BASE_URL = 'http://47.115.46.33:8080/lyys';
+// var BASE_URL = 'http://47.115.46.33:8080/lyys';
+var BASE_URL = 'https://laoyouyangsheng.lyysapp.cn';
 var HTTP_URL = '';
 var WEBSITE_NAME = "";
 var WEBSITE = 0;
